@@ -1,6 +1,6 @@
 # Veenna Community - run `make` or `make help`. Everything goes through bun.
 .DEFAULT_GOAL := help
-.PHONY: help install dev web mac mac-unsigned windows test test-api lint typecheck check api-keys api-build api clean
+.PHONY: help install dev web mac mac-unsigned windows linux test test-api lint typecheck check api-keys api-build api clean
 
 help: ## Show available commands
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z0-9_-]+:.*?## / {printf "  %-14s %s\n", $$1, $$2}' $(MAKEFILE_LIST)
@@ -22,6 +22,9 @@ mac-unsigned: ## Build the macOS installer, ad-hoc signed (local use)
 
 windows: ## Build the Windows installer
 	bun run electron:build:win
+
+linux: ## Build the Linux packages (.deb, .AppImage, .tar.gz); run on Linux
+	bun run electron:build:linux
 
 test: ## Renderer unit tests + main-process tests
 	bun run test:unit
