@@ -1,0 +1,231 @@
+/* Sidebar dictation controls (mic and format buttons). */
+
+/* Sidebar mic + format controls: larger hit target than form h-8 fields. */
+.nav-dictation-controls {
+  --nav-dictation-size: 2.75rem;
+  --nav-dictation-caret-col: 1.5rem;
+  --nav-dictation-icon-size: 1.25rem;
+  --nav-dictation-caret-icon-size: 0.875rem;
+}
+.nav-dictation-controls--large {
+  --nav-dictation-size: 3.25rem;
+  --nav-dictation-caret-col: 1.65rem;
+  --nav-dictation-icon-size: 1.375rem;
+  --nav-dictation-caret-icon-size: 0.875rem;
+}
+.nav-dictation-controls--rail {
+  /* Collapsed, the mic is a compact circle that still reads as the main control. */
+  --nav-dictation-size: 2.25rem;
+  --nav-dictation-caret-col: 1.25rem;
+  --nav-dictation-icon-size: 1rem;
+  --nav-dictation-caret-icon-size: 0.875rem;
+}
+.nav-dictation-controls--rail .nav-dictation-mic-group {
+  box-sizing: border-box;
+  width: var(--nav-dictation-size);
+  min-width: var(--nav-dictation-size);
+  height: var(--nav-dictation-size);
+  aspect-ratio: 1;
+  border-radius: 999px;
+}
+.nav-dictation-controls--rail .nav-dictation-mic-main {
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  border-radius: 999px;
+}
+.nav-dictation-pill {
+  width: var(--nav-dictation-size, 2.75rem);
+  height: var(--nav-dictation-size, 2.75rem);
+  min-width: var(--nav-dictation-size, 2.75rem);
+  border-radius: 999px;
+  background-color: var(--veenna-surface);
+  color: var(--veenna-fg);
+  border: 1px solid color-mix(in srgb, var(--veenna-fg) 5%, transparent);
+}
+[data-theme='light'] .nav-dictation-pill:not(.format-toggle-off) {
+  background-color: #ffffff;
+  color: var(--veenna-icon);
+  border-color: color-mix(in srgb, var(--veenna-fg) 5%, transparent);
+  box-shadow: var(--veenna-shadow-sm);
+}
+.nav-dictation-pill--compose {
+  color: var(--veenna-accent);
+}
+.nav-dictation-mic-group {
+  display: flex;
+  align-items: stretch;
+  height: var(--nav-dictation-size, 2.75rem);
+  border-radius: 999px;
+  background-color: var(--veenna-surface);
+  color: var(--veenna-fg);
+  border: 1px solid color-mix(in srgb, var(--veenna-fg) 5%, transparent);
+  overflow: hidden;
+}
+[data-theme='light'] .nav-dictation-mic-group:not(.format-toggle-group-off) {
+  background-color: #ffffff;
+  color: var(--veenna-icon);
+  border-color: color-mix(in srgb, var(--veenna-fg) 5%, transparent);
+  box-shadow: var(--veenna-shadow-sm);
+}
+
+/* Same as light: the pill is the colour of the page it sits on, set apart by its hairline border. */
+[data-theme='dark'] .nav-dictation-mic-group:not(.format-toggle-group-off),
+[data-theme='dark'] .nav-dictation-pill:not(.format-toggle-off),
+[data-theme='dark'] .nav-dictation-pill:hover:not(.format-toggle-off) {
+  background-color: var(--veenna-bg);
+  color: var(--veenna-icon);
+}
+[data-theme='dark']
+  .nav-dictation-mic-group:not(.format-toggle-group-off)
+  .nav-dictation-mic-main:hover:not(:disabled),
+[data-theme='dark']
+  .nav-dictation-mic-group:not(.format-toggle-group-off)
+  .nav-dictation-mic-mode:hover:not(:disabled) {
+  background-color: color-mix(in srgb, var(--veenna-fg) 4%, var(--veenna-bg));
+}
+[data-theme='dark'] .nav-dictation-mic-main:hover:not(:disabled),
+[data-theme='dark'] .nav-dictation-pill:hover:not(.format-toggle-off) {
+  color: var(--veenna-fg);
+}
+
+/* Selected (format on): inverted, like the active segment tab (dark theme only). */
+[data-theme='dark'] .nav-dictation-mic-group.format-toggle-group-on {
+  background-color: var(--veenna-tab-active-bg);
+  color: var(--veenna-tab-active-fg);
+  border-color: var(--veenna-tab-active-bg);
+  box-shadow: none;
+}
+[data-theme='dark'] .nav-dictation-mic-group.format-toggle-group-on .nav-dictation-mic-mode {
+  color: color-mix(in srgb, var(--veenna-tab-active-fg) 60%, transparent);
+  border-left-color: color-mix(in srgb, var(--veenna-tab-active-fg) 12%, transparent);
+}
+[data-theme='dark']
+  .nav-dictation-mic-group.format-toggle-group-on
+  .nav-dictation-mic-main:hover:not(:disabled),
+[data-theme='dark']
+  .nav-dictation-mic-group.format-toggle-group-on
+  .nav-dictation-mic-mode:hover:not(:disabled) {
+  background-color: transparent;
+  color: var(--veenna-tab-active-fg);
+}
+.nav-dictation-mic-group--compose {
+  color: var(--veenna-accent);
+}
+.nav-dictation-mic-group--compose .nav-dictation-mic-mode {
+  color: var(--veenna-accent);
+}
+.nav-dictation-mic-main,
+.nav-dictation-mic-mode {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  -webkit-app-region: no-drag;
+}
+.nav-dictation-mic-main {
+  width: var(--nav-dictation-size, 2.75rem);
+  min-width: var(--nav-dictation-size, 2.75rem);
+}
+.nav-dictation-controls .nav-dictation-pill svg,
+.nav-dictation-controls .nav-dictation-mic-main svg {
+  width: var(--nav-dictation-icon-size);
+  height: var(--nav-dictation-icon-size);
+}
+.nav-dictation-controls .nav-dictation-mic-mode svg {
+  width: var(--nav-dictation-caret-icon-size);
+  height: var(--nav-dictation-caret-icon-size);
+}
+.nav-dictation-mic-main:hover:not(:disabled),
+.nav-dictation-mic-mode:hover:not(:disabled) {
+  background-color: color-mix(in srgb, var(--veenna-fg) 6%, transparent);
+}
+[data-theme='light']
+  .nav-dictation-mic-group:not(.format-toggle-group-off)
+  .nav-dictation-mic-main:hover:not(:disabled),
+[data-theme='light']
+  .nav-dictation-mic-group:not(.format-toggle-group-off)
+  .nav-dictation-mic-mode:hover:not(:disabled) {
+  background-color: color-mix(in srgb, var(--veenna-fg) 4%, #ffffff);
+}
+[data-theme='light']
+  .nav-dictation-mic-group.format-toggle-group-off
+  .nav-dictation-mic-main:hover:not(:disabled),
+[data-theme='light']
+  .nav-dictation-mic-group.format-toggle-group-off
+  .nav-dictation-mic-mode:hover:not(:disabled) {
+  background-color: color-mix(in srgb, var(--veenna-fg) 4%, var(--veenna-row));
+}
+[data-theme='light'] .nav-dictation-mic-main:hover:not(:disabled) {
+  color: var(--veenna-fg);
+}
+[data-theme='light'] .nav-dictation-pill:hover:not(.format-toggle-off) {
+  background-color: #ffffff;
+  color: var(--veenna-fg);
+  box-shadow: var(--veenna-shadow-search);
+}
+
+/* Hovering the mic / format controls never changes their background. */
+[data-theme]
+  .nav-dictation-mic-group.nav-dictation-mic-group.nav-dictation-mic-group
+  .nav-dictation-mic-main:hover:not(:disabled),
+[data-theme]
+  .nav-dictation-mic-group.nav-dictation-mic-group.nav-dictation-mic-group
+  .nav-dictation-mic-mode:hover:not(:disabled) {
+  background-color: transparent;
+}
+.nav-dictation-mic-mode {
+  width: var(--nav-dictation-caret-col, 1.35rem);
+  min-width: var(--nav-dictation-caret-col, 1.35rem);
+  border-left: 1px solid color-mix(in srgb, var(--veenna-fg) 5%, transparent);
+  color: var(--veenna-icon-muted);
+}
+.nav-dictation-mic-main:focus-visible,
+.nav-dictation-mic-mode:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--veenna-focus-line);
+}
+[data-theme='dark'] .nav-dictation-pill {
+  background-color: var(--veenna-surface);
+}
+.nav-dictation-pill.format-toggle-off {
+  background-color: color-mix(in srgb, var(--veenna-bg) 82%, var(--veenna-divider) 18%);
+  box-shadow: none;
+}
+.nav-dictation-mic-group.format-toggle-group-on {
+  color: var(--veenna-accent);
+}
+.nav-dictation-mic-group.format-toggle-group-off {
+  background-color: color-mix(in srgb, var(--veenna-bg) 82%, var(--veenna-divider) 18%);
+  box-shadow: none;
+}
+[data-theme='light'] .nav-dictation-mic-group.format-toggle-group-off {
+  background-color: var(--veenna-row);
+  color: var(--veenna-icon);
+  border-color: transparent;
+}
+[data-theme='dark'] .nav-dictation-pill.format-toggle-off {
+  background-color: color-mix(in srgb, var(--veenna-bg) 72%, transparent);
+}
+[data-theme='dark'] .nav-dictation-mic-group.format-toggle-group-off {
+  background-color: color-mix(in srgb, var(--veenna-bg) 72%, transparent);
+}
+.veenna-main-chrome-tasks {
+  background-color: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+[data-theme='light'] .veenna-pane {
+  background-color: var(--veenna-surface);
+}
+[data-theme='light'] aside.veenna-nav-sidebar {
+  background-color: var(--veenna-sidebar);
+}
+[data-theme='light'] .veenna-main-chrome-tasks {
+  background-color: transparent;
+}

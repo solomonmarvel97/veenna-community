@@ -1,0 +1,188 @@
+/* Wallpaper scrim, blur and apply animation, plus loading skeleton shimmer. */
+
+/* Wallpaper scrim: solid tint only (no blur over live/static wallpaper). */
+.electron-wallpaper-scrim {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/*
+ * Soften the wallpaper image itself (not pane backdrop-filter - that flickers in Electron).
+ * Scale expands the layer so blur radius doesn't show empty edges.
+ */
+.veenna-wallpaper-blur-layer {
+  overflow: hidden;
+  transform: scale(var(--veenna-wallpaper-blur-scale, 1));
+  filter: blur(var(--veenna-wallpaper-blur, 0px));
+  transform-origin: center center;
+  will-change: filter, transform;
+}
+
+/*
+ * Cover wallpapers always from the image center so applied photos
+ * don't pin to the top (or a side) of the frame.
+ */
+.veenna-wallpaper-cover {
+  object-fit: cover;
+  object-position: center center;
+}
+.wallpaper-blur-slider {
+  appearance: none;
+  height: 1.25rem;
+  cursor: pointer;
+  background: transparent;
+}
+.wallpaper-blur-slider:disabled {
+  cursor: not-allowed;
+}
+.wallpaper-blur-slider::-webkit-slider-runnable-track {
+  height: 0.25rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--veenna-fg) 12%, transparent);
+}
+.wallpaper-blur-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 0.875rem;
+  height: 0.875rem;
+  margin-top: -0.3125rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--veenna-fg) 18%, transparent);
+  background: var(--veenna-surface);
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--veenna-fg) 16%, transparent);
+}
+.wallpaper-blur-slider::-moz-range-track {
+  height: 0.25rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--veenna-fg) 12%, transparent);
+}
+.wallpaper-blur-slider::-moz-range-thumb {
+  width: 0.875rem;
+  height: 0.875rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--veenna-fg) 18%, transparent);
+  background: var(--veenna-surface);
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--veenna-fg) 16%, transparent);
+}
+.wallpaper-bg-image {
+  animation: wallpaper-bg-settle 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes wallpaper-bg-settle {
+  from {
+    opacity: 0.55;
+    transform: scale(1.045);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Brief full-bleed settle when a wallpaper is applied from the picker. */
+.wallpaper-apply-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 130;
+  pointer-events: none;
+  animation: wallpaper-apply-overlay 780ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.wallpaper-apply-overlay__image {
+  width: 100%;
+  height: 100%;
+  animation: wallpaper-apply-image 780ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+@keyframes wallpaper-apply-overlay {
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  58% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes wallpaper-apply-image {
+  0% {
+    transform: scale(1.12);
+    filter: brightness(1.12);
+  }
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wallpaper-bg-image,
+  .wallpaper-apply-overlay {
+    animation-duration: 220ms;
+  }
+  .wallpaper-apply-overlay__image {
+    animation: none;
+  }
+}
+.electron-frame .electron-wallpaper-scrim {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+[data-theme='light'] .veenna-divide {
+  border-color: var(--veenna-divider) !important;
+}
+[data-theme='dark'] .veenna-divide {
+  border-color: var(--veenna-divider) !important;
+}
+
+/*
+ * Theme-aware skeleton shimmer - narrow band, stagger via --skeleton-delay.
+ *
+ * Every bone also fades in over its first moments. A load that finishes almost
+ * at once then shows next to nothing instead of a hard flash of grey bars, and
+ * a slow one still has its full skeleton up within a couple of frames.
+ */
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--veenna-skeleton-base) 0%,
+    var(--veenna-skeleton-base) 38%,
+    var(--veenna-skeleton-shine) 50%,
+    var(--veenna-skeleton-base) 62%,
+    var(--veenna-skeleton-base) 100%
+  );
+  background-size: 400% 100%;
+  animation:
+    skeleton-enter 220ms ease-out 60ms backwards,
+    skeleton-loading 2s ease-in-out var(--skeleton-delay, 0ms) infinite;
+}
+.skeleton-static {
+  background-color: var(--veenna-skeleton-base);
+  opacity: 0.72;
+  animation: skeleton-enter 220ms ease-out 60ms backwards;
+}
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-shimmer,
+  .skeleton-static {
+    animation: none;
+  }
+  .skeleton-shimmer {
+    background: var(--veenna-skeleton-base);
+  }
+}
+
+/* No `to` frame: each bone settles at its own opacity (static bones sit at 0.72). */
+@keyframes skeleton-enter {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}

@@ -1,0 +1,120 @@
+/* Shared transitions, animations-off switch, compositor rules and recorder buttons. */
+
+/* Mobile nav drawer / sheet lock - scroll rules merged into veenna-chrome-locked group above */
+
+/* Shared fade transition */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.25s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: 1.25;
+}
+h1 {
+  font-size: 24px;
+}
+h2 {
+  font-size: 20px;
+}
+h3 {
+  font-size: 18px;
+}
+h4 {
+  font-size: 16px;
+}
+h5 {
+  font-size: 15px;
+}
+h6 {
+  font-size: 14px;
+}
+@media (max-width: 1023px) {
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fade-enter-active,
+  .fade-leave-active {
+    transition-duration: 0.01ms !important;
+  }
+}
+html[data-reduced-motion='true'] .fade-enter-active,
+html[data-reduced-motion='true'] .fade-leave-active,
+html[data-motion-dev='off'] .modal-fade-enter-active,
+html[data-motion-dev='off'] .modal-fade-leave-active,
+html[data-motion-dev='off'] .fade-enter-active,
+html[data-motion-dev='off'] .fade-leave-active {
+  transition-duration: 0.01ms !important;
+}
+
+/*
+ * Animations switch off: every CSS animation and transition lands on its final state.
+ * Worker characters are exempt: they are how a worker shows what it is doing, and
+ * they stop only for the OS reduce-motion setting.
+ *
+ * Animations keep a tiny duration because `animationend` handlers wait on them.
+ * Transitions are off outright: a tiny duration here is still a real transition
+ * of `all` on every element on the page, started on each change, and that cost
+ * opening a chat an extra frame or two.
+ */
+html[data-animations='off'] *:not(.chr, .chr *),
+html[data-animations='off'] *:not(.chr *)::before,
+html[data-animations='off'] *:not(.chr *)::after {
+  animation-duration: 0.01ms !important;
+  animation-delay: 0s !important;
+  animation-iteration-count: 1 !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+
+/* A spinner is how the app says it is working, not decoration, so that switch leaves it turning. */
+html[data-animations='off']:not([data-reduced-motion='true']) .animate-spin {
+  animation-duration: 1s !important;
+  animation-iteration-count: infinite !important;
+}
+
+/*
+ * App-wide compositor stability: never use live backdrop-filter.
+ * Covers first-party UI, vendor bundles (notes editor, Jenny AI, notetaker dock),
+ * and any Tailwind backdrop-blur utilities - prevents shimmer/flicker over wallpaper,
+ * animated waveforms, canvas graphs, and stacked overlays (Chromium/Safari).
+ */
+body *,
+body *::before,
+body *::after {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/*
+ * Mobile dictation bar floats over scrolling note/task text, not an animated
+ * layer, so it's safe to frost - the small gaps around its three pills no
+ * longer let scrolling text read through sharp.
+ */
+.mobile-dictation-bar-glass {
+  backdrop-filter: blur(16px) saturate(1.15) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.15) !important;
+}
+
+/* Recorder buttons sit on the liquid pill: a touch lighter than it, in both themes. */
+[data-theme='dark'] .dictation-recorder-btn {
+  background-color: #353535;
+}
+[data-theme='dark'] .dictation-recorder-btn:hover:not(:disabled) {
+  background-color: #404040;
+}
+
+/* Cancel / finish follow the expanded pill's curve rather than being full circles. */
+.dictation-recorder-btn.dictation-recorder-btn {
+  border-radius: 999px;
+}

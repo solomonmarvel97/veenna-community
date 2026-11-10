@@ -1,0 +1,345 @@
+/* Base layer: design tokens (light and dark), element defaults, themes. */
+
+@layer base {
+  button:not(:disabled),
+  a[href],
+  summary,
+  select:not(:disabled),
+  input[type='checkbox']:not(:disabled),
+  input[type='radio']:not(:disabled),
+  input[type='submit']:not(:disabled),
+  input[type='button']:not(:disabled),
+  label[for] {
+    cursor: pointer;
+  }
+  :root {
+    --radius: 16px;
+    --background: 0 0% 100%;
+    --foreground: 240 3% 12%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 3% 12%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 3% 12%;
+    --primary: 240 3% 12%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 240 3% 12%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 240 2% 53%;
+    --accent: 0 0% 94%;
+    --accent-foreground: 240 3% 12%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 0 0% 70%;
+  }
+  .dark {
+    --background: 0 0% 7%;
+    --foreground: 0 0% 96%;
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 96%;
+    --popover: 0 0% 11%;
+    --popover-foreground: 0 0% 96%;
+    --primary: 0 0% 100%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 96%;
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 64%;
+    --accent: 0 0% 14%;
+    --accent-foreground: 0 0% 96%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 16%;
+    --input: 0 0% 16%;
+    --ring: 0 0% 64%;
+  }
+}
+:root {
+  --veenna-font:
+    'Geist', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --veenna-z-modal: 110;
+  --veenna-z-alert-dialog: 200;
+  --veenna-z-modal-backdrop: 100;
+  --veenna-z-detail-sidebar: 40;
+  --veenna-z-dictation-fab: 30;
+  --veenna-overlay: rgba(0, 0, 0, 0.6);
+  --veenna-pane-footer-height: 3rem;
+  --veenna-main-top-padding: 42px;
+  --veenna-main-bottom-padding: 42px;
+  --veenna-modal-width: 32rem;
+  --veenna-modal-width-wide: 42rem;
+  /* Header button group tones: one hue per button so each reads at a glance */
+  --seg-sky: #0284c7;
+  --seg-violet: #7c3aed;
+  --seg-emerald: #059669;
+  --seg-amber: #d97706;
+  --seg-rose: #e11d48;
+  --seg-teal: #0d9488;
+  /* Fallback tokens before data-theme resolves (mirrors light theme) */
+  --veenna-bg: #ffffff;
+  --veenna-surface: #ffffff;
+  --veenna-sidebar: #f5f5f5;
+  --veenna-nav-card: #ededed;
+  --veenna-nav-glass: 100%;
+  --veenna-panel: #f5f5f5;
+  --veenna-frame: #ffffff;
+  --veenna-frame-border: rgba(0, 0, 0, 0.08);
+  --veenna-frame-gap: 4px;
+  --veenna-frame-radius: 20px;
+  --veenna-card: #ffffff;
+  --veenna-accent: #18181b;
+  --veenna-heatmap-accent: #39b979;
+  --veenna-accent-fg: #ffffff;
+  --veenna-accent-soft: rgba(0, 0, 0, 0.06);
+  --veenna-tab-active-bg: #18181b;
+  --veenna-tab-active-fg: #ffffff;
+  --veenna-fg: #18181b;
+  --veenna-muted: #71717a;
+  --veenna-secondary: #3f3f46;
+  --veenna-icon: #18181b;
+  --veenna-icon-muted: #3f3f46;
+  /* Note icon colors: muted enough to sit beside text in either theme. */
+  --note-icon-gray: #787774;
+  --note-icon-brown: #9f6b53;
+  --note-icon-orange: #d9730d;
+  --note-icon-yellow: #cb912f;
+  --note-icon-green: #448361;
+  --note-icon-blue: #337ea9;
+  --note-icon-purple: #9065b0;
+  --note-icon-pink: #c14c8a;
+  --note-icon-red: #d44c47;
+  --veenna-border: rgba(0, 0, 0, 0.1);
+  --veenna-divider: rgba(0, 0, 0, 0.07);
+  --veenna-sidebar-border: rgba(0, 0, 0, 0.08);
+  --veenna-focus-line: rgba(0, 0, 0, 0.16);
+  --veenna-focus-subtle: rgba(0, 0, 0, 0.08);
+  --veenna-pane-glass: 100%;
+  --veenna-sidebar-glass: 100%;
+  --veenna-main-glass: 100%;
+  --veenna-main-content-glass: 100%;
+  --veenna-productivity-glass: 100%;
+  --veenna-wallpaper-scrim: 46%;
+  --veenna-wallpaper-blur: 0px;
+  --veenna-wallpaper-blur-scale: 1;
+
+  --nav-plan-badge-bg: #ffffff;
+  --nav-plan-badge-bg-hover: #ededed;
+  --nav-plan-badge-fg: #18181b;
+  --nav-plan-badge-label: rgba(24, 24, 27, 0.58);
+  --nav-plan-badge-icon-bg: rgba(24, 24, 27, 0.06);
+}
+[data-theme='dark'] {
+  --seg-sky: #38bdf8;
+  --seg-violet: #a78bfa;
+  --seg-emerald: #34d399;
+  --seg-amber: #fbbf24;
+  --seg-rose: #fb7185;
+  --seg-teal: #2dd4bf;
+  --veenna-bg: #121212;
+  --veenna-surface: #1a1a1a;
+  --veenna-sidebar: #0e0e0e;
+  --veenna-nav-card: #0a0a0a;
+  --veenna-nav-glass: 88%;
+  --veenna-panel: #1e1e1e;
+  --veenna-frame: #0e0e0e;
+  --veenna-frame-border: rgba(255, 255, 255, 0.07);
+  --veenna-card: #121212;
+  --veenna-accent: #ffffff;
+  --veenna-accent-fg: #0a0a0a;
+  --veenna-accent-soft: rgba(255, 255, 255, 0.12);
+  --veenna-tab-active-bg: #ffffff;
+  --veenna-tab-active-fg: #171717;
+  --veenna-border: rgba(255, 255, 255, 0.1);
+  --veenna-divider: rgba(255, 255, 255, 0.06);
+  --veenna-sidebar-border: rgba(255, 255, 255, 0.09);
+  --veenna-muted: #b4b4bc;
+  --veenna-secondary: #e4e4e7;
+  --veenna-icon: #d4d4d8;
+  --veenna-icon-muted: #71717a;
+  --note-icon-gray: #9b9b9b;
+  --note-icon-brown: #ba856f;
+  --note-icon-orange: #c77d48;
+  --note-icon-yellow: #ca9849;
+  --note-icon-green: #529e72;
+  --note-icon-blue: #5e87c9;
+  --note-icon-purple: #9d68d3;
+  --note-icon-pink: #d15796;
+  --note-icon-red: #df5452;
+  --veenna-ring: #52525b;
+  --veenna-ring-hover: rgba(255, 255, 255, 0.24);
+  --veenna-focus-line: rgba(255, 255, 255, 0.2);
+  --veenna-focus-subtle: rgba(255, 255, 255, 0.08);
+  --veenna-select-line: rgba(255, 255, 255, 0.3);
+  --veenna-star: #71717a;
+  --veenna-star-active: #fbbf24;
+  --veenna-row: rgba(255, 255, 255, 0.06);
+  --veenna-row-hover: rgba(255, 255, 255, 0.09);
+  /* Opaque: the gooey blob's contrast filter drops a translucent fill entirely. */
+  --veenna-liquid-fill: #282828;
+  /* Idle mic + send: no container behind them in dark. */
+  --veenna-liquid-idle-fill: transparent;
+  --veenna-sidebar-row-hover: color-mix(in srgb, var(--veenna-fg) 11%, transparent);
+  --veenna-fg: #f4f4f5;
+  --veenna-scrollbar: rgba(255, 255, 255, 0.18);
+  --veenna-search-bg: #1c1c1c;
+  --veenna-search-border: rgba(255, 255, 255, 0.08);
+  /* Translucent, so a bone reads on the page, a card, a sidebar or a row fill alike. */
+  --veenna-skeleton-base: rgba(255, 255, 255, 0.065);
+  --veenna-skeleton-shine: rgba(255, 255, 255, 0.13);
+  --veenna-shadow-sm: none;
+  --veenna-shadow-search: none;
+  /* Soft lift for things that float over the page, like the Weave composer. */
+  --veenna-shadow-float: 0 8px 24px rgba(0, 0, 0, 0.45), 0 2px 6px rgba(0, 0, 0, 0.35);
+  --veenna-pane-glass: 90%;
+  --veenna-sidebar-glass: 97%;
+  --veenna-main-glass: 93%;
+  --veenna-main-content-glass: 82%;
+  --veenna-productivity-glass: 68%;
+  --veenna-wallpaper-scrim: 46%;
+
+  /* shadcn bridge: keep portaled popovers/selects in sync with veenna dark palette */
+  --background: 0 0% 7%;
+  --foreground: 0 0% 96%;
+  --card: 0 0% 10%;
+  --card-foreground: 0 0% 96%;
+  --popover: 0 0% 11%;
+  --popover-foreground: 0 0% 96%;
+  --primary: 0 0% 100%;
+  --primary-foreground: 0 0% 4%;
+  --secondary: 0 0% 12%;
+  --secondary-foreground: 0 0% 96%;
+  --muted: 0 0% 12%;
+  --muted-foreground: 0 0% 55%;
+  --accent: 0 0% 14%;
+  --accent-foreground: 0 0% 96%;
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 0 0% 100% / 0.12;
+  --input: 0 0% 100% / 0.12;
+  --ring: 0 0% 100% / 0.18;
+
+  --nav-plan-badge-bg: #121212;
+  --nav-plan-badge-bg-hover: #1c1c1c;
+  --nav-plan-badge-fg: #fafafa;
+  --nav-plan-badge-label: rgba(250, 250, 250, 0.62);
+  --nav-plan-badge-icon-bg: rgba(255, 255, 255, 0.08);
+}
+[data-theme='light'] {
+  /*
+   * Neutral light, after macOS Mail: white content, soft gray sidebar,
+   * dark charcoal icons/text by default (not washed-out muted).
+   */
+  --veenna-bg: #ffffff;
+  --veenna-surface: #ffffff;
+  --veenna-sidebar: #f5f5f5;
+  --veenna-nav-card: #ededed;
+  --veenna-nav-glass: 100%;
+  --veenna-panel: #f5f5f5;
+  --veenna-frame: #ffffff;
+  --veenna-frame-border: rgba(0, 0, 0, 0.08);
+  --veenna-card: #ffffff;
+  --veenna-accent: #18181b;
+  --veenna-accent-fg: #ffffff;
+  --veenna-accent-soft: rgba(0, 0, 0, 0.06);
+  /* The selected tab inverts, as in dark: white-on-white can't be seen. */
+  --veenna-tab-active-bg: #18181b;
+  --veenna-tab-active-fg: #ffffff;
+  --veenna-border: rgba(0, 0, 0, 0.1);
+  --veenna-divider: rgba(0, 0, 0, 0.07);
+  --veenna-sidebar-border: rgba(0, 0, 0, 0.08);
+  --veenna-muted: #71717a;
+  --veenna-secondary: #3f3f46;
+  --veenna-icon: #18181b;
+  --veenna-icon-muted: #3f3f46;
+  --note-icon-gray: #787774;
+  --note-icon-brown: #9f6b53;
+  --note-icon-orange: #d9730d;
+  --note-icon-yellow: #cb912f;
+  --note-icon-green: #448361;
+  --note-icon-blue: #337ea9;
+  --note-icon-purple: #9065b0;
+  --note-icon-pink: #c14c8a;
+  --note-icon-red: #d44c47;
+  --veenna-ring: #dcdcdc;
+  --veenna-ring-hover: rgba(0, 0, 0, 0.2);
+  --veenna-focus-line: rgba(0, 0, 0, 0.16);
+  --veenna-focus-subtle: rgba(0, 0, 0, 0.08);
+  --veenna-select-line: rgba(0, 0, 0, 0.26);
+  --veenna-star: #a1a1aa;
+  --veenna-star-active: #d97706;
+  --veenna-row: #ebebeb;
+  --veenna-row-hover: #ebebeb;
+  --veenna-liquid-fill: #ebebeb;
+  /* Idle mic + send: separate circles, same as dark. */
+  --veenna-liquid-idle-fill: transparent;
+  --veenna-sidebar-row-hover: #ebebeb;
+  --veenna-fg: #18181b;
+  --veenna-scrollbar: rgba(0, 0, 0, 0.2);
+  --veenna-search-bg: #f0f0f0;
+  --veenna-search-border: rgba(0, 0, 0, 0.06);
+  /* Neutral translucent tint; the shine lifts toward the page. */
+  --veenna-skeleton-base: rgba(0, 0, 0, 0.07);
+  --veenna-skeleton-shine: rgba(0, 0, 0, 0.03);
+  --veenna-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --veenna-shadow-search: 0 1px 3px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  --veenna-shadow-float: 0 8px 24px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.05);
+  --veenna-pane-glass: 100%;
+  --veenna-sidebar-glass: 100%;
+  --veenna-main-glass: 100%;
+  --veenna-main-content-glass: 100%;
+  --veenna-productivity-glass: 100%;
+  --veenna-wallpaper-scrim: 46%;
+
+  --nav-plan-badge-bg: #ffffff;
+  --nav-plan-badge-bg-hover: #ededed;
+  --nav-plan-badge-fg: #18181b;
+  --nav-plan-badge-label: rgba(24, 24, 27, 0.58);
+  --nav-plan-badge-icon-bg: rgba(24, 24, 27, 0.06);
+
+  --background: 0 0% 100%;
+  --foreground: 240 5% 10%;
+  --card: 0 0% 100%;
+  --card-foreground: 240 5% 10%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 240 5% 10%;
+  --primary: 240 5% 10%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 0 0% 96%;
+  --secondary-foreground: 240 5% 10%;
+  --muted: 0 0% 96%;
+  --muted-foreground: 240 4% 46%;
+  --accent: 0 0% 94%;
+  --accent-foreground: 240 5% 10%;
+  --border: 0 0% 90%;
+  --input: 0 0% 90%;
+  --ring: 0 0% 70%;
+}
+html,
+body,
+#app {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  overscroll-behavior: none;
+  font-family: var(--veenna-font);
+  font-feature-settings: 'cv11', 'ss01';
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--veenna-bg);
+  color: var(--veenna-fg);
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+html[data-veenna-surface='dictation-hud'],
+html[data-veenna-surface='dictation-hud'] body,
+html[data-veenna-surface='dictation-hud'] #app {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+* {
+  box-sizing: border-box;
+}

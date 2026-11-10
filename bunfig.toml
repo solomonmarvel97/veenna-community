@@ -1,0 +1,4 @@
+[install]
+# Flat, npm-shaped node_modules: electron-builder ships node_modules unpacked
+# (asar: false) and the STT/embedder worker threads resolve modules from real files.
+linker = "hoisted"

@@ -1,0 +1,102 @@
+/*
+ * Todo: the list column, the detail pane, the completion ring and the add bar.
+ * Same rules as the full Veenna app's tasks page.
+ */
+
+.tasks-shell {
+  position: relative;
+  height: 100%;
+  min-height: 0;
+}
+
+.veenna-detail-sidebar {
+  height: 100%;
+  max-height: 100%;
+}
+
+.veenna-list-pane {
+  background-color: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.veenna-with-wallpaper .veenna-detail-sidebar.veenna-pane,
+.electron-frame.veenna-with-wallpaper .veenna-detail-sidebar.veenna-pane {
+  background-color: var(--veenna-surface);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+[data-theme='dark'] .veenna-with-wallpaper .veenna-detail-sidebar.veenna-pane,
+[data-theme='dark'] .electron-frame.veenna-with-wallpaper .veenna-detail-sidebar.veenna-pane {
+  background-color: var(--veenna-bg);
+}
+
+.veenna-task-ring:focus-visible,
+.veenna-task-ring:focus,
+button.veenna-task-ring:focus-visible {
+  box-shadow: none;
+  outline: none;
+}
+
+/* Task completion ring */
+.veenna-task-ring {
+  border: 1px solid var(--veenna-ring);
+  transition:
+    border-color 0.08s ease,
+    background-color 0.08s ease;
+}
+
+.veenna-task-ring:hover:not(.veenna-task-ring--done) {
+  border-color: var(--veenna-ring-hover);
+}
+
+.veenna-task-ring--done {
+  border-color: var(--veenna-accent);
+  background-color: var(--veenna-accent);
+  color: var(--veenna-accent-fg);
+  transition: none;
+}
+
+.veenna-list-pane .pane-footer {
+  height: auto;
+  min-height: var(--veenna-pane-footer-height);
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom, 0px));
+}
+
+.veenna-add-task-bar {
+  box-sizing: border-box;
+  width: 100%;
+  background-color: var(--veenna-search-bg);
+  border: 1px solid color-mix(in srgb, var(--veenna-fg) 15%, transparent);
+  border-radius: calc(var(--radius) - 4px); /* rounded-md */
+}
+
+[data-theme='dark'] .veenna-add-task-bar {
+  background-color: var(--veenna-bg);
+}
+
+.veenna-add-task-bar:focus-within {
+  outline: none;
+  box-shadow: none;
+}
+
+.veenna-add-task-bar input:focus,
+.veenna-add-task-bar input:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+}
+
+/* Mobile detail full-screen slide */
+.mobile-detail-enter-active,
+.mobile-detail-leave-active {
+  transition:
+    transform 0.28s cubic-bezier(0.32, 0.72, 0, 1),
+    opacity 0.28s ease;
+}
+.mobile-detail-enter-from,
+.mobile-detail-leave-to {
+  transform: translateX(100%);
+  opacity: 0.98;
+}

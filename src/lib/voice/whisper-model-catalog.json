@@ -1,0 +1,59 @@
+[
+  {
+    "id": "ggml/whisper-base-q5_1",
+    "label": "Whisper Base",
+    "provider": "OpenAI",
+    "family": "whisper",
+    "tier": "light",
+    "sizeLabel": "~60 MB",
+    "description": "Fastest: runs on your Mac's GPU and ships with the app, so dictation works the moment it is installed.",
+    "bundled": true,
+    "huggingFaceUrl": "https://huggingface.co/ggerganov/whisper.cpp",
+    "runtime": "whisper-cpp",
+    "file": "ggml-base-q5_1.bin"
+  },
+  {
+    "id": "Xenova/whisper-tiny",
+    "label": "Whisper Tiny",
+    "provider": "OpenAI",
+    "family": "whisper",
+    "tier": "light",
+    "sizeLabel": "~40 MB",
+    "description": "Small multilingual Whisper that runs anywhere. Ships with the app for computers that cannot run Whisper Base.",
+    "bundled": true,
+    "huggingFaceUrl": "https://huggingface.co/Xenova/whisper-tiny"
+  },
+  {
+    "id": "Xenova/whisper-small",
+    "label": "Whisper Small",
+    "provider": "OpenAI",
+    "family": "whisper",
+    "tier": "balanced",
+    "sizeLabel": "~240 MB",
+    "description": "Higher-accuracy multilingual Whisper for everyday dictation.",
+    "bundled": false,
+    "huggingFaceUrl": "https://huggingface.co/Xenova/whisper-small"
+  },
+  {
+    "id": "Xenova/whisper-medium",
+    "label": "Whisper Medium",
+    "provider": "OpenAI",
+    "family": "whisper",
+    "tier": "balanced",
+    "sizeLabel": "~740 MB",
+    "description": "High-accuracy multilingual Whisper. Slower but very capable.",
+    "bundled": false,
+    "huggingFaceUrl": "https://huggingface.co/Xenova/whisper-medium"
+  },
+  {
+    "id": "Xenova/whisper-large-v3",
+    "label": "Whisper Large",
+    "provider": "OpenAI",
+    "family": "whisper",
+    "tier": "large",
+    "sizeLabel": "~1.5 GB",
+    "description": "Whisper large v3 - best open multilingual quality. Heavy download and RAM.",
+    "bundled": false,
+    "huggingFaceUrl": "https://huggingface.co/Xenova/whisper-large-v3"
+  }
+]

@@ -1,0 +1,128 @@
+/* Page scroll layout, safe areas and pane footers. */
+
+/* Safe areas (iOS notch / home indicator) */
+.safe-top {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+/* RouterView constrains height; page shells scroll inside */
+.veenna-main-scroll {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1 1 auto;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+.veenna-main-scroll > * {
+  flex: 1 1 0%;
+  min-height: 0;
+  max-height: 100%;
+}
+
+/* Top hub tab strips must stay content-sized, not share flex height with the page.
+ * Opaque face so wallpaper glass on the tasks chrome does not bleed through the tabs. */
+.veenna-main-scroll > .productivity-top-tabs,
+.veenna-main-scroll > .dictation-top-tabs {
+  flex: 0 0 auto;
+  max-height: none;
+  background-color: var(--veenna-surface);
+}
+.veenna-main-scroll > .veenna-page-scroll,
+.veenna-main-scroll > .veenna-scroll-hidden.overflow-y-auto {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* RouterView fallthrough can merge veenna-main-scroll onto the page shell - keep scroll alive */
+.veenna-main-scroll.veenna-page-scroll,
+.veenna-main-scroll.veenna-scroll-hidden.overflow-y-auto {
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+/*
+ * Fill workspaces (Tasks / Gmail / Notes): the rounded main chrome must stay fixed.
+ * Never promote the page shell to a vertical scroller - only inner list/detail panes scroll.
+ */
+.veenna-main-chrome-tasks,
+.veenna-main-chrome:has(.veenna-productivity-shell) {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+.veenna-main-chrome-tasks .veenna-main-scroll,
+.veenna-main-chrome:has(.veenna-productivity-shell) .veenna-main-scroll {
+  overflow: hidden !important;
+}
+.veenna-main-chrome-tasks .veenna-scroll-hidden.overflow-hidden,
+.veenna-main-chrome:has(.veenna-productivity-shell) .veenna-scroll-hidden.overflow-hidden,
+.veenna-main-chrome-tasks .veenna-productivity-shell,
+.veenna-main-chrome:has(.veenna-productivity-shell) .veenna-productivity-shell {
+  overflow: hidden !important;
+  overscroll-behavior: none;
+}
+
+/* Mobile top bar overlays main content; breathing lives on the scroll container (padding, not margin) */
+@media (max-width: 1023px) {
+  .veenna-main-chrome {
+    --veenna-mobile-top-breathing: 0.75rem;
+    --veenna-mobile-bottom-breathing: 1.5rem;
+    --veenna-dictation-bar-clearance: 5.5rem;
+  }
+  html.mobile-dictation-bar-collapsed .veenna-main-chrome {
+    --veenna-dictation-bar-clearance: 2.5rem;
+  }
+  .veenna-main-chrome--mobile-fab .veenna-page-scroll,
+  .veenna-main-chrome--mobile-fab .veenna-scroll-hidden.overflow-y-auto {
+    --veenna-mobile-bottom-breathing: var(--veenna-dictation-bar-clearance);
+  }
+  .veenna-main-chrome--mobile-fab .veenna-main-scroll > .veenna-page-scroll,
+  .veenna-main-chrome--mobile-fab .veenna-main-scroll > .veenna-scroll-hidden.overflow-y-auto {
+    padding-bottom: calc(var(--veenna-dictation-bar-clearance) + env(safe-area-inset-bottom, 0px));
+    scroll-padding-bottom: calc(
+      var(--veenna-dictation-bar-clearance) + env(safe-area-inset-bottom, 0px)
+    );
+  }
+  .veenna-main-scroll > .veenna-page-scroll,
+  .veenna-main-scroll > .veenna-scroll-hidden.overflow-y-auto {
+    padding-top: var(--veenna-mobile-top-breathing);
+    padding-bottom: calc(var(--veenna-mobile-bottom-breathing) + env(safe-area-inset-bottom, 0px));
+    scroll-padding-bottom: calc(
+      var(--veenna-mobile-bottom-breathing) + env(safe-area-inset-bottom, 0px)
+    );
+  }
+
+  /* Home hero is full-bleed; mobile nav overlays the top of the greeting */
+  .veenna-main-scroll > .home-page-shell.veenna-page-scroll,
+  .veenna-main-scroll > .home-page-shell.veenna-scroll-hidden.overflow-y-auto {
+    padding-top: 0 !important;
+  }
+}
+@media (min-width: 1024px) {
+  .veenna-main-scroll {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Pane footers: fixed height so all columns align on one baseline */
+.pane-footer {
+  box-sizing: border-box;
+  height: var(--veenna-pane-footer-height);
+  flex-shrink: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* Sidebar footer should share the sidebar surface, not a second pane fill */
+aside.veenna-pane > .pane-footer {
+  background-color: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}

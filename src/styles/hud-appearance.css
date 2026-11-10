@@ -1,0 +1,146 @@
+/* Shared HUD icons - motion disabled (static only). */
+
+.hud-icon,
+.hud-icon *,
+.hud-icon *::before,
+.hud-icon *::after {
+  animation: none !important;
+  transition: none !important;
+}
+
+.hud-icon__dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.18rem;
+}
+
+.hud-icon__dot {
+  width: 0.28rem;
+  height: 0.28rem;
+  border-radius: 9999px;
+  background: currentColor;
+}
+
+.hud-icon__dots--animated .hud-icon__dot {
+  opacity: 0.92;
+}
+
+.hud-icon__ring {
+  width: 0.95rem;
+  height: 0.95rem;
+  border-radius: 9999px;
+  border: 1.5px solid currentColor;
+  opacity: 0.72;
+}
+
+.hud-icon__ring--animated {
+  opacity: 0.72;
+}
+
+.hud-icon__mic {
+  color: currentColor;
+}
+
+.hud-icon__mic--animated {
+  opacity: 0.88;
+}
+
+.hud-icon__spark-orbit {
+  position: relative;
+  width: 1rem;
+  height: 1rem;
+}
+
+.hud-icon__spark-orbit-core {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 0.3rem;
+  height: 0.3rem;
+  border-radius: 9999px;
+  background: currentColor;
+  opacity: 0.35;
+}
+
+.hud-icon__spark-orbit-satellite {
+  position: absolute;
+  inset: 0;
+}
+
+.hud-icon__spark-orbit-satellite::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 0.28rem;
+  height: 0.28rem;
+  margin-left: -0.14rem;
+  border-radius: 9999px;
+  background: currentColor;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.35);
+}
+
+.hud-icon__orbit-dot {
+  position: relative;
+  width: 1rem;
+  height: 1rem;
+}
+
+.hud-icon__orbit-dot-track {
+  position: absolute;
+  inset: 0.12rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.hud-icon__orbit-dot-satellite {
+  position: absolute;
+  inset: 0;
+}
+
+.hud-icon__orbit-dot-satellite::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 0.26rem;
+  height: 0.26rem;
+  margin-left: -0.13rem;
+  border-radius: 9999px;
+  background: currentColor;
+}
+
+.hud-icon__scan-bar {
+  position: relative;
+  width: 1rem;
+  height: 0.35rem;
+  overflow: hidden;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.hud-icon__scan-bar::after {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  left: 32%;
+  width: 35%;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, transparent, currentColor, transparent);
+}
+
+.hud-icon__spinner-static {
+  opacity: 0.88;
+}
+
+@keyframes hud-spinner-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.hud-icon .hud-icon__spinner-spin {
+  opacity: 0.95;
+  animation: hud-spinner-spin 0.85s linear infinite !important;
+}

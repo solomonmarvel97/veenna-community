@@ -1,0 +1,279 @@
+/* Modal and overlay surfaces, backdrop-filter freezing, frosted reading surfaces. */
+
+/* Modal shell - dim only; blur on stacked overlays causes compositor shimmer. */
+.veenna-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: color-mix(in srgb, var(--veenna-overlay) 88%, transparent);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+body.veenna-chrome-locked,
+body.veenna-modal-open,
+body.dictation-overlay-open,
+body.veenna-nav-open,
+body.veenna-search-open {
+  overflow: hidden;
+  touch-action: none;
+}
+
+/*
+ * While any overlay is open, freeze backdrop-filter on page chrome and floating
+ * blur utilities so animated content underneath cannot trigger compositor flicker.
+ */
+body.veenna-chrome-locked .veenna-with-wallpaper aside.veenna-nav-sidebar,
+body.veenna-chrome-locked .veenna-with-wallpaper main.veenna-main-chrome:not(.veenna-main-chrome-tasks),
+body.veenna-chrome-locked .veenna-with-wallpaper main.veenna-pane,
+body.veenna-chrome-locked .veenna-with-wallpaper .analytics-productivity-panel .analytics-card,
+body.veenna-chrome-locked .electron-wallpaper-scrim,
+body.veenna-chrome-locked .veenna-modal-backdrop,
+body.veenna-chrome-locked [class*='backdrop-blur'],
+body.veenna-modal-open .veenna-with-wallpaper aside.veenna-nav-sidebar,
+body.veenna-modal-open .veenna-with-wallpaper main.veenna-main-chrome:not(.veenna-main-chrome-tasks),
+body.veenna-modal-open .veenna-with-wallpaper main.veenna-pane,
+body.veenna-modal-open .veenna-with-wallpaper .analytics-productivity-panel .analytics-card,
+body.veenna-modal-open .electron-wallpaper-scrim,
+body.veenna-modal-open .veenna-modal-backdrop,
+body.veenna-modal-open [class*='backdrop-blur'],
+body.dictation-overlay-open .veenna-with-wallpaper aside.veenna-nav-sidebar,
+body.dictation-overlay-open .veenna-with-wallpaper main.veenna-main-chrome:not(.veenna-main-chrome-tasks),
+body.dictation-overlay-open .veenna-with-wallpaper main.veenna-pane,
+body.dictation-overlay-open .veenna-with-wallpaper .analytics-productivity-panel .analytics-card,
+body.dictation-overlay-open .electron-wallpaper-scrim,
+body.dictation-overlay-open .veenna-modal-backdrop,
+body.dictation-overlay-open [class*='backdrop-blur'],
+body.veenna-nav-open [class*='backdrop-blur'],
+body.veenna-search-open [class*='backdrop-blur'] {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Voice chat stage must keep frosting the app behind it. */
+body.dictation-overlay-open .dictation-overlay__veil--conversation,
+body.veenna-chrome-locked .dictation-overlay__veil--conversation {
+  backdrop-filter: blur(56px) saturate(1.2) !important;
+  -webkit-backdrop-filter: blur(56px) saturate(1.2) !important;
+}
+
+/* Search frosts the main pane only; the nav stays sharp on the other side. */
+body.veenna-search-open .veenna-search-veil,
+body.veenna-chrome-locked .veenna-search-veil {
+  backdrop-filter: blur(22px) saturate(1.08) !important;
+  -webkit-backdrop-filter: blur(22px) saturate(1.08) !important;
+}
+
+/* Vendor notes editor (bundled) may still ship backdrop-blur on floating toolbars/popovers. */
+.veenna-notes-page [class*='backdrop-blur'] {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Productivity pages - single page-level scrim: darker than default, wallpaper still visible */
+.veenna-with-wallpaper main.veenna-main-chrome.veenna-main-chrome-tasks:has(.veenna-productivity-shell),
+.veenna-with-wallpaper main.veenna-main-chrome:has(.veenna-productivity-shell) {
+  background-color: color-mix(
+    in srgb,
+    var(--veenna-surface) var(--veenna-productivity-glass),
+    transparent
+  );
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* Keep inner panes transparent on desktop so we don't stack opaque layers over the wallpaper */
+.veenna-with-wallpaper .veenna-main-chrome-tasks:has(.veenna-productivity-shell) .veenna-productivity-shell,
+.veenna-with-wallpaper .veenna-productivity-shell .veenna-notes-page {
+  background-color: transparent !important;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* Notes sidebar: solid fill across all screen sizes, themes, and wallpaper states */
+aside.veenna-notes-sidebar,
+.veenna-productivity-shell aside.veenna-notes-sidebar,
+.veenna-with-wallpaper .veenna-productivity-shell aside.veenna-notes-sidebar,
+.electron-frame.veenna-with-wallpaper .veenna-productivity-shell aside.veenna-notes-sidebar {
+  background-color: var(--veenna-surface) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  opacity: 1 !important;
+}
+[data-theme='dark'] aside.veenna-notes-sidebar,
+[data-theme='dark'] .veenna-productivity-shell aside.veenna-notes-sidebar,
+[data-theme='dark'] .veenna-with-wallpaper .veenna-productivity-shell aside.veenna-notes-sidebar,
+[data-theme='dark']
+  .electron-frame.veenna-with-wallpaper
+  .veenna-productivity-shell
+  aside.veenna-notes-sidebar {
+  background-color: var(--veenna-bg) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  opacity: 1 !important;
+}
+@media (min-width: 1024px) {
+  .veenna-with-wallpaper .veenna-productivity-shell aside:not(.veenna-notes-sidebar) {
+    background-color: transparent !important;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+@media (max-width: 1023.98px) {
+  .veenna-productivity-shell aside:not(.veenna-notes-sidebar),
+  .veenna-with-wallpaper .veenna-productivity-shell aside:not(.veenna-notes-sidebar) {
+    background-color: var(--veenna-surface) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    opacity: 1 !important;
+  }
+  [data-theme='dark'] .veenna-productivity-shell aside:not(.veenna-notes-sidebar),
+  [data-theme='dark'] .veenna-with-wallpaper .veenna-productivity-shell aside:not(.veenna-notes-sidebar) {
+    background-color: var(--veenna-bg) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    opacity: 1 !important;
+  }
+}
+.veenna-with-wallpaper .analytics-productivity-panel .analytics-card {
+  background-color: color-mix(in srgb, var(--veenna-panel) 88%, transparent);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+[data-theme='dark']
+  .veenna-with-wallpaper
+  main.veenna-main-chrome.veenna-main-chrome-tasks:has(.veenna-productivity-shell),
+[data-theme='dark'] .veenna-with-wallpaper main.veenna-main-chrome:has(.veenna-productivity-shell) {
+  background-color: color-mix(in srgb, var(--veenna-bg) var(--veenna-productivity-glass), transparent);
+}
+[data-theme='dark'] .veenna-with-wallpaper .analytics-productivity-panel .analytics-card {
+  background-color: color-mix(in srgb, var(--veenna-panel) 76%, transparent);
+}
+
+/*
+ * Frosted reading surfaces (Agent, Knowledge, Notes, Insights, and Voice feature
+ * pages). Heavier than default main glass so wallpaper softens behind the page.
+ * !important overrides the app-wide backdrop-filter: none (compositor stability).
+ */
+.veenna-with-wallpaper
+  main.veenna-main-chrome:not(.veenna-main-chrome--home):has(
+    .veenna-agent-shell,
+    .veenna-notes-page,
+    .veenna-frosted-shell
+  ),
+.veenna-with-wallpaper
+  main.veenna-pane:not(.veenna-main-chrome--home):has(
+    .veenna-agent-shell,
+    .veenna-notes-page,
+    .veenna-frosted-shell
+  ) {
+  background-color: color-mix(in srgb, var(--veenna-bg) 78%, transparent);
+  backdrop-filter: blur(64px) saturate(1.12) !important;
+  -webkit-backdrop-filter: blur(64px) saturate(1.12) !important;
+}
+[data-theme='light']
+  .veenna-with-wallpaper
+  main.veenna-main-chrome:has(.veenna-agent-shell, .veenna-notes-page, .veenna-frosted-shell),
+[data-theme='light']
+  .veenna-with-wallpaper
+  main.veenna-pane:has(.veenna-agent-shell, .veenna-notes-page, .veenna-frosted-shell) {
+  background-color: color-mix(in srgb, var(--veenna-surface) 82%, transparent);
+}
+.electron-frame.veenna-with-wallpaper
+  main.veenna-main-chrome:not(.veenna-main-chrome--home):has(
+    .veenna-agent-shell,
+    .veenna-notes-page,
+    .veenna-frosted-shell
+  ),
+.electron-frame.veenna-with-wallpaper
+  main.veenna-pane:not(.veenna-main-chrome--home):has(
+    .veenna-agent-shell,
+    .veenna-notes-page,
+    .veenna-frosted-shell
+  ) {
+  background-color: color-mix(in srgb, var(--veenna-bg) 78%, transparent);
+  backdrop-filter: blur(64px) saturate(1.12) !important;
+  -webkit-backdrop-filter: blur(64px) saturate(1.12) !important;
+}
+[data-theme='light']
+  .electron-frame.veenna-with-wallpaper
+  main.veenna-main-chrome:has(.veenna-agent-shell, .veenna-notes-page, .veenna-frosted-shell),
+[data-theme='light']
+  .electron-frame.veenna-with-wallpaper
+  main.veenna-pane:has(.veenna-agent-shell, .veenna-notes-page, .veenna-frosted-shell) {
+  background-color: color-mix(in srgb, var(--veenna-surface) 82%, transparent);
+}
+
+/*
+ * Confirm dialogs set body.veenna-modal-open / veenna-chrome-locked, which otherwise
+ * freeze backdrop-filter. Keep Agent / Knowledge / Notes frost while they are open.
+ */
+body.veenna-modal-open
+  .veenna-with-wallpaper
+  main.veenna-main-chrome:has(.veenna-agent-shell, .veenna-notes-page, .veenna-frosted-shell),
+body.veenna-modal-open
+  .veenna-with-wallpaper
+  main.veenna-pane:has(.veenna-agent-shell, .veenna-notes-page, .veenna-frosted-shell),
+body.veenna-chrome-locked
+  .veenna-with-wallpaper
+  main.veenna-main-chrome:has(.veenna-agent-shell, .veenna-notes-page, .veenna-frosted-shell),
+body.veenna-chrome-locked
+  .veenna-with-wallpaper
+  main.veenna-pane:has(.veenna-agent-shell, .veenna-notes-page, .veenna-frosted-shell) {
+  backdrop-filter: blur(64px) saturate(1.12) !important;
+  -webkit-backdrop-filter: blur(64px) saturate(1.12) !important;
+}
+
+/*
+ * Mobile chat must stay opaque even when the frosted wallpaper rules above
+ * apply (they are not desktop-gated and would otherwise win on cascade).
+ */
+@media (max-width: 1023.98px) {
+  .veenna-with-wallpaper main.veenna-main-chrome:has(.veenna-agent-shell),
+  .veenna-with-wallpaper main.veenna-pane:has(.veenna-agent-shell),
+  .electron-frame.veenna-with-wallpaper main.veenna-main-chrome:has(.veenna-agent-shell),
+  .electron-frame.veenna-with-wallpaper main.veenna-pane:has(.veenna-agent-shell),
+  body.veenna-modal-open .veenna-with-wallpaper main.veenna-main-chrome:has(.veenna-agent-shell),
+  body.veenna-chrome-locked .veenna-with-wallpaper main.veenna-main-chrome:has(.veenna-agent-shell) {
+    background-color: var(--veenna-bg) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  [data-theme='light'] .veenna-with-wallpaper main.veenna-main-chrome:has(.veenna-agent-shell) {
+    background-color: var(--veenna-surface) !important;
+  }
+}
+
+/* Inner page shell is transparent so the main frost shows through. */
+.veenna-with-wallpaper .veenna-frosted-shell {
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Full-page desk notes editor (DeskNotesView) in veenna theme */
+.veenna-notes-page {
+  height: 100%;
+  min-height: 0;
+}
+.veenna-notes-page main > header,
+.veenna-notes-page main > footer {
+  border: none !important;
+  box-shadow: none !important;
+}
+.veenna-notes-page .text-foreground {
+  color: var(--veenna-fg) !important;
+}
+.veenna-notes-page .text-muted-foreground {
+  color: var(--veenna-muted) !important;
+}
+.veenna-notes-page .text-primary {
+  color: var(--veenna-accent) !important;
+}
+.veenna-notes-page .border-border {
+  border-color: var(--veenna-border) !important;
+}
+.veenna-notes-page footer {
+  border-top: none !important;
+}
+.veenna-notes-page .hover\:bg-muted\/40:hover {
+  background-color: var(--veenna-row-hover) !important;
+}

@@ -1,0 +1,14 @@
+{
+  "name": "veenna-community-api",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "The Veenna Community API: signed model catalog and latest-version manifest. No database, no accounts, never receives dictation.",
+  "scripts": {
+    "keygen": "bun scripts/gen-key.mjs",
+    "build": "bun scripts/build.mjs",
+    "start": "bun src/server.mjs",
+    "test": "bun test"
+  },
+  "license": "MIT"
+}

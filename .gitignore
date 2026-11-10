@@ -1,0 +1,43 @@
+node_modules/
+dist/
+release/
+coverage/
+*.tsbuildinfo
+*.log
+.DS_Store
+.vscode/
+.idea/
+.claude/
+
+# Secrets and local config
+.env
+.env.*
+!.env.example
+api/.keys/
+api/dist/
+
+# Generated at build time
+build/icon.*
+build/tray/
+build/whisper-src/
+build/whisper-work/
+build/whisper-bundle/
+resources/models/
+public/favicon.png
+public/hud-mark.png
+electron/macos-dictation-key-monitor
+electron/macos-overlay-capture-exclude
+
+# Installers
+*.dmg
+*.dmg.blockmap
+*.zip
+*.exe
+*.AppImage
+*.deb
+builder-debug.yml
+builder-effective-config.yaml
+**/mac-arm64/
+**/mac/
+**/win-unpacked/
+**/linux-unpacked/

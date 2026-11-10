@@ -1,0 +1,16 @@
+/* Geist Sans, self-hosted in public/fonts (SIL Open Font License). */
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/Geist-Variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Display headings (page titles). Geist at regular weight. */
+.heading-display {
+  font-family: var(--veenna-font);
+  font-weight: 400;
+  letter-spacing: normal;
+  line-height: 1.2;
+}

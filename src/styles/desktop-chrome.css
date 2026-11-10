@@ -1,0 +1,537 @@
+/* Desktop chrome: text selection, focus rings, scrollbars, the drag region, the icon rail and the Electron window frame. */
+
+/* Desktop chrome: block accidental text selection / image drag */
+body {
+  -webkit-user-select: none;
+  user-select: none;
+}
+img,
+svg,
+a {
+  -webkit-user-drag: none;
+  user-drag: none;
+}
+
+/*
+ * Text links: a faint dotted underline that firms up on hover. One rule so
+ * every link reads the same.
+ */
+.link-dotted {
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+  text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
+  transition: text-decoration-color 0.15s ease;
+}
+.link-dotted:hover {
+  text-decoration-color: color-mix(in srgb, currentColor 90%, transparent);
+}
+
+/* Keep selection where people type or edit */
+input,
+textarea,
+select,
+[contenteditable='true'],
+[contenteditable=''] {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+/* Replace browser default tab focus rings with a hairline neutral indicator */
+:focus {
+  outline: none;
+}
+[contenteditable='true']:focus,
+[contenteditable='true']:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+:focus-visible {
+  outline: none !important;
+  box-shadow: 0 0 0 0.5px color-mix(in srgb, var(--veenna-fg) 20%, transparent) !important;
+}
+
+/*
+ * Menu rows take focus as the pointer moves over them, so the ring above would
+ * follow the mouse. The row the keyboard is on already shows in bright text.
+ */
+[role='menuitem']:focus-visible,
+[role='menuitemcheckbox']:focus-visible,
+[role='menuitemradio']:focus-visible {
+  box-shadow: none !important;
+}
+button:focus:not(:focus-visible),
+a:focus:not(:focus-visible),
+[tabindex]:not([tabindex='-1']):focus:not(:focus-visible) {
+  outline: none;
+  box-shadow: none;
+}
+.veenna-field:focus-visible,
+.veenna-field-ghost:focus-visible,
+input.veenna-field:focus-visible,
+textarea.veenna-field:focus-visible,
+.veenna-pick:focus-visible {
+  box-shadow: none;
+  outline: none;
+}
+
+/* Hide scrollbars app-wide; scrolling still works (pages, modals, portaled popovers) */
+html,
+body,
+body * {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+body *::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/* Opt-in hairline scrollbar. Overrides the app-wide hide above. */
+.veenna-thin-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--veenna-scrollbar) transparent;
+  -ms-overflow-style: auto;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
+}
+body .veenna-thin-scrollbar::-webkit-scrollbar {
+  display: block;
+  width: 3px;
+  height: 3px;
+}
+body .veenna-thin-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+body .veenna-thin-scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--veenna-scrollbar);
+  border-radius: 999px;
+}
+.veenna-scroll-hidden {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.veenna-scroll-hidden::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+.veenna-tab-scroll-track {
+  -webkit-overflow-scrolling: touch;
+}
+.home-worker-card {
+  flex-shrink: 0;
+  width: max(18.5rem, calc((100% - 0.75rem) / 2));
+  max-width: 100%;
+}
+input[type='search']::-webkit-search-cancel-button,
+input[type='search']::-webkit-search-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+  display: none;
+}
+.draggable-region {
+  -webkit-app-region: drag;
+}
+.no-drag {
+  -webkit-app-region: no-drag;
+}
+/* A draggable bar moves the window from its empty space; every control in it still takes clicks. */
+.draggable-region
+  :is(
+    button,
+    a,
+    input,
+    textarea,
+    select,
+    label,
+    summary,
+    [role='button'],
+    [role='tab'],
+    [role='menuitem'],
+    [role='combobox'],
+    [role='switch'],
+    [role='checkbox'],
+    [contenteditable='true'],
+    [tabindex]:not([tabindex='-1'])
+  ) {
+  -webkit-app-region: no-drag;
+}
+.veenna-nav-sidebar--collapsed {
+  overflow-x: hidden;
+}
+
+/* Icon rail: labels stay in the DOM for screen readers, icons stay visible. */
+.veenna-nav-sidebar--collapsed .nav-item-label,
+.veenna-nav-sidebar--collapsed .nav-item-trailing,
+.veenna-nav-sidebar--collapsed .nav-item-shortcut {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.veenna-nav-sidebar--collapsed [data-nav-item] {
+  /* A square, centred in the rail, so the highlight on the current page is one too. */
+  width: 2rem;
+  height: 2rem;
+  min-height: 0;
+  margin-inline: auto;
+  justify-content: center;
+  gap: 0;
+  padding-left: 0;
+  padding-right: 0;
+  background-color: transparent;
+  -webkit-tap-highlight-color: transparent;
+}
+.veenna-nav-sidebar--collapsed [data-nav-item]:hover,
+.veenna-nav-sidebar--collapsed [data-nav-item]:focus,
+.veenna-nav-sidebar--collapsed [data-nav-item]:active {
+  background-color: transparent;
+}
+/* The rail drops every row's fill, but the page you are on keeps the muted one. */
+.veenna-nav-sidebar--collapsed [data-nav-item][data-active],
+.veenna-nav-sidebar--collapsed [data-nav-item][data-active]:hover,
+.veenna-nav-sidebar--collapsed [data-nav-item][data-active]:focus,
+.veenna-nav-sidebar--collapsed [data-nav-item][data-active]:active {
+  background-color: hsl(var(--muted));
+}
+
+/* Electron hidden title bar: drag inset lives inside panes, not as a blank strip above them */
+.electron-frame {
+  --veenna-electron-titlebar: 32px;
+  /* Desktop shell fills the window; never keep a rubber-band/safe-area gutter. */
+  padding-bottom: 0;
+  overflow: hidden;
+}
+.electron-frame .veenna-sidebar-titlebar {
+  height: var(--veenna-electron-titlebar);
+  flex-shrink: 0;
+  -webkit-app-region: drag;
+}
+@media (min-width: 1024px) {
+  .electron-frame .veenna-main-chrome {
+    padding-top: 0;
+  }
+
+  /*
+   * Keep a top drag band for window move, but never steal clicks from page controls
+   * (Notes "New"/delete, headers, etc.) that sit flush under the titlebar after padding-top: 0.
+   * Sidebar `.veenna-sidebar-titlebar` remains the primary drag handle.
+   *
+   * Important: `-webkit-app-region: drag` still participates in hit-testing even when
+   * `pointer-events: none` is set, so interactive children must use `.no-drag` and sit
+   * above this layer (z-index > 5).
+   */
+  .electron-frame .veenna-main-chrome::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--veenna-electron-titlebar);
+    -webkit-app-region: drag;
+    z-index: 5;
+    pointer-events: none;
+    background: transparent;
+  }
+}
+@media (max-width: 1023px) {
+  .electron-frame .veenna-main-chrome {
+    padding-top: 0;
+  }
+
+  /*
+   * Narrow window: the whole app starts below a draggable strip that belongs to
+   * the macOS traffic lights. `contain: layout` makes the body the containing
+   * block for its fixed drawers (nav, chats), so they stop under the strip too
+   * instead of sliding up behind the window controls.
+   */
+  .electron-frame {
+    /* Taller than the wide layout's strip so the traffic lights have air below them. */
+    --veenna-electron-titlebar: 44px;
+    padding-top: var(--veenna-electron-titlebar);
+  }
+
+  /* The window strip keeps the muted chrome colour; the nav bar below is a shade darker. */
+  .electron-frame::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--veenna-electron-titlebar);
+    -webkit-app-region: drag;
+    z-index: 2;
+    background-color: hsl(var(--muted));
+    /* A light line closes the strip off from the nav bar below it. */
+    border-bottom: 1px solid hsl(var(--border));
+    box-sizing: border-box;
+  }
+  .electron-frame .veenna-app-body {
+    contain: layout;
+  }
+
+  /*
+   * Collapsed to the icon rail in a narrow window: the strip above already holds the traffic
+   * lights, and the rail's own title strip is empty, so it would only push the logo down.
+   * (Wide, the lights sit over the rail itself, so the strip stays there.)
+   */
+  .electron-frame .veenna-sidebar-titlebar--rail {
+    height: 0;
+  }
+}
+.veenna-pane {
+  background-color: var(--veenna-bg);
+}
+aside.veenna-pane {
+  border-right: 1px solid var(--veenna-sidebar-border);
+}
+aside.veenna-nav-sidebar {
+  background-color: var(--veenna-sidebar);
+}
+
+/*
+ * In the desktop app the window's own corners come from the OS and cannot be set from CSS (macOS
+ * draws about 12px on a window without a toolbar). The cards inside sit 4px in from the edge, so to
+ * look concentric with it they take the window's radius minus that gap.
+ */
+.electron-frame,
+/* Overlays teleported to body (the search veil) sit outside the frame; give them the same corners. */
+body:has(.electron-frame) {
+  --veenna-frame-radius: 10px;
+}
+
+/*
+ * On mobile web the frame's cards go square: rounded corners are for the web
+ * on a wide screen and the desktop app (whose window never gets this narrow,
+ * DESKTOP_MIN_WIDTH is 1024). Set on :root so the copilot overlay, which is
+ * teleported out of the frame, follows too.
+ */
+@media (max-width: 1023.98px) {
+  :root {
+    --veenna-frame-radius: 0px;
+    /* Edge to edge on a phone: no gap between the frame and its cards. */
+    --veenna-frame-gap: 0px;
+  }
+}
+
+/*
+ * The window frame. Every page is a card placed on it, bordered and rounded,
+ * with the same gap all round - on a phone as on a desktop. On a wide screen
+ * the nav is a card beside it, the main page is a card, and the copilot dock
+ * is a card on the right; chat splits into cards of its own (the conversation,
+ * and the panel beside it). On a narrow one the nav slides in as a floating
+ * card, and the chat is one card, since nothing sits beside it.
+ */
+.veenna-app-frame:not(.veenna-with-wallpaper) {
+  background-color: var(--veenna-frame);
+}
+.veenna-app-frame.veenna-with-wallpaper {
+  /* Never let the platform default (white) flash under the wallpaper layer. */
+  background-color: var(--veenna-bg);
+}
+.veenna-app-frame main.veenna-main-chrome {
+  margin: var(--veenna-frame-gap);
+  border: 1px solid var(--veenna-frame-border);
+  border-radius: var(--veenna-frame-radius);
+  overflow: hidden;
+}
+
+/*
+ * Productivity (Tasks) left its main transparent to sit edge to edge on the
+ * wallpaper. As a card it needs a face like every other page: solid on the
+ * frame, the same glass as the others over a wallpaper.
+ */
+.veenna-app-frame:not(.veenna-with-wallpaper) main.veenna-main-chrome-tasks {
+  background-color: var(--veenna-card);
+}
+.veenna-app-frame.veenna-with-wallpaper main.veenna-main-chrome.veenna-main-chrome-tasks {
+  background-color: color-mix(
+    in srgb,
+    var(--veenna-surface) var(--veenna-main-content-glass),
+    transparent
+  );
+}
+@media (max-width: 1023.98px) {
+  /* Edge to edge: no card border. Must follow the base rule above to win. */
+  .veenna-app-frame main.veenna-main-chrome {
+    border: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  .veenna-notes-sidebar {
+    z-index: 70;
+  }
+
+  /*
+   * The drawer floats over the page as a card of its own, off the frame's
+   * edges by the same gap. Solid, as the drawer always was on a phone.
+   */
+  .veenna-app-frame:not(.veenna-app-frame--nav-docked) aside.veenna-nav-sidebar.veenna-nav-sidebar {
+    top: var(--veenna-frame-gap);
+    bottom: var(--veenna-frame-gap);
+    left: var(--veenna-frame-gap);
+    height: auto;
+    border: 1px solid var(--veenna-frame-border);
+    border-radius: var(--veenna-frame-radius);
+    overflow: hidden;
+    background-color: var(--veenna-card) !important;
+  }
+
+  /* Closed, it goes the whole way off screen, gap and shadow included. */
+  .veenna-app-frame aside.veenna-nav-sidebar.-translate-x-full {
+    transform: translateX(calc(-100% - var(--veenna-frame-gap) - 2rem));
+  }
+
+  /*
+   * The desktop app keeps its nav docked in a narrow window, so the nav and the
+   * page stay cards on the frame, as they are on a wide one.
+   */
+  .veenna-app-frame--nav-docked {
+    --veenna-frame-gap: 4px;
+  }
+  .veenna-app-frame--nav-docked main.veenna-main-chrome {
+    border: 1px solid var(--veenna-frame-border);
+    border-radius: var(--veenna-frame-radius);
+  }
+  .veenna-app-frame--nav-docked aside.veenna-nav-sidebar {
+    align-self: stretch;
+    height: auto;
+    margin: var(--veenna-frame-gap) 0 var(--veenna-frame-gap) var(--veenna-frame-gap);
+    border: 1px solid var(--veenna-frame-border);
+    border-radius: var(--veenna-frame-radius);
+    overflow: hidden;
+  }
+}
+
+/*
+ * Mobile copilot teleports to body, so it cannot hang off .veenna-app-frame.
+ * Same floating-card inset as the nav drawer, mirrored to the right edge.
+ * `position` is set here because the dock's own `relative` class outranks the
+ * `absolute` the layout passes in, and without it top/bottom do nothing: the
+ * dock shrank to its header and composer at the top of a phone screen.
+ * On a phone the gap is 0, so it is a full-height sheet; the safe-area padding
+ * keeps its header under the notch and its composer above the home bar.
+ */
+aside.veenna-agent-copilot-dock.veenna-agent-copilot-dock--overlay {
+  position: absolute;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  top: var(--veenna-frame-gap);
+  bottom: var(--veenna-frame-gap);
+  right: var(--veenna-frame-gap);
+  height: auto;
+  border: 1px solid var(--veenna-frame-border);
+  border-radius: var(--veenna-frame-radius);
+  overflow: hidden;
+  background-color: var(--veenna-card);
+}
+@media (min-width: 1024px) {
+  /* The nav is a card too, with the same gap to the frame as every other. */
+  .veenna-app-frame aside.veenna-nav-sidebar {
+    align-self: stretch;
+    height: auto;
+    margin: var(--veenna-frame-gap) 0 var(--veenna-frame-gap) var(--veenna-frame-gap);
+    border: 1px solid var(--veenna-frame-border);
+    border-radius: var(--veenna-frame-radius);
+    overflow: hidden;
+  }
+
+  /*
+   * Copilot dock matches the nav: a card on the frame. Main already keeps a
+   * trailing frame-gap, so the dock only needs top / right / bottom inset -
+   * otherwise it sat flush on the window edge while every other card floated.
+   */
+  .veenna-app-frame aside.veenna-agent-copilot-dock {
+    align-self: stretch;
+    height: auto;
+    margin: var(--veenna-frame-gap) var(--veenna-frame-gap) var(--veenna-frame-gap) 0;
+    border: 1px solid var(--veenna-frame-border);
+    border-radius: var(--veenna-frame-radius);
+    overflow: hidden;
+    background-color: var(--veenna-card);
+  }
+  .veenna-app-frame .veenna-main-workbench {
+    min-width: 0;
+  }
+  @media (min-width: 1024px) {
+    .veenna-app-frame .veenna-main-workbench {
+      /* Keep Home / Draw readable when terminal + browser share the row. */
+      min-width: 24rem;
+    }
+  }
+
+  /*
+   * Full-screen browser lives inside main. Chat otherwise clears main's face
+   * so its own cards sit on the wallpaper; that must not leave a second
+   * background ring around this pane.
+   */
+  .veenna-app-frame.veenna-app-frame main.veenna-main-chrome.veenna-main-chrome--browser-page {
+    background-color: var(--veenna-surface) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  /* Same solid face as the sidebar token - no translucent glass. */
+  .veenna-app-frame:not(.veenna-with-wallpaper) aside.veenna-nav-sidebar {
+    background-color: var(--veenna-sidebar);
+  }
+
+  /*
+   * Over a wallpaper the nav used the sidebar colour at 97%, which in dark is
+   * all but solid black beside cards the wallpaper shows through. It takes a
+   * glass of its own darker face instead. [data-theme] outranks the Electron rule.
+   * Light theme stays fully opaque (ngrok-style solid sidebar).
+   */
+  [data-theme] .veenna-app-frame.veenna-with-wallpaper aside.veenna-nav-sidebar.veenna-pane {
+    background-color: color-mix(in srgb, var(--veenna-nav-card) var(--veenna-nav-glass), transparent);
+  }
+  [data-theme='light'] .veenna-app-frame.veenna-with-wallpaper aside.veenna-nav-sidebar.veenna-pane {
+    background-color: var(--veenna-sidebar) !important;
+  }
+  .veenna-app-frame .veenna-frame-card {
+    border: 1px solid var(--veenna-frame-border);
+    border-radius: var(--veenna-frame-radius);
+    overflow: hidden;
+  }
+
+  /*
+   * The chat draws its own cards, so under them is the frame and nothing else:
+   * main keeps no margin, edge, face or frost of its own. Over a wallpaper the
+   * frosted-surface rules further down give main a blur with !important, which
+   * painted a square pane behind the rounded cards. The doubled classes outrank
+   * those rules, the ones that keep frost while a dialog is open included.
+   */
+  .veenna-app-frame.veenna-app-frame main.veenna-main-chrome.veenna-main-chrome:has(.veenna-agent-shell) {
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+    overflow: visible;
+    background-color: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  .veenna-app-frame main .veenna-pane:has(.veenna-agent-shell) {
+    background-color: transparent !important;
+  }
+
+  /* Half a gap each side of the zero-width resize handle between the cards. */
+  .veenna-app-frame .veenna-agent-shell {
+    column-gap: calc(var(--veenna-frame-gap) / 2);
+    padding: var(--veenna-frame-gap);
+  }
+
+  /* A list and its page as two cards in one row, spaced the same way. */
+  .veenna-app-frame .veenna-frame-cards {
+    column-gap: calc(var(--veenna-frame-gap) / 2);
+  }
+}

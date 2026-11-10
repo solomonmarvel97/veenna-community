@@ -1,0 +1,17 @@
+/*
+ * Global styles. The pieces live in src/styles/ and are imported in order: the order matters,
+ * because later rules override earlier ones at equal specificity.
+ */
+@import './motion/motion.css';
+@import './styles/fonts.css';
+@import './styles/tailwind.css';
+@import './styles/base.css';
+@import './styles/desktop-chrome.css';
+@import './styles/nav-dictation.css';
+@import './styles/app-frame.css';
+@import './styles/wallpaper.css';
+@import './styles/fields.css';
+@import './styles/layout.css';
+@import './styles/overlays.css';
+@import './styles/utilities.css';
+@import './styles/todo.css';

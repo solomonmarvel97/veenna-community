@@ -1,0 +1,208 @@
+/* The app frame: nav sidebar, main content pages, Home, and frosted panes over a wallpaper. */
+
+/* Nav sidebar - opaque glass over wallpaper (no backdrop-filter: repaints/flickers on hover). */
+.veenna-with-wallpaper aside.veenna-nav-sidebar {
+  background-color: color-mix(in srgb, var(--veenna-surface) var(--veenna-sidebar-glass), transparent);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+[data-theme='dark'] .veenna-with-wallpaper aside.veenna-nav-sidebar {
+  background-color: color-mix(in srgb, var(--veenna-bg) var(--veenna-sidebar-glass), transparent);
+}
+.veenna-with-wallpaper aside.veenna-nav-sidebar,
+[data-theme='dark'] .veenna-with-wallpaper aside.veenna-nav-sidebar {
+  background-color: color-mix(in srgb, var(--veenna-sidebar) var(--veenna-sidebar-glass), transparent);
+}
+
+/* Light: fully solid sidebar - never let wallpaper show through. */
+[data-theme='light'] .veenna-with-wallpaper aside.veenna-nav-sidebar,
+[data-theme='light'] aside.veenna-nav-sidebar {
+  background-color: var(--veenna-sidebar) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  opacity: 1 !important;
+}
+
+/*
+ * Mobile nav drawer slides in as a full-height overlay - must be 100% solid/opaque
+ * on mobile, never transparent or glass under any theme or wallpaper state.
+ */
+@media (max-width: 1023.98px) {
+  aside.veenna-nav-sidebar,
+  .veenna-nav-sidebar,
+  .veenna-with-wallpaper aside.veenna-nav-sidebar,
+  .veenna-with-wallpaper aside.veenna-pane.veenna-nav-sidebar,
+  .electron-frame.veenna-with-wallpaper aside.veenna-nav-sidebar,
+  .electron-frame.veenna-with-wallpaper aside.veenna-pane.veenna-nav-sidebar {
+    background-color: var(--veenna-sidebar) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    opacity: 1 !important;
+  }
+  [data-theme='dark'] aside.veenna-nav-sidebar,
+  [data-theme='dark'] .veenna-nav-sidebar,
+  [data-theme='dark'] .veenna-with-wallpaper aside.veenna-nav-sidebar,
+  [data-theme='dark'] .veenna-with-wallpaper aside.veenna-pane.veenna-nav-sidebar,
+  [data-theme='dark'] .electron-frame.veenna-with-wallpaper aside.veenna-nav-sidebar,
+  [data-theme='dark'] .electron-frame.veenna-with-wallpaper aside.veenna-pane.veenna-nav-sidebar {
+    background-color: var(--veenna-sidebar) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    opacity: 1 !important;
+  }
+  main.veenna-main-chrome:has(.veenna-agent-shell),
+  .veenna-with-wallpaper main.veenna-main-chrome:has(.veenna-agent-shell),
+  .electron-frame.veenna-with-wallpaper main.veenna-main-chrome:has(.veenna-agent-shell),
+  main.veenna-pane:has(.veenna-agent-shell),
+  .veenna-with-wallpaper main.veenna-pane:has(.veenna-agent-shell),
+  .veenna-with-wallpaper main .veenna-pane:has(.veenna-agent-shell) {
+    background-color: var(--veenna-bg) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    opacity: 1 !important;
+  }
+  [data-theme='light'] main.veenna-main-chrome:has(.veenna-agent-shell),
+  [data-theme='light'] .veenna-with-wallpaper main.veenna-main-chrome:has(.veenna-agent-shell),
+  [data-theme='light'] .veenna-with-wallpaper main .veenna-pane:has(.veenna-agent-shell) {
+    background-color: var(--veenna-surface) !important;
+  }
+}
+
+/* Main content pages - surface fill, wallpaper peeks through */
+.veenna-with-wallpaper main.veenna-main-chrome:not(.veenna-main-chrome-tasks),
+.veenna-with-wallpaper main.veenna-pane {
+  background-color: color-mix(
+    in srgb,
+    var(--veenna-surface) var(--veenna-main-content-glass),
+    transparent
+  );
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* The greeting hero's height, shared so the page below it can centre against the whole pane. */
+.home-page-shell {
+  --home-hero-height: 300px;
+}
+
+/* Home: solid shell when there is no app wallpaper; otherwise wallpaper shows through */
+:not(.veenna-with-wallpaper) .home-page-shell {
+  background-color: var(--veenna-bg) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+.veenna-with-wallpaper .home-page-shell {
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+.veenna-with-wallpaper main.veenna-pane:has(.home-page-shell),
+.veenna-with-wallpaper main.veenna-main-chrome:has(.home-page-shell) {
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+[data-theme='light'] :not(.veenna-with-wallpaper) .home-page-shell {
+  background-color: var(--veenna-bg) !important;
+}
+[data-theme='dark'] :not(.veenna-with-wallpaper) .home-page-shell {
+  background-color: var(--veenna-bg) !important;
+}
+
+/* Soft overlap under the hero so the page join doesn’t read as a hard cut. */
+.home-page-below-hero {
+  margin-top: -6rem;
+  padding-top: 6rem;
+  background: linear-gradient(
+    to bottom,
+    transparent 0,
+    color-mix(in srgb, var(--veenna-bg) 12%, transparent) 1rem,
+    color-mix(in srgb, var(--veenna-bg) 24%, transparent) 2rem,
+    color-mix(in srgb, var(--veenna-bg) 38%, transparent) 3rem,
+    color-mix(in srgb, var(--veenna-bg) 52%, transparent) 3.75rem,
+    color-mix(in srgb, var(--veenna-bg) 66%, transparent) 4.5rem,
+    color-mix(in srgb, var(--veenna-bg) 80%, transparent) 5.25rem,
+    color-mix(in srgb, var(--veenna-bg) 92%, transparent) 5.6rem,
+    var(--veenna-bg) 6rem,
+    var(--veenna-bg) 100%
+  );
+}
+
+/*
+ * Shared card surface for insights tiles (heatmap, voice stats, …). Global
+ * on purpose: InsightsActivityHeatmap/VoiceStatsCard render on Home, but this
+ * rule used to live inside InsightsDashboard.vue's own bundle - so on a
+ * Home-first visit, before that unrelated component's chunk ever loaded, the
+ * class was on the markup with no matching style, leaving the tiles blank.
+ */
+.insights-card {
+  border-radius: var(--radius, 0.5rem);
+  background: var(--veenna-panel);
+  box-shadow: var(--veenna-shadow-sm);
+}
+
+/* Tasks - no overlay; wallpaper shows through fully */
+.veenna-with-wallpaper main.veenna-main-chrome.veenna-main-chrome-tasks,
+.veenna-with-wallpaper .veenna-main-chrome-tasks {
+  background-color: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/*
+ * Wallpaper + frosted panes: backdrop-filter repaints on hover/animation and shimmers
+ * in Chromium/Safari. Use opaque color-mix glass everywhere (Electron + web).
+ */
+.electron-frame.veenna-with-wallpaper aside.veenna-nav-sidebar,
+.electron-frame.veenna-with-wallpaper main.veenna-main-chrome:not(.veenna-main-chrome-tasks),
+.electron-frame.veenna-with-wallpaper main.veenna-pane {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.electron-frame.veenna-with-wallpaper aside.veenna-nav-sidebar {
+  background-color: color-mix(in srgb, var(--veenna-surface) var(--veenna-sidebar-glass), transparent);
+}
+[data-theme='dark'] .electron-frame.veenna-with-wallpaper aside.veenna-nav-sidebar {
+  background-color: color-mix(in srgb, var(--veenna-bg) var(--veenna-sidebar-glass), transparent);
+}
+.electron-frame.veenna-with-wallpaper aside.veenna-nav-sidebar,
+[data-theme='dark'] .electron-frame.veenna-with-wallpaper aside.veenna-nav-sidebar {
+  background-color: color-mix(in srgb, var(--veenna-sidebar) var(--veenna-sidebar-glass), transparent);
+}
+[data-theme='light'] .electron-frame.veenna-with-wallpaper aside.veenna-nav-sidebar {
+  background-color: var(--veenna-sidebar) !important;
+}
+@media (max-width: 1023.98px) {
+  .electron-frame.veenna-with-wallpaper aside.veenna-nav-sidebar {
+    background-color: var(--veenna-sidebar);
+  }
+  [data-theme='dark'] .electron-frame.veenna-with-wallpaper aside.veenna-nav-sidebar {
+    background-color: var(--veenna-sidebar);
+  }
+}
+.electron-frame.veenna-with-wallpaper main.veenna-main-chrome:not(.veenna-main-chrome-tasks),
+.electron-frame.veenna-with-wallpaper main.veenna-pane {
+  background-color: color-mix(in srgb, var(--veenna-surface) 82%, transparent);
+}
+
+/* Home must stay clear so the shared wallpaper reads through the hero. */
+.electron-frame.veenna-with-wallpaper main.veenna-main-chrome:has(.home-page-shell),
+.electron-frame.veenna-with-wallpaper main.veenna-pane:has(.home-page-shell),
+.veenna-with-wallpaper main.veenna-main-chrome.veenna-main-chrome--home,
+.electron-frame.veenna-with-wallpaper main.veenna-main-chrome.veenna-main-chrome--home {
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Route class beats KeepAlive :has() races and nested veenna-pane glass. */
+.veenna-with-wallpaper main.veenna-main-chrome--home,
+.veenna-with-wallpaper main.veenna-main-chrome--home.veenna-pane,
+.electron-frame.veenna-with-wallpaper main.veenna-main-chrome--home,
+.electron-frame.veenna-with-wallpaper main.veenna-main-chrome--home.veenna-pane,
+.veenna-with-wallpaper main.veenna-main-chrome--home .home-page-shell,
+.electron-frame.veenna-with-wallpaper main.veenna-main-chrome--home .home-page-shell {
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}

@@ -1,0 +1,174 @@
+/* Motion tokens - durations respect prefers-reduced-motion via useReducedMotion (data attribute). */
+:root {
+  --motion-duration-fast: 150ms;
+  --motion-duration-normal: 200ms;
+  --motion-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+}
+
+html[data-reduced-motion='true'],
+html[data-motion-dev='off'] {
+  --motion-duration-fast: 0ms;
+  --motion-duration-normal: 0ms;
+}
+
+/*
+ * Scroll-triggered batches: hidden until revealed. After Motion runs it clears inline
+ * opacity/transform - without a “revealed” class, the pre-reveal rule would apply again
+ * and cards would vanish. `motion-scroll-revealed` is added in onComplete (useScrollReveal).
+ */
+.motion-scroll-reveal-target:not(.motion-scroll-revealed),
+.motion-feed-scroll-target:not(.motion-scroll-revealed),
+.motion-job-board-scroll-target:not(.motion-scroll-revealed) {
+  opacity: 0;
+  transform: translate3d(0, 12px, 0);
+}
+
+.motion-scroll-reveal-target.motion-scroll-revealed,
+.motion-feed-scroll-target.motion-scroll-revealed,
+.motion-job-board-scroll-target.motion-scroll-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+/*
+ * Job board (and similar): do not hide cards with CSS opacity:0. When Motion playback reverts, inline
+ * styles are cleared - with the default rule above, cards would stay invisible. Here unrevealed
+ * targets stay visible in CSS; hidden state + motion come from Motion `animate` in useScrollReveal.
+ */
+.job-board-scroll-reveal-root .motion-scroll-reveal-target:not(.motion-scroll-revealed) {
+  opacity: 1;
+  transform: none;
+}
+
+html[data-reduced-motion='true'] .motion-scroll-reveal-target,
+html[data-reduced-motion='true'] .motion-feed-scroll-target,
+html[data-reduced-motion='true'] .motion-job-board-scroll-target,
+html[data-reduced-motion='true'] .job-board-scroll-reveal-root .motion-scroll-reveal-target,
+html[data-motion-dev='off'] .motion-scroll-reveal-target,
+html[data-motion-dev='off'] .motion-feed-scroll-target,
+html[data-motion-dev='off'] .motion-job-board-scroll-target,
+html[data-motion-dev='off'] .job-board-scroll-reveal-root .motion-scroll-reveal-target {
+  opacity: 1;
+  transform: none;
+}
+
+/**
+ * Opt-in tap feedback for links, cards, icon buttons (not using ui/button).
+ * `Button` already uses active:scale in CVA - use `motionClass.tapSurface` elsewhere.
+ */
+.motion-tap-surface {
+  transition: transform var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+.motion-tap-surface:active {
+  transform: scale(0.98);
+}
+
+html[data-reduced-motion='true'] .motion-tap-surface:active,
+html[data-motion-dev='off'] .motion-tap-surface:active {
+  transform: none;
+}
+
+/* Classic sidebar: nested nav group expand/collapse (radix CollapsibleContent). */
+@keyframes sidebar-collapsible-down {
+  from {
+    height: 0;
+    opacity: 0;
+  }
+  to {
+    height: var(--radix-collapsible-content-height);
+    opacity: 1;
+  }
+}
+
+@keyframes sidebar-collapsible-up {
+  from {
+    height: var(--radix-collapsible-content-height);
+    opacity: 1;
+  }
+  to {
+    height: 0;
+    opacity: 0;
+  }
+}
+
+.sidebar-nav-collapsible-content[data-state='open'] {
+  animation: sidebar-collapsible-down var(--motion-duration-normal) var(--motion-ease-standard);
+}
+
+.sidebar-nav-collapsible-content[data-state='closed'] {
+  animation: sidebar-collapsible-up var(--motion-duration-normal) var(--motion-ease-standard);
+}
+
+.sidebar-nav-caret {
+  transition: transform var(--motion-duration-normal) var(--motion-ease-standard);
+}
+
+.sidebar-nav-caret--expanded {
+  transform: rotate(90deg);
+}
+
+/* Collapsed rail: tiny chevron between parent icon and sub-items */
+.group[data-collapsible='icon'] .sidebar-nav-parent-hint-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 0.5rem;
+  margin-top: 0.1875rem;
+  margin-bottom: 0.0625rem;
+  pointer-events: none;
+}
+
+.group[data-collapsible='icon'] .sidebar-nav-parent-hint {
+  width: 0.5rem;
+  height: 0.5rem;
+}
+
+/* Nested nav: left rail when expanded; muted sub-items (slightly softer than top-level) */
+.sidebar-nav-sub-group {
+  margin-left: 1rem;
+  margin-top: 0.25rem;
+  padding-left: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  border-left: 1px solid hsl(var(--sidebar-border) / 0.35);
+}
+
+.group[data-collapsible='icon'] .sidebar-nav-sub-group {
+  margin-left: 0;
+  margin-top: 0;
+  padding-left: 0;
+  gap: 0.125rem;
+  align-items: center;
+  border-left: none;
+}
+
+.group[data-collapsible='icon'] .sidebar-nav-sub-group [data-sidebar='menu'] {
+  gap: 0.125rem;
+  align-items: center;
+}
+
+.sidebar-nav-sub-group [data-sidebar='menu-button']:not([data-active='true']) {
+  color: hsl(var(--sidebar-foreground) / 0.68) !important;
+}
+
+.sidebar-nav-sub-group [data-sidebar='menu-button']:not([data-active='true']) svg {
+  color: hsl(var(--sidebar-foreground) / 0.68) !important;
+}
+
+.sidebar-nav-sub-group [data-sidebar='menu-button']:not([data-active='true']):hover,
+.sidebar-nav-sub-group [data-sidebar='menu-button']:not([data-active='true']):hover svg {
+  color: hsl(var(--sidebar-foreground) / 0.82) !important;
+  background-color: hsl(var(--muted) / 0.75) !important;
+}
+
+html[data-reduced-motion='true'] .sidebar-nav-collapsible-content,
+html[data-motion-dev='off'] .sidebar-nav-collapsible-content {
+  animation: none !important;
+}
+
+html[data-reduced-motion='true'] .sidebar-nav-caret,
+html[data-motion-dev='off'] .sidebar-nav-caret {
+  transition: none;
+}

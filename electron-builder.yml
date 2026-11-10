@@ -1,0 +1,133 @@
+appId: com.veenna.community
+# No trailing period - macOS Electron helper lookup is `${productName} Helper.app`.
+productName: Veenna Community
+copyright: Copyright © veenna
+artifactName: Veenna-Community-${version}-${os}-${arch}.${ext}
+directories:
+  output: release
+  buildResources: build
+files:
+  - package.json
+  - electron/**/*
+  # Tests, docs and Swift sources never need to ship.
+  - '!electron/**/*.test.*'
+  - '!electron/**/*.swift'
+  # The dictation helper's C++ source; the built binary ships from build/whisper-bundle.
+  - '!electron/native/**'
+  - '!electron/**/*.md'
+  - build/tray/**/*
+  - build/icon.png
+  - build/icon.icns
+  - build/icon.ico
+  # The renderer ships once, as Resources/dist (extraResources below);
+  # electron/lib/protocol.cjs serves it from there.
+  # Shared with renderer; required at runtime by electron/lib/whisperModels.cjs
+  - src/lib/voice/whisper-model-catalog.json
+extraResources:
+  - from: dist
+    to: dist
+    filter:
+      - '**/*'
+  # On-device dictation models (Whisper Base for whisper.cpp), so a
+  # fresh install dictates at once. Staged by scripts/bundle-whisper-model.cjs;
+  # read by electron/lib/whisperModels.cjs.
+  - from: resources/models
+    to: models
+  # Licence texts that must travel with the app: ours, Electron's, and Chromium's own notices.
+  - from: LICENSE
+    to: licenses/LICENSE
+  - from: node_modules/electron/dist/LICENSE
+    to: licenses/ELECTRON-LICENSE
+  - from: node_modules/electron/dist/LICENSES.chromium.html
+    to: licenses/LICENSES.chromium.html
+  # veenna-whisper, the whisper.cpp dictation helper for this build's OS and arch.
+  # Built by scripts/prepare-whisper.cjs; found by electron/lib/whisperCppStt.cjs.
+  - from: build/whisper-bundle/${os}-${arch}
+    to: whisper
+# No asar: the STT worker thread and @xenova/transformers' ESM imports must load from real files.
+asar: false
+# Electron Fuses are flipped in scripts/electron-after-pack.cjs, not here:
+# electron-builder flips `electronFuses` after afterPack, which broke the
+# ad-hoc signature that hook seals local builds with.
+npmRebuild: true
+# The app is English-only; Chromium's other 53 locale packs are 40 MB unpacked.
+# Chromium's own strings (e.g. context menus) show in English everywhere.
+electronLanguages:
+  - en
+  - en_GB
+# Local builds (CSC_IDENTITY_AUTO_DISCOVERY=false) are sealed by afterPack with an
+# ad-hoc signature (unsigned fused builds won't launch). Release builds sign with
+# CSC_LINK / CSC_KEY_PASSWORD and notarize in afterSign.
+afterPack: scripts/electron-after-pack.cjs
+afterSign: scripts/electron-notarize.cjs
+# No URL scheme is registered with the OS: the app's own scheme is internal to its windows.
+mac:
+  category: public.app-category.productivity
+  icon: build/icon.icns
+  extraFiles:
+    - from: electron/macos-dictation-key-monitor
+      to: MacOS/veenna-dictation-key-monitor
+    - from: electron/macos-overlay-capture-exclude
+      to: MacOS/veenna-overlay-capture-exclude
+  extendInfo:
+    CFBundleDisplayName: Veenna Community
+    NSMicrophoneUsageDescription: Veenna Community needs the microphone for dictation. Audio never leaves this Mac.
+  target:
+    - target: dmg
+      arch:
+        - arm64
+        - x64
+    - target: zip
+      arch:
+        - arm64
+        - x64
+  hardenedRuntime: true
+  entitlements: electron/entitlements.mac.plist
+  entitlementsInherit: electron/entitlements.mac.plist
+  gatekeeperAssess: false
+  notarize: false
+dmg:
+  sign: false
+win:
+  icon: build/icon.ico
+  target:
+    - target: nsis
+      arch:
+        - x64
+    - target: zip
+      arch:
+        - x64
+  # Local/dev builds skip signing (and the resource editing that needs wine on a Mac).
+  # The release build turns it on with -c.win.signAndEditExecutable=true
+  # (electron:build:win:release), and scripts/electron-win-sign.cjs signs each file
+  # with Azure Trusted Signing or signtool. Add publisherName (the certificate's
+  # subject) only once releases are signed: the updater then refuses unsigned updates.
+  signAndEditExecutable: false
+  signtoolOptions:
+    sign: scripts/electron-win-sign.cjs
+    signingHashAlgorithms:
+      - sha256
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: Veenna Community
+linux:
+  icon: build/icon.png
+  category: Office
+  maintainer: veenna <hello@veenna.com>
+  synopsis: Free on-device dictation
+  description: Veenna Community - free dictation that stays on your device
+  target:
+    - target: deb
+      arch:
+        - x64
+    - target: tar.gz
+      arch:
+        - x64
+    - target: AppImage
+      arch:
+        - x64
+# No update feed: the app never checks for updates. People get new versions from the download page.
+# electron/config/edition.cjs reads this from the packaged package.json (veennaEdition).
