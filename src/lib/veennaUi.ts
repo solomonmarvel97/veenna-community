@@ -11,7 +11,7 @@ import { isElectronMainWindow } from '@/lib/platform/isElectron'
 const PAGE_COLUMN = 'mx-auto w-full max-w-5xl px-3 sm:px-4' as const
 const PAGE_COLUMN_FULL = 'mx-auto w-full max-w-[1600px] px-2 sm:px-3' as const
 const ICON_BTN =
-  'inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-veenna-icon-muted transition-colors hover:bg-veenna-row-hover hover:text-veenna-icon focus-visible:outline-none focus-visible:shadow-[0_0_0_1px_var(--veenna-focus-subtle)] disabled:pointer-events-none disabled:opacity-50' as const
+  'inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-sm text-veenna-icon-muted transition-colors hover:bg-veenna-row-hover hover:text-veenna-icon focus-visible:outline-none focus-visible:shadow-[0_0_0_1px_var(--veenna-focus-subtle)] disabled:pointer-events-none disabled:opacity-50' as const
 /** How a menu row shows it is hovered, focused, open or chosen: brighter text, never a fill. */
 const MENU_ROW_TONE =
   'text-veenna-muted transition-colors hover:text-veenna-fg focus:text-veenna-fg focus-visible:text-veenna-fg data-[highlighted]:text-veenna-fg data-[state=open]:text-veenna-fg data-[state=checked]:text-veenna-fg aria-selected:text-veenna-fg' as const
@@ -87,32 +87,32 @@ export const veennaUi = {
   homeWorkerCard: 'home-worker-card',
   /** Pill segment control (Home hero mode, settings tabs, productivity hubs). */
   segmentPillTrack:
-    'inline-flex h-7 items-stretch rounded-full border border-veenna-divider bg-veenna-row p-0.5 shadow-veenna-sm',
+    'inline-flex h-7 items-stretch rounded-[calc(var(--radius)-5px)] border border-veenna-divider bg-veenna-row p-0.5 shadow-veenna-sm',
   segmentPillTab:
-    'inline-flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-0 text-caption font-medium leading-none whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--veenna-focus-line)] focus-visible:ring-offset-1 focus-visible:ring-offset-[var(--veenna-bg)] sm:px-3',
+    'inline-flex shrink-0 items-center gap-1.5 rounded-sm px-2.5 py-0 text-caption font-medium leading-none whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--veenna-focus-line)] focus-visible:ring-offset-1 focus-visible:ring-offset-[var(--veenna-bg)] sm:px-3',
   segmentPillTabActive: 'bg-[var(--veenna-tab-active-bg)] text-[var(--veenna-tab-active-fg)]',
   segmentPillTabInactive: 'text-veenna-muted hover:text-veenna-fg',
   /** Capsule segment control (dictation mode - matches HUD mode switcher). */
   segmentHudTrack:
-    'inline-flex rounded-full border border-veenna-divider bg-veenna-row p-0.5 shadow-veenna-sm',
+    'inline-flex rounded-[calc(var(--radius)-5px)] border border-veenna-divider bg-veenna-row p-0.5 shadow-veenna-sm',
   segmentHudTab:
-    'inline-flex shrink-0 items-center gap-1 rounded-full px-2.5 py-1 text-label font-semibold leading-none whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--veenna-focus-line)] focus-visible:ring-offset-1 focus-visible:ring-offset-[var(--veenna-bg)] sm:gap-1.5 sm:px-3 sm:text-caption',
+    'inline-flex shrink-0 items-center gap-1 rounded-sm px-2.5 py-1 text-label font-semibold leading-none whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--veenna-focus-line)] focus-visible:ring-offset-1 focus-visible:ring-offset-[var(--veenna-bg)] sm:gap-1.5 sm:px-3 sm:text-caption',
   segmentHudTabActive: 'bg-[var(--veenna-tab-active-bg)] text-[var(--veenna-tab-active-fg)]',
   segmentHudTabInactive: 'text-veenna-muted hover:text-veenna-fg',
 
   /** Compact standard control height (h-7 / 28px). Prefer VeennaButton over one-off size classes. */
   btnPrimary:
-    'inline-flex h-7 items-center justify-center gap-1.5 rounded-full bg-veenna-accent px-3 text-caption font-medium leading-none text-veenna-accent-fg transition-opacity hover:opacity-90 focus-visible:!shadow-none disabled:pointer-events-none disabled:opacity-50',
+    'inline-flex h-7 items-center justify-center gap-1.5 rounded-sm bg-veenna-accent px-3 text-caption font-medium leading-none text-veenna-accent-fg transition-opacity hover:opacity-90 focus-visible:!shadow-none disabled:pointer-events-none disabled:opacity-50',
   btnSecondary:
-    'inline-flex h-7 items-center justify-center gap-1.5 rounded-full px-3 text-caption leading-none text-veenna-muted transition-colors hover:bg-veenna-row-hover disabled:pointer-events-none disabled:opacity-50',
+    'inline-flex h-7 items-center justify-center gap-1.5 rounded-sm px-3 text-caption leading-none text-veenna-muted transition-colors hover:bg-veenna-row-hover disabled:pointer-events-none disabled:opacity-50',
   btnMuted:
-    'inline-flex h-7 items-center justify-center gap-1.5 rounded-full bg-muted px-3 text-caption font-medium leading-none text-veenna-fg transition-colors hover:bg-muted/80 disabled:pointer-events-none disabled:opacity-50 dark:bg-muted/55 dark:hover:bg-muted/80',
+    'inline-flex h-7 items-center justify-center gap-1.5 rounded-sm bg-muted px-3 text-caption font-medium leading-none text-veenna-fg transition-colors hover:bg-muted/80 disabled:pointer-events-none disabled:opacity-50 dark:bg-muted/55 dark:hover:bg-muted/80',
   btnOutline:
-    'inline-flex h-7 items-center justify-center gap-1.5 rounded-full border border-veenna-border px-3 text-caption leading-none text-veenna-accent transition-colors hover:bg-veenna-row disabled:pointer-events-none disabled:opacity-40',
+    'inline-flex h-7 items-center justify-center gap-1.5 rounded-sm border border-veenna-border px-3 text-caption leading-none text-veenna-accent transition-colors hover:bg-veenna-row disabled:pointer-events-none disabled:opacity-40',
   btnGhost:
-    'inline-flex h-7 items-center justify-center gap-1.5 rounded-full bg-veenna-row-hover px-3 text-caption font-medium leading-none text-veenna-fg transition-colors hover:bg-veenna-row',
+    'inline-flex h-7 items-center justify-center gap-1.5 rounded-sm bg-veenna-row-hover px-3 text-caption font-medium leading-none text-veenna-fg transition-colors hover:bg-veenna-row',
   btnDestructive:
-    'inline-flex h-7 items-center justify-center gap-1.5 rounded-full bg-red-500/15 px-3 text-caption font-medium leading-none text-red-500 transition-colors hover:bg-red-500/25 disabled:pointer-events-none disabled:opacity-50',
+    'inline-flex h-7 items-center justify-center gap-1.5 rounded-sm bg-red-500/15 px-3 text-caption font-medium leading-none text-red-500 transition-colors hover:bg-red-500/25 disabled:pointer-events-none disabled:opacity-50',
   btnNavAction:
     'inline-flex h-7 items-center gap-1.5 text-caption font-medium leading-none text-veenna-accent transition-opacity hover:opacity-80',
 
@@ -125,13 +125,13 @@ export const veennaUi = {
   iconBtnMd: ICON_BTN,
   /** Sidebar footer: bare circular settings / theme controls (icon only, no chrome). */
   sidebarFooterIconBtn:
-    'flex h-7 w-7 items-center justify-center rounded-full text-veenna-icon transition-colors hover:text-veenna-fg dark:text-veenna-icon-muted dark:hover:text-veenna-icon',
+    'flex h-7 w-7 items-center justify-center rounded-sm text-veenna-icon transition-colors hover:text-veenna-fg dark:text-veenna-icon-muted dark:hover:text-veenna-icon',
   /** Destructive icon button hover (delete). Overrides iconBtn hover bg. */
   iconBtnDestructiveHover: 'hover:bg-red-500/15 hover:text-red-500',
 
-  alertError: 'rounded-md bg-red-500/10 px-3 py-2 text-body text-red-400',
+  alertError: 'rounded-sm bg-red-500/10 px-3 py-2 text-body text-red-400',
   alertSuccess:
-    'rounded-md border border-green-500/30 bg-green-500/10 px-3 py-2 text-body text-green-700 dark:text-green-400',
+    'rounded-sm border border-green-500/30 bg-green-500/10 px-3 py-2 text-body text-green-700 dark:text-green-400',
 
   emptyState: 'px-6 py-8 text-center text-body text-veenna-muted',
 
@@ -141,21 +141,21 @@ export const veennaUi = {
   /** Inset for page / library summary panels (not settings rows, not metric tiles). */
   surfacePanelInset: 'px-4 py-4 sm:px-5 sm:py-5',
   surfaceRaised: 'rounded-xl bg-muted/50',
-  surfaceList: 'overflow-hidden rounded-md border border-veenna-divider bg-card',
+  surfaceList: 'overflow-hidden rounded-sm border border-veenna-divider bg-card',
   surfaceEmpty: 'rounded-xl bg-muted/30 py-10',
 
   card: 'rounded-xl border border-veenna-border bg-veenna-surface shadow-veenna-sm',
 
   /** Native text fields: block layout (not flex like triggers) */
   field:
-    'block w-full rounded-md border-0 bg-veenna-row px-3 py-2 text-body text-veenna-fg placeholder:text-veenna-muted transition-colors focus-visible:outline-none focus-visible:ring-0 focus-visible:bg-veenna-row-hover disabled:cursor-not-allowed disabled:opacity-50',
+    'block w-full rounded-sm border-0 bg-veenna-row px-3 py-2 text-body text-veenna-fg placeholder:text-veenna-muted transition-colors focus-visible:outline-none focus-visible:ring-0 focus-visible:bg-veenna-row-hover disabled:cursor-not-allowed disabled:opacity-50',
   /** Form controls: inputs, selects, date/time triggers */
   control:
-    'flex w-full rounded-md border-0 bg-veenna-row px-3 py-2 text-body text-veenna-fg placeholder:text-veenna-muted transition-colors focus-visible:outline-none focus-visible:ring-0 focus-visible:bg-veenna-row-hover disabled:cursor-not-allowed disabled:opacity-50',
+    'flex w-full rounded-sm border-0 bg-veenna-row px-3 py-2 text-body text-veenna-fg placeholder:text-veenna-muted transition-colors focus-visible:outline-none focus-visible:ring-0 focus-visible:bg-veenna-row-hover disabled:cursor-not-allowed disabled:opacity-50',
   controlTrigger:
-    'flex w-full items-center rounded-md border-0 bg-veenna-row px-3 py-2 text-body text-veenna-fg transition-colors focus-visible:outline-none focus-visible:ring-0 focus-visible:bg-veenna-row-hover disabled:cursor-not-allowed disabled:opacity-50',
+    'flex w-full items-center rounded-sm border-0 bg-veenna-row px-3 py-2 text-body text-veenna-fg transition-colors focus-visible:outline-none focus-visible:ring-0 focus-visible:bg-veenna-row-hover disabled:cursor-not-allowed disabled:opacity-50',
   popoverSurface:
-    'rounded-md border border-veenna-border bg-veenna-surface text-veenna-fg shadow-veenna-sm',
+    'rounded-sm border border-veenna-border bg-veenna-surface text-veenna-fg shadow-veenna-sm',
 
   /**
    * The one compact menu standard: dropdowns, right-click menus and row popups all build from these.
@@ -183,7 +183,7 @@ export const veennaUi = {
   menuPanelPad: 'px-3 py-2',
 
   /** Settings modal cards - dividers span full card width (no outer padding on card). */
-  settingsCard: 'overflow-hidden rounded-md border border-veenna-divider bg-veenna-surface/60',
+  settingsCard: 'overflow-hidden rounded-sm border border-veenna-divider bg-veenna-surface/60',
   settingsGroupTitle:
     'border-b border-veenna-divider px-4 py-3 text-label font-medium uppercase tracking-overline text-veenna-muted',
   /** A group title sharing its row (a badge, a Close link): the row carries the divider so it spans the card. */

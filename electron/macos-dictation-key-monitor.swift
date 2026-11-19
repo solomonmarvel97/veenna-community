@@ -22,18 +22,18 @@ var eventTap: CFMachPort?
 var consumeEvents = false
 var inputMonitoringGranted = false
 
-// Clio Screen chord: a set of modifiers held together with nothing else (default Control+Option).
+// Veenna Screen chord: a set of modifiers held together with nothing else (default Control+Option).
 // Control must already be down when Option goes down, so Option alone stays dictation.
-var clioMask: CGEventFlags = [.maskShift]
-var clioHeld = false
+var veennaMask: CGEventFlags = [.maskShift]
+var veennaHeld = false
 
 // Key chord mode (default Shift+Space): a modifier plus the space bar. The space is swallowed so it
-// never types; held for 200 ms it starts Clio, and a shorter press types the space after all.
-var clioKeyMode = true
+// never types; held for 200 ms it starts Veenna, and a shorter press types the space after all.
+var veennaKeyMode = true
 let spaceKeyCode: Int64 = 49
-var clioPending = false
-var clioPendingTimer: Timer?
-let clioHoldDelay = 0.2
+var veennaPending = false
+var veennaPendingTimer: Timer?
+let veennaHoldDelay = 0.2
 
 func postSpaceKeystroke(withShift: Bool) {
     guard let source = CGEventSource(stateID: .combinedSessionState),
@@ -47,36 +47,36 @@ func postSpaceKeystroke(withShift: Bool) {
     up.post(tap: .cgSessionEventTap)
 }
 
-func clioKeyCancelPending() {
-    clioPendingTimer?.invalidate()
-    clioPendingTimer = nil
-    clioPending = false
+func veennaKeyCancelPending() {
+    veennaPendingTimer?.invalidate()
+    veennaPendingTimer = nil
+    veennaPending = false
 }
-let clioRelevant: CGEventFlags = [.maskControl, .maskAlternate, .maskShift, .maskCommand]
+let veennaRelevant: CGEventFlags = [.maskControl, .maskAlternate, .maskShift, .maskCommand]
 
-func clioChordActive(_ flags: CGEventFlags) -> Bool {
-    flags.intersection(clioRelevant) == clioMask
+func veennaChordActive(_ flags: CGEventFlags) -> Bool {
+    flags.intersection(veennaRelevant) == veennaMask
 }
 
-func updateClioChord(_ flags: CGEventFlags) {
-    let active = clioChordActive(flags)
-    if active && !clioHeld {
+func updateVeennaChord(_ flags: CGEventFlags) {
+    let active = veennaChordActive(flags)
+    if active && !veennaHeld {
         // Dictation already running (Option first, then Control): it keeps the key.
         if sessionEngaged || handsFreeLatched { return }
-        clioHeld = true
-        emit("clio-down")
-    } else if !active && clioHeld {
-        clioHeld = false
-        emit("clio-up")
+        veennaHeld = true
+        emit("veenna-down")
+    } else if !active && veennaHeld {
+        veennaHeld = false
+        emit("veenna-up")
     }
 }
 
-/// Option going down while the Clio chord (which includes Option) is complete is not dictation.
-func clioClaimsOption(_ flags: CGEventFlags) -> Bool {
-    !clioKeyMode && clioMask.contains(.maskAlternate) && clioChordActive(flags)
+/// Option going down while the Veenna chord (which includes Option) is complete is not dictation.
+func veennaClaimsOption(_ flags: CGEventFlags) -> Bool {
+    !veennaKeyMode && veennaMask.contains(.maskAlternate) && veennaChordActive(flags)
 }
 
-func parseClioChord(_ text: String) -> CGEventFlags? {
+func parseVeennaChord(_ text: String) -> CGEventFlags? {
     var mask: CGEventFlags = []
     for word in text.split(separator: "+") {
         switch word {
@@ -155,7 +155,7 @@ func handleOptionFlagsChanged(_ event: CGEvent) {
     if keycode == 58 {
         if isDown && !leftOptionHeld {
             leftOptionHeld = true
-            if !optionHeld && !clioClaimsOption(event.flags) { handleOptionDown() }
+            if !optionHeld && !veennaClaimsOption(event.flags) { handleOptionDown() }
         } else if !isDown && leftOptionHeld {
             leftOptionHeld = false
             if optionHeld && !anyOptionPhysicallyHeld() { handleOptionUp() }
@@ -163,7 +163,7 @@ func handleOptionFlagsChanged(_ event: CGEvent) {
     } else if keycode == 61 {
         if isDown && !rightOptionHeld {
             rightOptionHeld = true
-            if !optionHeld && !clioClaimsOption(event.flags) { handleOptionDown() }
+            if !optionHeld && !veennaClaimsOption(event.flags) { handleOptionDown() }
         } else if !isDown && rightOptionHeld {
             rightOptionHeld = false
             if optionHeld && !anyOptionPhysicallyHeld() { handleOptionUp() }
@@ -184,50 +184,50 @@ func callback(
         return Unmanaged.passUnretained(event)
     }
 
-    if clioKeyMode {
+    if veennaKeyMode {
         let keycode = event.getIntegerValueField(.keyboardEventKeycode)
         let flags = event.flags
-        let shiftOnly = flags.intersection(clioRelevant) == clioMask
+        let shiftOnly = flags.intersection(veennaRelevant) == veennaMask
         if type == .keyDown && keycode == spaceKeyCode {
             if event.getIntegerValueField(.keyboardEventAutorepeat) != 0 {
-                if clioPending || clioHeld { return consumeEvents ? nil : Unmanaged.passUnretained(event) }
+                if veennaPending || veennaHeld { return consumeEvents ? nil : Unmanaged.passUnretained(event) }
             } else if consumeEvents && shiftOnly && !sessionEngaged && !handsFreeLatched {
-                clioPending = true
-                clioPendingTimer?.invalidate()
-                clioPendingTimer = Timer.scheduledTimer(withTimeInterval: clioHoldDelay, repeats: false) { _ in
-                    guard clioPending else { return }
-                    clioPending = false
-                    clioHeld = true
-                    emit("clio-down")
+                veennaPending = true
+                veennaPendingTimer?.invalidate()
+                veennaPendingTimer = Timer.scheduledTimer(withTimeInterval: veennaHoldDelay, repeats: false) { _ in
+                    guard veennaPending else { return }
+                    veennaPending = false
+                    veennaHeld = true
+                    emit("veenna-down")
                 }
                 return nil
             }
-        } else if type == .keyUp && keycode == spaceKeyCode && (clioPending || clioHeld) {
-            if clioPending {
+        } else if type == .keyUp && keycode == spaceKeyCode && (veennaPending || veennaHeld) {
+            if veennaPending {
                 // Too short to be a question: it was just a space.
-                clioKeyCancelPending()
+                veennaKeyCancelPending()
                 postSpaceKeystroke(withShift: true)
             } else {
-                clioHeld = false
-                emit("clio-up")
+                veennaHeld = false
+                emit("veenna-up")
             }
             return nil
         } else if type == .flagsChanged && !flags.contains(.maskShift) {
-            if clioPending {
-                clioKeyCancelPending()
+            if veennaPending {
+                veennaKeyCancelPending()
                 postSpaceKeystroke(withShift: false)
-            } else if clioHeld {
-                clioHeld = false
-                emit("clio-up")
+            } else if veennaHeld {
+                veennaHeld = false
+                emit("veenna-up")
             }
-        } else if type == .keyDown && (clioPending || clioHeld) {
-            // Another key with the chord down: a shortcut, not Clio.
-            if clioPending {
-                clioKeyCancelPending()
+        } else if type == .keyDown && (veennaPending || veennaHeld) {
+            // Another key with the chord down: a shortcut, not Veenna.
+            if veennaPending {
+                veennaKeyCancelPending()
                 postSpaceKeystroke(withShift: true)
             } else {
-                clioHeld = false
-                emit("clio-cancel")
+                veennaHeld = false
+                emit("veenna-cancel")
             }
         }
     }
@@ -235,9 +235,9 @@ func callback(
     if type == .flagsChanged {
         // The chord is judged first so a claimed Option never starts dictation.
         let keycode = event.getIntegerValueField(.keyboardEventKeycode)
-        if !clioKeyMode && isOptionKey(keycode) && event.flags.contains(.maskAlternate) { updateClioChord(event.flags) }
+        if !veennaKeyMode && isOptionKey(keycode) && event.flags.contains(.maskAlternate) { updateVeennaChord(event.flags) }
         handleOptionFlagsChanged(event)
-        if !clioKeyMode && !(isOptionKey(keycode) && event.flags.contains(.maskAlternate)) { updateClioChord(event.flags) }
+        if !veennaKeyMode && !(isOptionKey(keycode) && event.flags.contains(.maskAlternate)) { updateVeennaChord(event.flags) }
     }
 
     if type == .keyDown {
@@ -251,10 +251,10 @@ func callback(
                 }
             }
         }
-        // Any other key while the chord is down means it was a shortcut, not Clio.
-        if clioHeld && !clioKeyMode {
-            clioHeld = false
-            emit("clio-cancel")
+        // Any other key while the chord is down means it was a shortcut, not Veenna.
+        if veennaHeld && !veennaKeyMode {
+            veennaHeld = false
+            emit("veenna-cancel")
         }
         if anyOptionPhysicallyHeld(), !isOptionKey(keycode) {
             handleOptionComboInterrupt()
@@ -408,15 +408,15 @@ func handleCommand(_ line: String) {
     guard parts.count >= 2 else { return }
     let id = parts[0]
 
-    if parts[1] == "clio-chord", parts.count >= 3 {
-        if parts[2].hasSuffix("+space"), let mask = parseClioChord(String(parts[2].dropLast(6))) {
-            clioMask = mask
-            clioKeyMode = true
-            clioKeyCancelPending()
+    if parts[1] == "veenna-chord", parts.count >= 3 {
+        if parts[2].hasSuffix("+space"), let mask = parseVeennaChord(String(parts[2].dropLast(6))) {
+            veennaMask = mask
+            veennaKeyMode = true
+            veennaKeyCancelPending()
             replyLine(id, ["ok": true])
-        } else if let mask = parseClioChord(parts[2]) {
-            clioKeyMode = false
-            clioMask = mask
+        } else if let mask = parseVeennaChord(parts[2]) {
+            veennaKeyMode = false
+            veennaMask = mask
             replyLine(id, ["ok": true])
         } else {
             replyLine(id, ["ok": false, "reason": "bad_chord"])
@@ -519,14 +519,14 @@ CGEvent.tapEnable(tap: resolvedTap, enable: true)
 // the event before the tap sees it. Push-to-talk would then hold forever, so
 // while Option counts as held, check the key itself and let go when it is up.
 let heldCheck = Timer(timeInterval: 0.1, repeats: true) { _ in
-    if clioHeld {
+    if veennaHeld {
         let flags = CGEventSource.flagsState(.hidSystemState)
-        let stillHeld = clioKeyMode
+        let stillHeld = veennaKeyMode
             ? (flags.contains(.maskShift) && CGEventSource.keyState(.hidSystemState, key: CGKeyCode(spaceKeyCode)))
-            : clioChordActive(flags)
+            : veennaChordActive(flags)
         if !stillHeld {
-            clioHeld = false
-            emit("clio-up")
+            veennaHeld = false
+            emit("veenna-up")
         }
     }
     guard optionHeld, !handsFreeLatched else { return }
@@ -556,6 +556,6 @@ if !inputMonitoringGranted || !startedTrusted {
 }
 
 let ready =
-    "{\"ready\":true,\"key\":\"Option\",\"consume\":\(consumeEvents),\"inputMonitoring\":\(inputMonitoringGranted),\"commands\":true,\"clio\":true}\n"
+    "{\"ready\":true,\"key\":\"Option\",\"consume\":\(consumeEvents),\"inputMonitoring\":\(inputMonitoringGranted),\"commands\":true,\"veenna\":true}\n"
 FileHandle.standardError.write(ready.data(using: .utf8)!)
 CFRunLoopRun()

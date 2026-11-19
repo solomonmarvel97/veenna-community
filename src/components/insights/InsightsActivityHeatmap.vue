@@ -202,7 +202,7 @@ function clearTip() {
     <Teleport to="body">
       <div
         v-if="hovered"
-        class="insights-heat-tip pointer-events-none fixed z-[40] -translate-x-1/2 -translate-y-full rounded-md px-2 py-1 text-caption font-medium shadow-lg"
+        class="insights-heat-tip pointer-events-none fixed z-[40] -translate-x-1/2 -translate-y-full rounded-sm px-2 py-1 text-caption font-medium shadow-lg"
         :style="{ left: `${hovered.x}px`, top: `${hovered.y - 8}px` }"
         role="tooltip"
       >

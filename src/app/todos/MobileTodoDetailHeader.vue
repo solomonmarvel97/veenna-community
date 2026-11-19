@@ -29,7 +29,7 @@ async function deleteTask() {
     <MobileNavButton />
     <button
       type="button"
-      class="flex h-10 w-10 items-center justify-center rounded-md text-veenna-icon-muted transition-colors hover:bg-veenna-row-hover hover:text-veenna-icon"
+      class="flex h-10 w-10 items-center justify-center rounded-sm text-veenna-icon-muted transition-colors hover:bg-veenna-row-hover hover:text-veenna-icon"
       aria-label="Back to todo list"
       @click="goBack"
     >
@@ -39,7 +39,7 @@ async function deleteTask() {
     <button
       v-if="store.selectedItem"
       type="button"
-      class="flex h-10 w-10 items-center justify-center rounded-md text-veenna-icon-muted transition-colors hover:bg-red-500/10 hover:text-red-400"
+      class="flex h-10 w-10 items-center justify-center rounded-sm text-veenna-icon-muted transition-colors hover:bg-red-500/10 hover:text-red-400"
       aria-label="Delete todo"
       @click="deleteTask"
     >

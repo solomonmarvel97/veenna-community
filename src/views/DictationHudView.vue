@@ -110,9 +110,7 @@ const titleLabel = computed(() => {
  * Status copy only while recording or during the brief post-save acknowledgement. Everything
  * else stays in the compact 40×40 window, which has no room for a line of text beside the pill.
  */
-const showTitle = computed(
-  () => Boolean(titleLabel.value) && (isDictating.value || showSuccessFeedback.value),
-)
+const showTitle = computed(() => Boolean(titleLabel.value) && showSuccessFeedback.value)
 
 /** Single pill container: idle circle → recording bar → processing circle. */
 const showCorePill = computed(

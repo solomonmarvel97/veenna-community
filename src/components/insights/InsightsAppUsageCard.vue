@@ -65,9 +65,9 @@ function barTone(index: number): string {
           aria-hidden="true"
         />
         <div class="min-w-0">
-          <div class="relative h-7 overflow-hidden rounded-md bg-veenna-row">
+          <div class="relative h-7 overflow-hidden rounded-sm bg-veenna-row">
             <div
-              class="absolute inset-y-0 left-0 flex items-center rounded-md px-2 transition-[width] duration-700 ease-out"
+              class="absolute inset-y-0 left-0 flex items-center rounded-sm px-2 transition-[width] duration-700 ease-out"
               :style="{
                 width: `${Math.max(cat.percent > 0 ? 12 : 0, cat.percent)}%`,
                 background: barTone(index),

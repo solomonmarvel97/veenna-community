@@ -21,7 +21,7 @@ function reload() {
     </p>
     <button
       type="button"
-      class="inline-flex h-7 items-center rounded-md border border-veenna-divider bg-veenna-bg px-3 text-caption font-medium text-veenna-fg hover:bg-veenna-row"
+      class="inline-flex h-7 items-center rounded-sm border border-veenna-divider bg-veenna-bg px-3 text-caption font-medium text-veenna-fg hover:bg-veenna-row"
       @click="reload"
     >
       Reload

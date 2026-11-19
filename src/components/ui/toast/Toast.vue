@@ -58,7 +58,7 @@ const dismissClasses = computed(() => {
 <template>
   <div
     :class="[
-      'no-drag pointer-events-auto flex min-h-8 max-w-[min(28rem,calc(100vw-2rem))] items-center gap-1.5 rounded-md py-1.5 pl-3.5 pr-1 shadow-lg',
+      'no-drag pointer-events-auto flex min-h-8 max-w-[min(28rem,calc(100vw-2rem))] items-center gap-1.5 rounded-sm py-1.5 pl-3.5 pr-1 shadow-lg',
       variantClasses,
       onClick ? 'cursor-pointer select-none' : '',
     ]"
@@ -89,7 +89,7 @@ const dismissClasses = computed(() => {
     <button
       type="button"
       :class="[
-        'flex size-6 shrink-0 items-center justify-center rounded-md transition-colors',
+        'flex size-6 shrink-0 items-center justify-center rounded-sm transition-colors',
         dismissClasses,
       ]"
       aria-label="Dismiss"

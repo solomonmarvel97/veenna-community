@@ -39,7 +39,7 @@ const nextTheme = computed(() => {
     class="inline-flex items-center justify-center text-foreground transition-all duration-200 hover:bg-accent active:scale-95 focus-visible:outline-none focus-visible:shadow-[0_0_0_1px_var(--veenna-focus-subtle)]"
     :class="[
       props.compact ? 'h-7 w-7' : 'h-7 w-7',
-      props.roundedFull ? 'rounded-full' : 'rounded-md',
+      props.roundedFull ? 'rounded-full' : 'rounded-sm',
     ]"
     :aria-label="`Switch to ${nextTheme} mode`"
     :title="`Theme: ${currentTheme}. Click to cycle.`"

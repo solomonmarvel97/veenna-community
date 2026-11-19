@@ -19,8 +19,8 @@ const emit = defineEmits<{ click: [event: MouseEvent] }>()
 
 /** The desktop app uses the compact row at any window width; only the web follows the `lg` breakpoint. */
 const smartRowClass = isElectronMainWindow
-  ? 'h-8 gap-2.5 rounded-md px-1.5 py-0'
-  : 'gap-2.5 rounded-md px-2.5 py-2.5 max-lg:min-h-[44px] lg:h-8 lg:px-1.5 lg:py-0'
+  ? 'h-8 gap-2.5 rounded-sm px-1.5 py-0'
+  : 'gap-2.5 rounded-sm px-2.5 py-2.5 max-lg:min-h-[44px] lg:h-8 lg:px-1.5 lg:py-0'
 const shortcutHideClass = isElectronMainWindow ? '' : 'max-lg:hidden'
 
 let skipClick = false
@@ -53,7 +53,7 @@ function onClick(event: MouseEvent) {
     :class="
       cn(
         'group flex w-full items-center text-left text-body transition-colors focus-visible:outline-none focus-visible:shadow-[0_0_0_1px_var(--veenna-focus-subtle)]',
-        variant === 'smart' ? smartRowClass : 'h-8 gap-2 rounded-md px-2 py-0',
+        variant === 'smart' ? smartRowClass : 'h-8 gap-2 rounded-sm px-2 py-0',
         indent && 'pl-6',
         disabled && 'cursor-not-allowed opacity-40',
         // Smart rows mark selection by brightness, not a fill: the chosen row is

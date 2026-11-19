@@ -69,7 +69,7 @@ button.veenna-task-ring:focus-visible {
   width: 100%;
   background-color: var(--veenna-search-bg);
   border: 1px solid color-mix(in srgb, var(--veenna-fg) 15%, transparent);
-  border-radius: calc(var(--radius) - 4px); /* rounded-md */
+  border-radius: calc(var(--radius) - 4px); /* rounded-sm */
 }
 
 [data-theme='dark'] .veenna-add-task-bar {

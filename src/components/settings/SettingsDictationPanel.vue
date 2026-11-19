@@ -226,7 +226,7 @@ useErrorToast(hudScreenShareError)
 
       <div
         v-if="showHotkeyPermissionHelp"
-        class="rounded-md border border-amber-500/30 bg-amber-500/5 p-3"
+        class="rounded-sm border border-amber-500/30 bg-amber-500/5 p-3"
       >
         <div class="space-y-0.5">
           <p class="text-body font-medium text-veenna-foreground">Global Option key</p>

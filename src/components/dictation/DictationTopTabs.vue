@@ -20,7 +20,6 @@ function open(id: string | number) {
   const tab = tabs.find((t) => t.id === id)
   if (tab && !isActive(tab)) void router.push(tab.path)
 }
-
 </script>
 
 <template>

@@ -125,7 +125,7 @@ onUnmounted(() => {
 
           <div class="flex flex-wrap items-center gap-2">
             <span
-              class="inline-flex h-7 min-w-[7.5rem] items-center justify-center rounded-md bg-muted px-3 text-caption font-medium leading-none text-veenna-fg dark:bg-muted/55"
+              class="inline-flex h-7 min-w-[7.5rem] items-center justify-center rounded-sm bg-muted px-3 text-caption font-medium leading-none text-veenna-fg dark:bg-muted/55"
               :aria-label="`Hands-free shortcut: ${draftLabel || currentLabel}`"
             >
               {{ draftLabel || currentLabel }}

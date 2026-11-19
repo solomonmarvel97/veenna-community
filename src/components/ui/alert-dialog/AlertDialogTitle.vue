@@ -24,7 +24,7 @@ const delegatedProps = computed(() => {
       <slot />
     </AlertDialogTitle>
     <AlertDialogCancel
-      class="inline-grid size-7 shrink-0 place-items-center rounded-md text-veenna-muted transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
+      class="inline-grid size-7 shrink-0 place-items-center rounded-sm text-veenna-muted transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
       aria-label="Close"
     >
       <PhX class="size-4" weight="bold" aria-hidden="true" />

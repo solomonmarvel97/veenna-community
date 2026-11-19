@@ -4,7 +4,7 @@
   the always-on-top dictation HUD, a sticky, or the meeting prompt the
   same markup is a grey card sitting over a small panel - and, being
   fixed and inset-0, it swallows clicks until the bundle takes it away.
-  Those windows get no splash at all, removed rather than hidden. Clio's
+  Those windows get no splash at all, removed rather than hidden. Veenna's
   overlay matters most: it is a transparent window over the whole display,
   shown at launch, so a splash there fills the screen before the main window
   appears. A public
@@ -18,10 +18,10 @@
   var el = document.getElementById('boot-splash')
   if (!el) return
   var shell = window.veennaElectron || {}
-  var panels = ['/dictation-hud', '/meeting-prompt', '/stickies/widget', '/clio-overlay']
+  var panels = ['/dictation-hud', '/meeting-prompt', '/stickies/widget', '/veenna-overlay']
   var floating =
     Boolean(
-      shell.isDictationHud || shell.isClioOverlay || shell.isStickyWidget || shell.isMeetingPrompt,
+      shell.isDictationHud || shell.isVeennaOverlay || shell.isStickyWidget || shell.isMeetingPrompt,
     ) ||
     panels.indexOf(window.location.pathname) !== -1
   if (floating) {

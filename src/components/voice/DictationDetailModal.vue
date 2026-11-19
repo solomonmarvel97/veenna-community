@@ -6,7 +6,8 @@
  */
 import { computed } from 'vue'
 import { format, parseISO } from 'date-fns'
-import { PhCaretDown, PhCheck, PhCopy, PhSpinner } from '@phosphor-icons/vue'
+import { PhCaretDown, PhCopy, PhSpinner } from '@phosphor-icons/vue'
+import CopiedCheck from '@/components/ui/CopiedCheck.vue'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -104,7 +105,7 @@ const hasMore = computed(() => props.actions.canRetry)
               :disabled="!shownText"
               @click="emit('copy', shownText)"
             >
-              <PhCheck v-if="copied" class="size-3.5 text-veenna-accent" weight="bold" />
+              <CopiedCheck v-if="copied" class="size-3.5" />
               <PhCopy v-else class="size-3.5" weight="fill" />
               {{ copied ? 'Copied' : 'Copy' }}
             </Button>

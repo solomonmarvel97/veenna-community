@@ -19,7 +19,9 @@ function startDictating() {
 </script>
 
 <template>
-  <div class="flex flex-col items-center gap-4 py-6 text-center [--hairline-plate:var(--veenna-bg)]">
+  <div
+    class="flex flex-col items-center gap-4 py-6 text-center [--hairline-plate:var(--veenna-bg)]"
+  >
     <!-- The figure's viewBox ends well below the drawing, so the heading rises into that margin. -->
     <div class="flex flex-col items-center">
       <HairlineMic class="-mb-4 w-[200px]" play />

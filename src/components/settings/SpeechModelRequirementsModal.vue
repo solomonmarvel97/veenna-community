@@ -65,7 +65,7 @@ const warnings = computed(
 
       <section
         v-if="model"
-        class="rounded-md border border-veenna-divider bg-veenna-row-hover/40 px-3 py-2.5"
+        class="rounded-sm border border-veenna-divider bg-veenna-row-hover/40 px-3 py-2.5"
       >
         <p class="text-body font-medium text-veenna-foreground">{{ model.label }}</p>
         <p class="mt-1 text-caption text-veenna-muted">
@@ -111,7 +111,7 @@ const warnings = computed(
           <li
             v-for="issue in blockingIssues"
             :key="issue.code"
-            class="rounded-md border border-red-500/20 bg-red-500/5 px-3 py-2"
+            class="rounded-sm border border-red-500/20 bg-red-500/5 px-3 py-2"
           >
             <p class="text-body font-medium text-veenna-foreground">{{ issue.title }}</p>
             <p class="mt-0.5 text-caption text-veenna-muted">{{ issue.detail }}</p>
@@ -125,7 +125,7 @@ const warnings = computed(
           <li
             v-for="issue in warnings"
             :key="issue.code"
-            class="rounded-md border border-amber-500/20 bg-amber-500/5 px-3 py-2"
+            class="rounded-sm border border-amber-500/20 bg-amber-500/5 px-3 py-2"
           >
             <p class="text-body font-medium text-veenna-foreground">{{ issue.title }}</p>
             <p class="mt-0.5 text-caption text-veenna-muted">{{ issue.detail }}</p>

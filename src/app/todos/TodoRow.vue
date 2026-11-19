@@ -80,7 +80,7 @@ async function onCopy() {
 
 <template>
   <div
-    class="veenna-touch-target veenna-task-row mb-1 flex cursor-pointer items-center gap-3 rounded-md px-3 py-3 transition-[background-color,transform] duration-motion-fast ease-motion-standard hover:bg-veenna-row-hover active:scale-[0.998] sm:py-2.5"
+    class="veenna-touch-target veenna-task-row mb-1 flex cursor-pointer items-center gap-3 rounded-sm px-3 py-3 transition-[background-color,transform] duration-motion-fast ease-motion-standard hover:bg-veenna-row-hover active:scale-[0.998] sm:py-2.5"
     :class="[selectMode ? 'select-none' : '', selected ? 'bg-veenna-row' : '']"
     :role="selectMode ? 'checkbox' : undefined"
     :aria-checked="selectMode ? checked : undefined"
@@ -105,7 +105,7 @@ async function onCopy() {
     <button
       v-else
       type="button"
-      class="veenna-task-ring flex h-6 w-6 shrink-0 items-center justify-center rounded-md sm:h-5 sm:w-5"
+      class="veenna-task-ring flex h-6 w-6 shrink-0 items-center justify-center rounded-sm sm:h-5 sm:w-5"
       :class="displayCompleted ? 'veenna-task-ring--done' : ''"
       :aria-label="displayCompleted ? 'Mark incomplete' : 'Mark complete'"
       @click.stop="onToggleComplete"
@@ -130,7 +130,7 @@ async function onCopy() {
     <button
       v-if="!selectMode"
       type="button"
-      class="flex h-10 w-10 shrink-0 items-center justify-center rounded-md sm:h-8 sm:w-8 sm:p-1"
+      class="flex h-10 w-10 shrink-0 items-center justify-center rounded-sm sm:h-8 sm:w-8 sm:p-1"
       :class="
         displayImportant ? 'text-veenna-star-active' : 'text-veenna-star hover:text-veenna-star-active'
       "
@@ -143,7 +143,7 @@ async function onCopy() {
       <DropdownMenuTrigger as-child>
         <button
           type="button"
-          class="-ml-2 flex h-10 w-10 shrink-0 items-center justify-center rounded-md text-veenna-icon-muted transition-colors hover:text-veenna-icon sm:h-8 sm:w-8"
+          class="-ml-2 flex h-10 w-10 shrink-0 items-center justify-center rounded-sm text-veenna-icon-muted transition-colors hover:text-veenna-icon sm:h-8 sm:w-8"
           :class="actionsOpen ? 'text-veenna-icon' : ''"
           aria-label="Todo actions"
           @click.stop

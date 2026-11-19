@@ -3,6 +3,7 @@
     v-if="totalPages > 1 || alwaysShow"
     ref="rootRef"
     class="relative z-20 isolate flex w-full min-w-0 items-center justify-between gap-3"
+    :class="{ 'flex-wrap gap-y-2': fitLevel >= FIT_WRAP }"
   >
     <div class="flex min-w-0 items-center gap-3">
       <div v-if="showItemsPerPageSelect" class="flex shrink-0 items-center gap-2">
@@ -12,7 +13,7 @@
           @update:model-value="onItemsPerPageChange"
         >
           <SelectTrigger
-            class="h-8 w-[4.25rem] min-w-[4.25rem] gap-1 rounded-md px-2.5 text-caption tabular-nums [&>span:first-child]:overflow-visible [&>span:first-child]:whitespace-nowrap"
+            class="h-8 w-[4.25rem] min-w-[4.25rem] gap-1 rounded-sm px-2.5 text-caption tabular-nums [&>span:first-child]:overflow-visible [&>span:first-child]:whitespace-nowrap"
             :disabled="navDisabled"
             aria-label="Rows per page"
           >
@@ -41,7 +42,8 @@
       </div>
 
       <div
-        v-if="showResultsText"
+        v-if="showResultsText && fitLevel < 1"
+        ref="resultsRef"
         class="min-w-0 truncate whitespace-nowrap text-body tabular-nums text-veenna-muted"
       >
         {{ resultsLabel }}
@@ -49,9 +51,12 @@
     </div>
 
     <div
-      class="flex shrink-0 items-stretch overflow-hidden rounded-md border border-veenna-border bg-veenna-row divide-x divide-veenna-border"
+      ref="pagerRef"
+      :class="{ 'ml-auto': fitLevel >= FIT_WRAP }"
+      class="flex shrink-0 items-stretch overflow-hidden rounded-sm border border-veenna-border bg-veenna-row divide-x divide-veenna-border"
     >
       <button
+        v-if="fitLevel < 2"
         type="button"
         :class="navButtonClass"
         :disabled="pageButtonsDisabled || currentPage <= 1"
@@ -131,6 +136,7 @@
         <PhCaretRight v-else class="size-3.5 shrink-0" />
       </button>
       <button
+        v-if="fitLevel < 2"
         type="button"
         :class="navButtonClass"
         :disabled="pageButtonsDisabled || currentPage >= totalPages"
@@ -148,7 +154,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { computed, nextTick, onBeforeUnmount, ref, watch } from 'vue'
 import {
   Select,
   SelectContent,
@@ -231,41 +237,54 @@ function pageButtonClass(active: boolean) {
   )
 }
 
-const maxVisiblePages = 3
-const halfVisible = Math.floor(maxVisiblePages / 2)
+/**
+ * Fit ladder. On narrow bars (phones) the pager must never run over the
+ * page-size select, so pieces drop away until it fits beside it:
+ * 0 everything · 1 no results text · 2 no first/last arrows ·
+ * 3 one page number · 4 prev / current / next only · 5 pager wraps to its own row.
+ */
+const FIT_WRAP = 5
+const fitLevel = ref(0)
+const resultsRef = ref<HTMLElement | null>(null)
+const pagerRef = ref<HTMLElement | null>(null)
+
+const maxVisiblePages = computed(() => (fitLevel.value >= 3 ? 1 : 3))
+const halfVisible = computed(() => Math.floor(maxVisiblePages.value / 2))
 
 const visiblePages = computed(() => {
-  if (totalPages.value <= maxVisiblePages) {
+  if (totalPages.value <= maxVisiblePages.value) {
     return Array.from({ length: Math.max(1, totalPages.value) }, (_, i) => i + 1)
   }
 
-  let start = Math.max(1, props.currentPage - halfVisible)
-  let end = Math.min(totalPages.value, start + maxVisiblePages - 1)
+  let start = Math.max(1, props.currentPage - halfVisible.value)
+  let end = Math.min(totalPages.value, start + maxVisiblePages.value - 1)
 
   if (end === totalPages.value) {
-    start = Math.max(1, end - maxVisiblePages + 1)
+    start = Math.max(1, end - maxVisiblePages.value + 1)
   }
 
   return Array.from({ length: end - start + 1 }, (_, i) => start + i)
 })
 
 const showFirstPage = computed(
-  () => totalPages.value > maxVisiblePages && visiblePages.value[0] > 1,
+  () => fitLevel.value < 4 && totalPages.value > maxVisiblePages.value && visiblePages.value[0] > 1,
 )
 
 const showLastPage = computed(
   () =>
-    totalPages.value > maxVisiblePages &&
+    fitLevel.value < 4 &&
+    totalPages.value > maxVisiblePages.value &&
     visiblePages.value[visiblePages.value.length - 1] < totalPages.value,
 )
 
 const showStartEllipsis = computed(
-  () => totalPages.value > maxVisiblePages && visiblePages.value[0] > 2,
+  () => fitLevel.value < 4 && totalPages.value > maxVisiblePages.value && visiblePages.value[0] > 2,
 )
 
 const showEndEllipsis = computed(
   () =>
-    totalPages.value > maxVisiblePages &&
+    fitLevel.value < 4 &&
+    totalPages.value > maxVisiblePages.value &&
     visiblePages.value[visiblePages.value.length - 1] < totalPages.value - 1,
 )
 
@@ -414,4 +433,79 @@ watch(
     }
   },
 )
+
+/** True when the pager runs past either edge of the bar or into the left group. */
+function barOverflows() {
+  const root = rootRef.value
+  const pager = pagerRef.value
+  if (!root || !pager) return false
+  const results = resultsRef.value
+  if (results && results.scrollWidth > results.clientWidth + 1) return true
+  const bar = root.getBoundingClientRect()
+  const pagerBox = pager.getBoundingClientRect()
+  if (pagerBox.left < bar.left - 1 || pagerBox.right > bar.right + 1) return true
+  const left = root.firstElementChild as HTMLElement | null
+  if (left && left !== pager) {
+    // Measure the left group's children, not the group (it can shrink under its content).
+    let leftEdge = -Infinity
+    for (const child of Array.from(left.children)) {
+      leftEdge = Math.max(leftEdge, child.getBoundingClientRect().right)
+    }
+    if (leftEdge > pagerBox.left - 4) return true
+  }
+  return false
+}
+
+let fitRun = 0
+async function fitToWidth() {
+  const run = ++fitRun
+  fitLevel.value = 0
+  await nextTick()
+  // Runs inside the same frame (microtasks), so the steps never paint.
+  while (run === fitRun && fitLevel.value < FIT_WRAP && barOverflows()) {
+    fitLevel.value += 1
+    await nextTick()
+  }
+}
+
+let resizeObserver: ResizeObserver | null = null
+let observedWidth = -1
+
+watch(
+  rootRef,
+  (el) => {
+    resizeObserver?.disconnect()
+    resizeObserver = null
+    observedWidth = -1
+    if (!el || typeof ResizeObserver === 'undefined') return
+    resizeObserver = new ResizeObserver((entries) => {
+      const width = Math.round(entries[0]?.contentRect.width ?? 0)
+      if (width === observedWidth) return
+      observedWidth = width
+      void fitToWidth()
+    })
+    resizeObserver.observe(el)
+  },
+  { flush: 'post' },
+)
+
+watch(
+  () => [
+    props.currentPage,
+    totalPages.value,
+    resultsLabel.value,
+    props.showResultsText,
+    props.showItemsPerPageSelect,
+  ],
+  () => {
+    if (rootRef.value) void fitToWidth()
+  },
+  { flush: 'post' },
+)
+
+onBeforeUnmount(() => {
+  fitRun += 1
+  resizeObserver?.disconnect()
+  resizeObserver = null
+})
 </script>

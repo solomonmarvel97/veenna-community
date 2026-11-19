@@ -41,7 +41,7 @@ onBeforeUnmount(() => {
   >
     <div
       v-if="visible"
-      class="pointer-events-none fixed right-4 top-4 rounded-md border border-veenna-border bg-veenna-surface px-2.5 py-1 text-label font-medium tabular-nums text-veenna-fg shadow-veenna-sm"
+      class="pointer-events-none fixed right-4 top-4 rounded-sm border border-veenna-border bg-veenna-surface px-2.5 py-1 text-label font-medium tabular-nums text-veenna-fg shadow-veenna-sm"
       :style="{ zIndex: Z_INDEX_TOAST }"
       role="status"
       aria-live="polite"

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { PhCheck, PhX } from '@phosphor-icons/vue'
 import DictationWaveform from '@/components/dictation/DictationWaveform.vue'
-import AnimatedDots from '@/components/ui/AnimatedDots.vue'
 import { useDictationStore } from '@/stores/dictation'
 
 /** The HUD while recording: the live waveform and, in hands-free mode, Cancel and OK. */
@@ -13,16 +12,10 @@ const store = useDictationStore()
 
 <template>
   <div
-    class="dictation-hud__working rounded-md"
+    class="dictation-hud__working rounded-sm"
     role="group"
     :aria-label="titleLabel || 'Recording'"
   >
-    <div class="dictation-hud__working-header">
-      <span class="dictation-hud__working-tag">
-        <AnimatedDots :label="titleLabel" />
-      </span>
-    </div>
-
     <div class="dictation-hud__working-wave">
       <DictationWaveform
         class="dictation-hud__wave dictation-hud__wave--wide"
@@ -57,7 +50,7 @@ const store = useDictationStore()
 
 <style scoped>
 /*
- * The recording card: one rounded-md box holding the status tag, waveform, and
+ * The recording card: one rounded-sm box holding the status tag, waveform, and
  * (in hands-free / meeting-stop) the mode tags, actions or confirm row - instead
  * of a pill with buttons and a mode bar scattered as separate floating pieces.
  */
@@ -67,10 +60,10 @@ const store = useDictationStore()
   box-sizing: border-box;
   flex-direction: column;
   align-items: stretch;
-  gap: 0.55rem;
+  gap: 0.4rem;
   width: min(100%, calc(100vw - 0.5rem));
   box-sizing: border-box;
-  padding: 0.7rem 0.5rem 0.75rem;
+  padding: 0.5rem 0.5rem;
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: rgba(16, 16, 16, 0.96);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
@@ -109,13 +102,13 @@ const store = useDictationStore()
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 2rem;
+  height: 1.25rem;
   padding: 0 0.25rem;
 }
 
 .dictation-hud__wave--wide {
   width: 100%;
-  height: 1.5rem;
+  height: 1rem;
 }
 
 .dictation-hud__working-footer {

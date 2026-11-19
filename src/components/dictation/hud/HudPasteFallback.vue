@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue'
-import { PhCheck, PhCopy, PhPause, PhPlay, PhX } from '@phosphor-icons/vue'
+import { PhCopy, PhPause, PhPlay, PhX } from '@phosphor-icons/vue'
+import CopiedCheck from '@/components/ui/CopiedCheck.vue'
 import { usePasteFallbackCountdown } from '@/composables/usePasteFallbackCountdown'
 import { writeClipboardText } from '@/lib/clipboard/writeClipboardText'
 
@@ -30,7 +31,7 @@ onUnmounted(countdown.stop)
 
 <template>
   <div
-    class="dictation-hud__paste-fallback-card rounded-md"
+    class="dictation-hud__paste-fallback-card rounded-sm"
     role="dialog"
     aria-label="Dictation text"
     @mouseenter="countdown.pauseOnHover"
@@ -58,7 +59,7 @@ onUnmounted(countdown.stop)
         @pointerdown.stop
         @click.stop="copy"
       >
-        <PhCheck v-if="copied" class="h-3.5 w-3.5" weight="bold" aria-hidden="true" />
+        <CopiedCheck v-if="copied" class="h-3.5 w-3.5" />
         <PhCopy v-else class="h-3.5 w-3.5" weight="bold" aria-hidden="true" />
         {{ copied ? 'Copied' : 'Copy' }}
       </button>
