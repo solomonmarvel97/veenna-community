@@ -62,7 +62,7 @@ useErrorToast(() => store.error)
 
     <p
       v-else-if="!store.loading"
-      class="rounded-md border border-veenna-border bg-veenna-row/40 px-4 py-6 text-center text-body text-veenna-muted"
+      class="rounded-sm border border-veenna-border bg-veenna-row/40 px-4 py-6 text-center text-body text-veenna-muted"
     >
       No insights yet. Dictate something to start filling this page.
     </p>

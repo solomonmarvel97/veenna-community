@@ -153,7 +153,7 @@ function clearHover() {
 
             <div
               v-if="active"
-              class="pointer-events-none absolute z-10 min-w-[8.5rem] rounded-md border border-veenna-border bg-veenna-surface px-2.5 py-2 shadow-veenna-sm"
+              class="pointer-events-none absolute z-10 min-w-[8.5rem] rounded-sm border border-veenna-border bg-veenna-surface px-2.5 py-2 shadow-veenna-sm"
               :style="{
                 left: `${active.x}%`,
                 top: `calc(${active.y}% - 8px)`,
@@ -204,7 +204,7 @@ function clearHover() {
 
       <div
         v-else
-        class="m-4 flex min-h-[13rem] flex-1 items-center justify-center rounded-md bg-veenna-row text-caption text-veenna-muted"
+        class="m-4 flex min-h-[13rem] flex-1 items-center justify-center rounded-sm bg-veenna-row text-caption text-veenna-muted"
       >
         Dictate for a few days to see your trend.
       </div>

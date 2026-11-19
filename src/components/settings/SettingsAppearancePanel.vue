@@ -193,7 +193,7 @@ const wallpaperThumbStyle = computed(() => {
           <button
             v-if="hasBackground"
             type="button"
-            class="group relative block aspect-[16/10] w-full overflow-hidden rounded-md bg-muted/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--veenna-focus-line)]"
+            class="group relative block aspect-[16/10] w-full overflow-hidden rounded-sm bg-muted/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--veenna-focus-line)]"
             aria-label="Preview wallpaper"
             title="Preview wallpaper"
             @click="openWallpaperPreview"
@@ -206,7 +206,7 @@ const wallpaperThumbStyle = computed(() => {
               class="absolute inset-0 flex items-center justify-center bg-black/0 opacity-0 transition-all group-hover:bg-black/35 group-hover:opacity-100 group-focus-visible:bg-black/35 group-focus-visible:opacity-100"
             >
               <span
-                class="flex items-center gap-1 rounded-md bg-black/55 px-2 py-1 text-caption font-medium text-white"
+                class="flex items-center gap-1 rounded-sm bg-black/55 px-2 py-1 text-caption font-medium text-white"
               >
                 <PhArrowsOut class="h-3 w-3" />
                 Preview
@@ -216,7 +216,7 @@ const wallpaperThumbStyle = computed(() => {
           <button
             v-else
             type="button"
-            class="flex aspect-[16/10] w-full flex-col items-center justify-center gap-1.5 rounded-md border border-dashed border-veenna-divider bg-muted/15 text-veenna-muted transition-colors hover:bg-muted/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--veenna-focus-line)]"
+            class="flex aspect-[16/10] w-full flex-col items-center justify-center gap-1.5 rounded-sm border border-dashed border-veenna-divider bg-muted/15 text-veenna-muted transition-colors hover:bg-muted/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--veenna-focus-line)]"
             aria-label="Choose a wallpaper"
             @click="theme.openBackgroundPicker()"
           >
@@ -375,7 +375,7 @@ const wallpaperThumbStyle = computed(() => {
           v-if="backgroundUrl"
           :src="backgroundUrl"
           alt="Wallpaper preview"
-          class="max-h-[min(70vh,560px)] max-w-full rounded-md object-contain"
+          class="max-h-[min(70vh,560px)] max-w-full rounded-sm object-contain"
         />
       </ModalBody>
     </VeennaModal>

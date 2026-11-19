@@ -169,13 +169,13 @@ const createdLabel = () => {
       <button
         v-if="store.selectedItem"
         type="button"
-        class="inline-flex min-w-0 items-center gap-2 rounded-md px-1.5 py-1 text-body text-veenna-fg transition-colors hover:bg-veenna-row-hover"
+        class="inline-flex min-w-0 items-center gap-2 rounded-sm px-1.5 py-1 text-body text-veenna-fg transition-colors hover:bg-veenna-row-hover"
         :aria-pressed="displayCompleted"
         :aria-label="completeActionLabel"
         @click="onToggleComplete"
       >
         <span
-          class="veenna-task-ring flex h-5 w-5 shrink-0 items-center justify-center rounded-md"
+          class="veenna-task-ring flex h-5 w-5 shrink-0 items-center justify-center rounded-sm"
           :class="displayCompleted ? 'veenna-task-ring--done' : ''"
           aria-hidden="true"
         >
@@ -186,7 +186,7 @@ const createdLabel = () => {
       <span class="min-w-0 flex-1" />
       <button
         type="button"
-        class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-veenna-icon-muted transition-colors hover:bg-veenna-row-hover hover:text-veenna-icon"
+        class="flex h-7 w-7 shrink-0 items-center justify-center rounded-sm text-veenna-icon-muted transition-colors hover:bg-veenna-row-hover hover:text-veenna-icon"
         aria-label="Close"
         title="Close"
         @click="store.setDetailOpen(false)"
@@ -200,14 +200,14 @@ const createdLabel = () => {
         <Input
           v-model="taskTitle"
           type="text"
-          class="veenna-field !h-9 !min-h-9 min-w-0 flex-1 rounded-md border-0 bg-transparent px-2.5 py-0 text-body leading-9 shadow-none focus-visible:border-transparent focus-visible:ring-0"
+          class="veenna-field !h-9 !min-h-9 min-w-0 flex-1 rounded-sm border-0 bg-transparent px-2.5 py-0 text-body leading-9 shadow-none focus-visible:border-transparent focus-visible:ring-0"
           :class="displayCompleted ? 'line-through text-veenna-secondary' : 'text-veenna-fg'"
           aria-label="Todo title"
           @keydown.enter.prevent="($event.target as HTMLInputElement).blur()"
         />
         <button
           type="button"
-          class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md transition-colors"
+          class="flex h-7 w-7 shrink-0 items-center justify-center rounded-sm transition-colors"
           :class="
             store.selectedItem.is_important
               ? 'text-veenna-star-active'
@@ -261,7 +261,7 @@ const createdLabel = () => {
             >
             <button
               type="button"
-              class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-veenna-icon-muted opacity-0 transition-opacity hover:bg-veenna-row-hover hover:text-veenna-fg group-hover:opacity-100"
+              class="flex h-7 w-7 shrink-0 items-center justify-center rounded-sm text-veenna-icon-muted opacity-0 transition-opacity hover:bg-veenna-row-hover hover:text-veenna-fg group-hover:opacity-100"
               aria-label="Delete step"
               @click="store.removeStep(store.selectedItem!.id, step.id)"
             >
@@ -305,7 +305,7 @@ const createdLabel = () => {
       >
         <textarea
           v-model="notes"
-          class="veenna-field min-h-0 w-full flex-1 resize-none rounded-md p-3 text-body"
+          class="veenna-field min-h-0 w-full flex-1 resize-none rounded-sm p-3 text-body"
           placeholder="Write notes…"
           aria-label="Notes"
           @blur="saveNotes"

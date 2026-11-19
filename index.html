@@ -23,18 +23,18 @@
     <title>Veenna Community</title>
     <script src="/theme-boot.js"></script>
     <script>
-      /* Clio's overlay is a transparent, full-display window. It must never paint the boot
+      /* Veenna's overlay is a transparent, full-display window. It must never paint the boot
          splash (or any backdrop): that was the full-screen flash at launch. */
-      if (location.pathname.indexOf('/clio-overlay') === 0) {
-        document.documentElement.setAttribute('data-clio-overlay', '')
+      if (location.pathname.indexOf('/veenna-overlay') === 0) {
+        document.documentElement.setAttribute('data-veenna-overlay', '')
       }
     </script>
     <style>
-      html[data-clio-overlay],
-      html[data-clio-overlay] body {
+      html[data-veenna-overlay],
+      html[data-veenna-overlay] body {
         background: transparent !important;
       }
-      html[data-clio-overlay] #boot-splash {
+      html[data-veenna-overlay] #boot-splash {
         display: none !important;
       }
     </style>

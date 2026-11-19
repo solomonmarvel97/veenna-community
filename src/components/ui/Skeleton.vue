@@ -15,8 +15,8 @@ const props = withDefaults(
 
 const roundedClass = {
   sm: 'rounded-sm',
-  md: 'rounded-md',
-  lg: 'rounded-md',
+  md: 'rounded-sm',
+  lg: 'rounded-sm',
   full: 'rounded-full',
   none: 'rounded-none',
 }

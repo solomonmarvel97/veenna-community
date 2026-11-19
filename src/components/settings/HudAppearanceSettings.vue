@@ -129,7 +129,7 @@ onUnmounted(() => {
                   <TooltipContent
                     side="top"
                     :side-offset="6"
-                    class="z-[400] max-w-[16rem] rounded-md border border-veenna-divider bg-veenna-surface px-2.5 py-1.5 text-caption leading-snug text-veenna-fg shadow-veenna-sm"
+                    class="z-[400] max-w-[16rem] rounded-sm border border-veenna-divider bg-veenna-surface px-2.5 py-1.5 text-caption leading-snug text-veenna-fg shadow-veenna-sm"
                   >
                     {{ option.description }}
                   </TooltipContent>

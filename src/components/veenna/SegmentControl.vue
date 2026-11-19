@@ -60,7 +60,7 @@ function tabClass(selected: boolean) {
     )
   }
   return cn(
-    'inline-flex h-7 shrink-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-md border-b-2 px-2.5 py-0 text-caption transition-colors focus-visible:shadow-[0_0_0_1px_var(--veenna-focus-subtle)]',
+    'inline-flex h-7 shrink-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-sm border-b-2 px-2.5 py-0 text-caption transition-colors focus-visible:shadow-[0_0_0_1px_var(--veenna-focus-subtle)]',
     selected
       ? 'border-transparent bg-[var(--veenna-tab-active-bg)] font-medium text-[var(--veenna-tab-active-fg)] shadow-sm'
       : 'border-transparent text-veenna-muted hover:text-veenna-fg',

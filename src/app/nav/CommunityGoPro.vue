@@ -35,7 +35,7 @@ async function goPro() {
   >
     <button
       type="button"
-      class="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-veenna-divider text-veenna-fg transition-colors hover:bg-veenna-row focus-visible:outline-none focus-visible:shadow-[0_0_0_1px_var(--veenna-focus-subtle)]"
+      class="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-sm border border-veenna-divider text-veenna-fg transition-colors hover:bg-veenna-row focus-visible:outline-none focus-visible:shadow-[0_0_0_1px_var(--veenna-focus-subtle)]"
       title="Settings: speech models and dictation"
       aria-label="Settings"
       data-testid="community-settings"
@@ -45,7 +45,7 @@ async function goPro() {
     </button>
     <button
       type="button"
-      class="inline-flex h-7 min-w-0 items-center justify-center gap-1.5 rounded-md border border-veenna-divider text-body-sm text-veenna-fg transition-colors hover:bg-veenna-row focus-visible:outline-none focus-visible:shadow-[0_0_0_1px_var(--veenna-focus-subtle)]"
+      class="inline-flex h-7 min-w-0 items-center justify-center gap-1.5 rounded-sm border border-veenna-divider text-body-sm text-veenna-fg transition-colors hover:bg-veenna-row focus-visible:outline-none focus-visible:shadow-[0_0_0_1px_var(--veenna-focus-subtle)]"
       :class="navCollapsed ? 'w-7' : 'px-2.5'"
       title="Go Pro: get the full Veenna app"
       aria-label="Go Pro: get the full Veenna app"

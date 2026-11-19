@@ -13,7 +13,7 @@ withDefaults(defineProps<{ count?: number }>(), { count: 4 })
       <div
         v-for="n in count"
         :key="n"
-        class="overflow-hidden rounded-md border border-veenna-divider bg-card"
+        class="overflow-hidden rounded-sm border border-veenna-divider bg-card"
       >
         <div class="flex items-center justify-between gap-3 px-4 pt-2.5 pb-2">
           <div class="flex items-center gap-2">

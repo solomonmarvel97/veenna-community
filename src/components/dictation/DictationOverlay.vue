@@ -218,7 +218,7 @@ onBeforeUnmount(() => {
 
 .dictation-overlay__wave {
   width: 12rem;
-  height: 1.4rem;
+  height: 1rem;
   flex-shrink: 0;
   contain: strict;
 }

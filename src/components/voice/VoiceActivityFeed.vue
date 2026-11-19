@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { format, isToday, parseISO } from 'date-fns'
-import { PhCaretDown, PhCheck, PhCopy, PhMagicWand, PhMagnifyingGlass, PhStop, PhSpinner } from '@phosphor-icons/vue'
+import { PhCaretDown, PhCopy, PhMagicWand, PhMagnifyingGlass, PhStop, PhSpinner } from '@phosphor-icons/vue'
+import CopiedCheck from '@/components/ui/CopiedCheck.vue'
 import { useRouter } from 'vue-router'
 import { transcribeGuestBlob } from '@/lib/voice/localStt'
 import { Button } from '@/components/ui/button'
@@ -104,7 +105,7 @@ const groupSectionClass = 'space-y-2'
 // Cards stay solid bg-card so the Copy control's bg-muted reads as a chip.
 // Avoid opacity on --veenna-row / --veenna-panel: those are already translucent
 // and often disappear on wallpaper.
-const itemClass = 'overflow-hidden rounded-md border border-veenna-divider bg-card'
+const itemClass = 'overflow-hidden rounded-sm border border-veenna-divider bg-card'
 
 function groupHeaderClass(period: VoiceCaptureGroup['period']) {
   if (period === 'today') {
@@ -789,11 +790,7 @@ useErrorToast(() => (isFull.value ? store.historyError : null), {
                       :aria-label="copiedId === item.id ? 'Copied' : 'Copy capture'"
                       @click="copyCapture(item)"
                     >
-                      <PhCheck
-                        v-if="copiedId === item.id"
-                        class="size-3.5 text-veenna-accent"
-                        weight="bold"
-                      />
+                      <CopiedCheck v-if="copiedId === item.id" class="size-3.5" />
                       <PhCopy v-else class="size-3.5" weight="fill" />
                       {{ copiedId === item.id ? 'Copied' : 'Copy' }}
                     </Button>

@@ -157,7 +157,7 @@ function formatDay(date: string, pattern: string) {
               <span
                 v-for="day in recentCaptures.slice(0, 8)"
                 :key="day.date"
-                class="rounded-md bg-veenna-row px-2 py-1 text-label tabular-nums text-veenna-fg"
+                class="rounded-sm bg-veenna-row px-2 py-1 text-label tabular-nums text-veenna-fg"
               >
                 {{ formatDay(day.date, 'MMM d') }}
                 · {{ day.words }}

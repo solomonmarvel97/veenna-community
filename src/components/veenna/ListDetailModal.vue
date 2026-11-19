@@ -164,7 +164,7 @@ function onPointerUp(event: PointerEvent) {
                   v-if="field.multiline"
                   :class="
                     cn(
-                      'mt-1.5 max-h-56 overflow-y-auto rounded-md border border-veenna-border bg-veenna-row/50 px-4 py-2.5 text-body leading-relaxed text-veenna-fg',
+                      'mt-1.5 max-h-56 overflow-y-auto rounded-sm border border-veenna-border bg-veenna-row/50 px-4 py-2.5 text-body leading-relaxed text-veenna-fg',
                       field.preserveFormatting || field.monospace
                         ? 'whitespace-pre-wrap [tab-size:4]'
                         : 'whitespace-pre-wrap',

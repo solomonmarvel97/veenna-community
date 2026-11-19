@@ -1,7 +1,7 @@
 <template>
   <canvas
     ref="canvasRef"
-    class="dictation-waveform block h-7 w-[min(100%,240px)] min-w-0 sm:h-8 sm:w-[min(100%,280px)]"
+    class="dictation-waveform block h-5 w-[min(100%,240px)] min-w-0 sm:w-[min(100%,280px)]"
     aria-hidden="true"
   />
 </template>

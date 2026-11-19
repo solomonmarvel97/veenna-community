@@ -21,7 +21,7 @@ const emit = defineEmits<{ 'update:modelValue': [value: string] }>()
   <div
     :class="
       cn(
-        'veenna-field-wrap relative flex items-center rounded-md border',
+        'veenna-field-wrap relative flex items-center rounded-sm border',
         variant === 'row'
           ? 'border-transparent bg-veenna-row transition-colors focus-within:bg-veenna-row-hover'
           : 'border-veenna-search-border bg-veenna-search-bg shadow-veenna-search',

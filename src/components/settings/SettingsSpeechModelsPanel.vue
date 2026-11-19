@@ -448,7 +448,7 @@ useErrorToast(actionError)
           <div class="flex items-center gap-2.5 border-b border-veenna-divider px-4 py-3">
             <div
               v-if="speechProviderLogoSrc(provider)"
-              class="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-white/95 p-1 ring-1 ring-black/5"
+              class="flex h-6 w-6 shrink-0 items-center justify-center rounded-sm bg-white/95 p-1 ring-1 ring-black/5"
             >
               <img
                 :src="speechProviderLogoSrc(provider)!"
@@ -471,7 +471,7 @@ useErrorToast(actionError)
                   <div class="flex min-w-0 flex-1 gap-3">
                     <div
                       v-if="speechProviderLogoSrc(model.provider)"
-                      class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-white/95 p-1 ring-1 ring-black/5"
+                      class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-sm bg-white/95 p-1 ring-1 ring-black/5"
                     >
                       <img
                         :src="speechProviderLogoSrc(model.provider)!"
@@ -484,25 +484,25 @@ useErrorToast(actionError)
                         <p class="text-body font-medium text-veenna-foreground">{{ model.label }}</p>
                         <span
                           v-if="isActiveModel(model.id)"
-                          class="rounded-md bg-veenna-accent/15 px-1.5 py-0.5 text-micro font-medium text-veenna-accent"
+                          class="rounded-sm bg-veenna-accent/15 px-1.5 py-0.5 text-micro font-medium text-veenna-accent"
                         >
                           Active
                         </span>
                         <span
                           v-if="statusFor(model.id)?.installed"
-                          class="rounded-md bg-emerald-500/10 px-1.5 py-0.5 text-micro text-emerald-500"
+                          class="rounded-sm bg-emerald-500/10 px-1.5 py-0.5 text-micro text-emerald-500"
                         >
                           Installed
                         </span>
                         <span
                           v-for="tag in modelTags(model)"
                           :key="tag"
-                          class="rounded-md bg-veenna-accent/5 px-1.5 py-0.5 text-micro text-veenna-muted/70"
+                          class="rounded-sm bg-veenna-accent/5 px-1.5 py-0.5 text-micro text-veenna-muted/70"
                         >
                           {{ tag }}
                         </span>
                         <span
-                          class="rounded-md bg-veenna-row-hover/60 px-1.5 py-0.5 text-micro text-veenna-muted/70"
+                          class="rounded-sm bg-veenna-row-hover/60 px-1.5 py-0.5 text-micro text-veenna-muted/70"
                         >
                           {{ tierLabel(model.tier) }}
                         </span>

@@ -289,7 +289,7 @@ watch(
         <button
           @click="previousMonth"
           aria-label="Previous"
-          class="inline-flex h-6 w-6 items-center justify-center rounded-md bg-transparent p-0 text-veenna-icon-muted transition-colors hover:bg-veenna-row-hover hover:text-veenna-icon focus-visible:outline-none"
+          class="inline-flex h-6 w-6 items-center justify-center rounded-sm bg-transparent p-0 text-veenna-icon-muted transition-colors hover:bg-veenna-row-hover hover:text-veenna-icon focus-visible:outline-none"
         >
           <PhCaretLeft class="h-3.5 w-3.5" />
         </button>
@@ -299,7 +299,7 @@ watch(
         <button
           @click="nextMonth"
           aria-label="Next"
-          class="inline-flex h-6 w-6 items-center justify-center rounded-md bg-transparent p-0 text-veenna-icon-muted transition-colors hover:bg-veenna-row-hover hover:text-veenna-icon focus-visible:outline-none"
+          class="inline-flex h-6 w-6 items-center justify-center rounded-sm bg-transparent p-0 text-veenna-icon-muted transition-colors hover:bg-veenna-row-hover hover:text-veenna-icon focus-visible:outline-none"
         >
           <PhCaretRight class="h-3.5 w-3.5" />
         </button>
@@ -310,7 +310,7 @@ watch(
           :key="year"
           @click="selectYear(year)"
           :class="[
-            'h-8 rounded-md text-caption font-normal transition-colors',
+            'h-8 rounded-sm text-caption font-normal transition-colors',
             year === currentDate?.getFullYear()
               ? 'bg-veenna-accent font-normal text-veenna-accent-fg'
               : 'hover:bg-veenna-row-hover hover:text-veenna-fg',
@@ -327,20 +327,20 @@ watch(
         <button
           @click="previousMonth"
           aria-label="Previous"
-          class="inline-flex h-6 w-6 items-center justify-center rounded-md bg-transparent p-0 text-veenna-icon-muted transition-colors hover:bg-veenna-row-hover hover:text-veenna-icon focus-visible:outline-none"
+          class="inline-flex h-6 w-6 items-center justify-center rounded-sm bg-transparent p-0 text-veenna-icon-muted transition-colors hover:bg-veenna-row-hover hover:text-veenna-icon focus-visible:outline-none"
         >
           <PhCaretLeft class="h-3.5 w-3.5" />
         </button>
         <button
           @click="goToYearView"
-          class="rounded-md px-1.5 py-0.5 text-caption font-medium text-veenna-fg transition-colors hover:bg-veenna-row-hover hover:text-veenna-fg"
+          class="rounded-sm px-1.5 py-0.5 text-caption font-medium text-veenna-fg transition-colors hover:bg-veenna-row-hover hover:text-veenna-fg"
         >
           {{ currentDate?.getFullYear() || new Date().getFullYear() }}
         </button>
         <button
           @click="nextMonth"
           aria-label="Next"
-          class="inline-flex h-6 w-6 items-center justify-center rounded-md bg-transparent p-0 text-veenna-icon-muted transition-colors hover:bg-veenna-row-hover hover:text-veenna-icon focus-visible:outline-none"
+          class="inline-flex h-6 w-6 items-center justify-center rounded-sm bg-transparent p-0 text-veenna-icon-muted transition-colors hover:bg-veenna-row-hover hover:text-veenna-icon focus-visible:outline-none"
         >
           <PhCaretRight class="h-3.5 w-3.5" />
         </button>
@@ -351,7 +351,7 @@ watch(
           :key="index"
           @click="selectMonth(index)"
           :class="[
-            'h-8 rounded-md text-caption font-normal transition-colors',
+            'h-8 rounded-sm text-caption font-normal transition-colors',
             index === currentDate?.getMonth()
               ? 'bg-veenna-accent font-normal text-veenna-accent-fg'
               : 'hover:bg-veenna-row-hover hover:text-veenna-fg',
@@ -368,20 +368,20 @@ watch(
         <button
           @click="previousMonth"
           aria-label="Previous"
-          class="inline-flex h-6 w-6 items-center justify-center rounded-md bg-transparent p-0 text-veenna-icon-muted transition-colors hover:bg-veenna-row-hover hover:text-veenna-icon focus-visible:outline-none"
+          class="inline-flex h-6 w-6 items-center justify-center rounded-sm bg-transparent p-0 text-veenna-icon-muted transition-colors hover:bg-veenna-row-hover hover:text-veenna-icon focus-visible:outline-none"
         >
           <PhCaretLeft class="h-3.5 w-3.5" />
         </button>
         <button
           @click="goToMonthView"
-          class="rounded-md px-1.5 py-0.5 text-caption font-medium text-veenna-fg transition-colors hover:bg-veenna-row-hover hover:text-veenna-fg"
+          class="rounded-sm px-1.5 py-0.5 text-caption font-medium text-veenna-fg transition-colors hover:bg-veenna-row-hover hover:text-veenna-fg"
         >
           {{ currentMonthYear }}
         </button>
         <button
           @click="nextMonth"
           aria-label="Next"
-          class="inline-flex h-6 w-6 items-center justify-center rounded-md bg-transparent p-0 text-veenna-icon-muted transition-colors hover:bg-veenna-row-hover hover:text-veenna-icon focus-visible:outline-none"
+          class="inline-flex h-6 w-6 items-center justify-center rounded-sm bg-transparent p-0 text-veenna-icon-muted transition-colors hover:bg-veenna-row-hover hover:text-veenna-icon focus-visible:outline-none"
         >
           <PhCaretRight class="h-3.5 w-3.5" />
         </button>
@@ -404,7 +404,7 @@ watch(
             :disabled="isDateDisabled(calendarDay.date)"
             :class="
               cn(
-                'h-7 w-7 rounded-md p-0 text-caption font-normal text-veenna-fg transition-colors hover:bg-veenna-row-hover',
+                'h-7 w-7 rounded-sm p-0 text-caption font-normal text-veenna-fg transition-colors hover:bg-veenna-row-hover',
                 calendarDayButtonClass(calendarDay),
               )
             "
