@@ -43,7 +43,7 @@ const emit = defineEmits<{ retry: []; dismiss: [] }>()
   flex-direction: column;
   gap: 0.6rem;
   padding: 0.75rem 0.85rem 0.8rem;
-  border-radius: 0.6rem;
+  border-radius: 0.5rem;
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: rgba(16, 16, 16, 0.96);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
@@ -76,7 +76,7 @@ const emit = defineEmits<{ retry: []; dismiss: [] }>()
   align-items: center;
   gap: 0.25rem;
   padding: 0.28rem 0.55rem;
-  border-radius: 9999px;
+  border-radius: 0.5rem;
   border: 1px solid rgba(255, 255, 255, 0.14);
   background: rgba(255, 255, 255, 0.08);
   font-size: 0.6875rem;

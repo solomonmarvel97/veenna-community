@@ -307,7 +307,7 @@ aside.veenna-nav-sidebar {
 .electron-frame,
 /* Overlays teleported to body (the search veil) sit outside the frame; give them the same corners. */
 body:has(.electron-frame) {
-  --veenna-frame-radius: 10px;
+  --veenna-frame-radius: 8px;
 }
 
 /*

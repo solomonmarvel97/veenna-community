@@ -89,7 +89,7 @@ const store = useDictationStore()
   align-items: center;
   gap: 0.35rem;
   padding: 0.2rem 0.55rem 0.2rem 0.45rem;
-  border-radius: 9999px;
+  border-radius: 0.5rem;
   background: rgba(255, 255, 255, 0.08);
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', system-ui, sans-serif;
   font-size: 0.75rem;
@@ -108,6 +108,7 @@ const store = useDictationStore()
 
 .dictation-hud__wave--wide {
   width: 100%;
+  max-width: none;
   height: 1rem;
 }
 
@@ -125,7 +126,7 @@ const store = useDictationStore()
   gap: 0.3rem;
   padding: 0.3rem 0.65rem;
   border: none;
-  border-radius: 9999px;
+  border-radius: 0.5rem;
   font-family: inherit;
   font-size: 0.6875rem;
   font-weight: 600;
@@ -160,8 +161,6 @@ const store = useDictationStore()
   background: #86efac;
 }
 .dictation-hud__wave {
-  width: 6.25rem;
-  height: 1rem;
   --dictation-wave-color: rgba(255, 255, 255, 0.98);
 }
 </style>

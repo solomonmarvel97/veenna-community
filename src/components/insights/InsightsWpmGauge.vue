@@ -18,9 +18,9 @@ const wpmDisplay = computed(() => (props.wpm > 0 ? String(props.wpm) : '-'))
 </script>
 
 <template>
-  <div :class="[veennaUi.settingsCard, 'flex h-full flex-col']">
-    <div :class="veennaUi.settingsGroupHeader">
-      <h3 :class="veennaUi.settingsGroupLabel">Speaking pace</h3>
+  <div :class="[veennaUi.laneCard, 'flex h-full flex-col']">
+    <div :class="veennaUi.laneHeader">
+      <h3 :class="veennaUi.laneLabel">Speaking pace</h3>
       <span class="text-caption tabular-nums text-veenna-muted">Words per minute</span>
     </div>
 

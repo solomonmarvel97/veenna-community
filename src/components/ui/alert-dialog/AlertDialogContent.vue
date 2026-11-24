@@ -56,7 +56,7 @@ function handleInteractOutside(event: Event) {
         v-bind="{ ...$attrs, ...delegatedProps }"
         :class="
           cn(
-            'pointer-events-auto relative z-[1] grid w-[95vw] max-w-[var(--veenna-modal-width)] gap-4 rounded-2xl border border-veenna-border bg-veenna-surface p-4 shadow-veenna-sm outline-none duration-200',
+            'pointer-events-auto relative z-[1] grid w-[95vw] max-w-[var(--veenna-modal-width)] gap-4 rounded-sm border border-veenna-border bg-veenna-surface p-4 shadow-veenna-sm outline-none duration-200',
             'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
             props.class,
           )
