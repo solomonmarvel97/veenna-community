@@ -321,7 +321,7 @@ useErrorToast(actionError)
                 <span v-if="activeLocalModel" class="flex min-w-0 items-center gap-2">
                   <div
                     v-if="speechProviderLogoSrc(activeLocalModel.provider)"
-                    class="flex h-5 w-5 shrink-0 items-center justify-center rounded bg-white/95 p-0.5 ring-1 ring-black/5"
+                    class="flex h-5 w-5 shrink-0 items-center justify-center rounded-sm bg-white/95 p-0.5 ring-1 ring-black/5"
                   >
                     <img
                       :src="speechProviderLogoSrc(activeLocalModel.provider)!"
@@ -338,7 +338,7 @@ useErrorToast(actionError)
                 <span class="flex items-center gap-2">
                   <div
                     v-if="speechProviderLogoSrc(model.provider)"
-                    class="flex h-5 w-5 shrink-0 items-center justify-center rounded bg-white/95 p-0.5 ring-1 ring-black/5"
+                    class="flex h-5 w-5 shrink-0 items-center justify-center rounded-sm bg-white/95 p-0.5 ring-1 ring-black/5"
                   >
                     <img
                       :src="speechProviderLogoSrc(model.provider)!"

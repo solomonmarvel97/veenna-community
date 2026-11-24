@@ -17,6 +17,7 @@ import { ensureLocalSpeechModelInstalled } from '@/lib/voice/ensureLocalSpeechMo
 import { startLiveSegments, type LiveResult } from '@/lib/dictation/liveSegments'
 import { isElectron } from '@/lib/platform/isElectron'
 import { useToast } from '@/components/ui/toast/use-toast'
+import { beginDictationTrace, type DictationTrace } from '@/lib/dictation/dictationTrace'
 import { startDictationTimer, startPasteDictationTimer, timingPreview } from '@/lib/dictation/dictationTiming'
 import { getDictationRetry, patchDictationRetry, saveDictationRetry, type DictationRetryPayload } from '@/lib/dictation/dictationRetryCache'
 
@@ -340,6 +341,20 @@ export function useDictation() {
     pasteTimer.end('paste_done', `bytes=${text.length}`)
   }
 
+  /** Saves the finished dictation's history row and audio off the paste's path. */
+  function saveCaptureAfterPaste(payload: {
+    id: string | undefined
+    text: string
+    durationMs: number | null
+    speechDurationMs: number | null
+  }) {
+    setTimeout(() => {
+      void captures
+        .addCaptureLocal({ ...payload, source: 'hotkey' })
+        .catch(() => keepRecordingAudio({ durationMs: payload.durationMs, text: payload.text }))
+    }, 0)
+  }
+
   /** Keeps the recording of a dictation that did not finish, so it can be retried. */
   async function keepRecordingAudio(params?: {
     text?: string | null
@@ -375,6 +390,8 @@ export function useDictation() {
       timerLabel?: string
       /** Text transcribed while speaking; a null text means the full recording is needed. */
       liveTranscript?: Promise<LiveResult>
+      /** The developer-mode trace the stop began; a retry starts its own. */
+      trace?: DictationTrace
     } = {},
   ) {
     dictationEngine.finalizing = true
@@ -384,7 +401,10 @@ export function useDictation() {
     dictationEngine.capturedAppContext = payload.capturedAppContext
     saveDictationRetry(payload)
 
-    const timer = startDictationTimer(options.timerLabel ?? 'finalize')
+    const trace = options.trace ?? beginDictationTrace(options.timerLabel ?? 'finalize')
+    trace.linkCapture(payload.captureId)
+    let traceError: unknown = null
+    const timer = startDictationTimer(options.timerLabel ?? 'finalize', trace)
     const { blob, mixedBlob, durationMs, silenceContext } = payload
     const playbackBlob = preferredPlaybackBlob(blob, null, mixedBlob ?? null)
     setPendingCaptureAudio(playbackBlob)
@@ -449,16 +469,19 @@ export function useDictation() {
       const text = sttText.trim()
       const finalText = collapseRepeatedPhrases(text) || text
       patchDictationRetry({ stage: 'transcript', rawText: finalText })
-      await captures.addCaptureLocal({
-        id: retryCaptureId(),
+      // Paste first: the history row, the audio save and the insights recount all wait until the
+      // text is in place, so none of them sits between the last word and the paste.
+      const captureId = retryCaptureId()
+      await deliverText(finalText)
+      timer.end('done')
+      saveCaptureAfterPaste({
+        id: captureId,
         text: finalText,
         durationMs,
         speechDurationMs: silenceContext.speakingMs || null,
-        source: 'hotkey',
       })
-      await deliverText(finalText)
-      timer.end('done')
     } catch (err) {
+      traceError = err
       await keepRecordingAudio({ durationMs })
       const message = dictationErrorMessage(err)
       const handledAsPermission = await markDictationFailedMaybePermission(err, message, timer)
@@ -469,6 +492,7 @@ export function useDictation() {
         })
       }
     } finally {
+      trace.finish(traceError ? { ok: false, error: traceError } : { ok: true })
       dictationEngine.abortController = null
       dictationEngine.finalizing = false
       if (!store.error && !store.pasteFallbackText) {
@@ -491,7 +515,11 @@ export function useDictation() {
     const speechDurationMs = readSpeechDurationMs(micMonitor)
     const speakingMs = readSpeakingMs(micMonitor)
     const monitorSampled = readMonitorSampled(micMonitor)
-    const timer = startDictationTimer('finalize')
+    const trace = beginDictationTrace('stop', {
+      speech_ms: speechDurationMs,
+      recording_ms: durationMs ?? 0,
+    })
+    const timer = startDictationTimer('finalize', trace)
     timer.mark(
       'key_release',
       `speech=${speechDurationMs}ms recording=${durationMs ?? 0}ms sampled=${monitorSampled}`,
@@ -515,6 +543,7 @@ export function useDictation() {
         store.reset()
         dictationEngine.finalizing = false
         timer.end('silent_dismiss')
+        trace.finish()
       })()
       return
     }
@@ -556,6 +585,7 @@ export function useDictation() {
       store.reset()
       dictationEngine.finalizing = false
       timer.end('skip_transcription')
+      trace.finish()
       return
     }
 
@@ -573,7 +603,7 @@ export function useDictation() {
         capturedAppContext: dictationEngine.capturedAppContext,
         silenceContext,
       },
-      { liveTranscript },
+      { liveTranscript, trace },
     )
   }
 

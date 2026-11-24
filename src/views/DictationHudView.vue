@@ -671,7 +671,7 @@ onUnmounted(() => {
   height: 2.25rem;
   min-width: 2.25rem;
   padding: 0;
-  border-radius: 9999px;
+  border-radius: 0.5rem;
   border: none;
   background: rgba(18, 18, 18, 0.92);
   /* Idle / processing repositioning runs through the pointer handlers below. */
@@ -687,7 +687,7 @@ onUnmounted(() => {
   width: 100%;
   min-width: 0;
   padding: 0 0.75rem;
-  border-radius: 9999px;
+  border-radius: 0.5rem;
 }
 
 .dictation-hud--surface-glass .dictation-hud__pill {

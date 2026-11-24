@@ -84,13 +84,13 @@ onUnmounted(() => {
           />
           <div class="relative flex items-center justify-center gap-3 py-1">
             <div
-              class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full hud-preview-pill"
+              class="flex h-10 w-10 shrink-0 items-center justify-center rounded-sm hud-preview-pill"
               :class="`hud-preview-pill--${voiceSettings.hudAppearance.surface}`"
             >
               <PhMicrophone class="h-3.5 w-3.5 text-white" weight="bold" aria-hidden="true" />
             </div>
             <div
-              class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full hud-preview-pill"
+              class="flex h-10 w-10 shrink-0 items-center justify-center rounded-sm hud-preview-pill"
               :class="`hud-preview-pill--${voiceSettings.hudAppearance.surface}`"
             >
               <PhSpinner

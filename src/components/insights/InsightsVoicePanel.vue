@@ -96,9 +96,9 @@ function formatDay(date: string, pattern: string) {
     </div>
 
     <div class="grid gap-4 lg:grid-cols-2">
-      <div :class="[veennaUi.settingsCard, 'flex flex-col']">
-        <div :class="veennaUi.settingsGroupHeader">
-          <h3 :class="veennaUi.settingsGroupLabel">How you dictate</h3>
+      <div :class="[veennaUi.laneCard, 'flex flex-col']">
+        <div :class="veennaUi.laneHeader">
+          <h3 :class="veennaUi.laneLabel">How you dictate</h3>
           <span class="text-caption tabular-nums text-veenna-muted">
             {{ totalCaptures.toLocaleString() }} captures
           </span>
@@ -126,14 +126,16 @@ function formatDay(date: string, pattern: string) {
         </p>
       </div>
 
-      <div :class="[veennaUi.settingsCard, 'flex flex-col']">
-        <div :class="veennaUi.settingsGroupHeader">
-          <h3 :class="veennaUi.settingsGroupLabel">Peak day</h3>
+      <div :class="[veennaUi.laneCard, 'flex flex-col']">
+        <div :class="veennaUi.laneHeader">
+          <h3 :class="veennaUi.laneLabel">Peak day</h3>
           <span
             v-if="peakDay && peakDay.words > 0"
             class="text-caption tabular-nums text-veenna-muted"
           >
-            <span class="font-semibold text-veenna-fg">{{ formatCompactCount(peakDay.words) }}</span>
+            <span class="font-semibold text-veenna-fg">{{
+              formatCompactCount(peakDay.words)
+            }}</span>
             words
           </span>
         </div>

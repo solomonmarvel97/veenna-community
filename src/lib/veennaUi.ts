@@ -7,6 +7,7 @@
  * h-7 px-3. Do not invent a fourth overlay gutter.
  */
 import { isElectronMainWindow } from '@/lib/platform/isElectron'
+import { LANE_CHILD_CARD, LANE_CLASS } from '@/lib/cardStyle'
 
 const PAGE_COLUMN = 'mx-auto w-full max-w-5xl px-3 sm:px-4' as const
 const PAGE_COLUMN_FULL = 'mx-auto w-full max-w-[1600px] px-2 sm:px-3' as const
@@ -25,7 +26,7 @@ export const veennaUi = {
     'pointer-events-auto fixed inset-0 z-[var(--veenna-z-modal)] flex items-center justify-center p-3 no-drag sm:p-4',
   modalBackdrop: 'veenna-modal-backdrop',
   modalPanel:
-    'relative z-10 flex w-full flex-col overflow-hidden rounded-2xl border border-veenna-border bg-veenna-surface shadow-veenna-sm',
+    'relative z-10 flex w-full flex-col overflow-hidden rounded-sm border border-veenna-border bg-veenna-surface shadow-veenna-sm',
   /** Overlay inset: 16px, 20px at sm. Use ModalHeader/Body/Footer instead of copying. */
   overlayHeader: 'px-4 py-4 sm:px-5',
   overlayHeaderSm: 'px-4 py-2.5',
@@ -40,10 +41,11 @@ export const veennaUi = {
     'max-h-[min(92vh,720px)] max-w-[var(--veenna-modal-width-wide)] sm:max-h-[min(90vh,720px)]',
   /** Near-fullscreen sheet (worker design chat, run results parity). */
   modalPanelXl:
-    'h-[min(100dvh,100%)] max-h-[100dvh] w-full max-w-none rounded-none border-0 sm:h-[80vh] sm:max-h-[80vh] sm:w-[80vw] sm:max-w-[80vw] sm:rounded-2xl sm:border',
+    'h-[min(100dvh,100%)] max-h-[100dvh] w-full max-w-none rounded-none border-0 sm:h-[80vh] sm:max-h-[80vh] sm:w-[80vw] sm:max-w-[80vw] sm:rounded-sm sm:border',
 
   pane: 'veenna-pane flex h-full min-h-0 flex-col no-drag',
-  paneHeader: 'flex shrink-0 items-center gap-3 border-b border-veenna-divider veenna-divide px-4 py-3',
+  paneHeader:
+    'flex shrink-0 items-center gap-3 border-b border-veenna-divider veenna-divide px-4 py-3',
   /**
    * Chat + document/note/kb preview headers in the agent split view.
    * Fixed height so adjacent panes always line up.
@@ -87,14 +89,14 @@ export const veennaUi = {
   homeWorkerCard: 'home-worker-card',
   /** Pill segment control (Home hero mode, settings tabs, productivity hubs). */
   segmentPillTrack:
-    'inline-flex h-7 items-stretch rounded-[calc(var(--radius)-5px)] border border-veenna-divider bg-veenna-row p-0.5 shadow-veenna-sm',
+    'inline-flex h-7 items-stretch rounded-sm border border-veenna-divider bg-veenna-row p-0.5 shadow-veenna-sm',
   segmentPillTab:
     'inline-flex shrink-0 items-center gap-1.5 rounded-sm px-2.5 py-0 text-caption font-medium leading-none whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--veenna-focus-line)] focus-visible:ring-offset-1 focus-visible:ring-offset-[var(--veenna-bg)] sm:px-3',
   segmentPillTabActive: 'bg-[var(--veenna-tab-active-bg)] text-[var(--veenna-tab-active-fg)]',
   segmentPillTabInactive: 'text-veenna-muted hover:text-veenna-fg',
   /** Capsule segment control (dictation mode - matches HUD mode switcher). */
   segmentHudTrack:
-    'inline-flex rounded-[calc(var(--radius)-5px)] border border-veenna-divider bg-veenna-row p-0.5 shadow-veenna-sm',
+    'inline-flex rounded-sm border border-veenna-divider bg-veenna-row p-0.5 shadow-veenna-sm',
   segmentHudTab:
     'inline-flex shrink-0 items-center gap-1 rounded-sm px-2.5 py-1 text-label font-semibold leading-none whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--veenna-focus-line)] focus-visible:ring-offset-1 focus-visible:ring-offset-[var(--veenna-bg)] sm:gap-1.5 sm:px-3 sm:text-caption',
   segmentHudTabActive: 'bg-[var(--veenna-tab-active-bg)] text-[var(--veenna-tab-active-fg)]',
@@ -136,15 +138,15 @@ export const veennaUi = {
   emptyState: 'px-6 py-8 text-center text-body text-veenna-muted',
 
   /** Business-page surfaces - keep bg-muted at /25-/45 max (never full opacity). */
-  surfaceSubtle: 'rounded-xl bg-muted/30',
-  surfacePanel: 'rounded-xl bg-muted/40',
+  surfaceSubtle: 'rounded-sm bg-muted/30',
+  surfacePanel: 'rounded-sm bg-muted/40',
   /** Inset for page / library summary panels (not settings rows, not metric tiles). */
   surfacePanelInset: 'px-4 py-4 sm:px-5 sm:py-5',
-  surfaceRaised: 'rounded-xl bg-muted/50',
+  surfaceRaised: 'rounded-sm bg-muted/50',
   surfaceList: 'overflow-hidden rounded-sm border border-veenna-divider bg-card',
-  surfaceEmpty: 'rounded-xl bg-muted/30 py-10',
+  surfaceEmpty: 'rounded-sm bg-muted/30 py-10',
 
-  card: 'rounded-xl border border-veenna-border bg-veenna-surface shadow-veenna-sm',
+  card: 'rounded-sm border border-veenna-border bg-veenna-surface shadow-veenna-sm',
 
   /** Native text fields: block layout (not flex like triggers) */
   field:
@@ -190,6 +192,17 @@ export const veennaUi = {
   settingsGroupHeader:
     'flex items-center justify-between gap-2 border-b border-veenna-divider px-4 py-3',
   settingsGroupLabel: 'text-label font-medium uppercase tracking-overline text-veenna-muted',
+
+  /**
+   * The card family's outer lane (see cardStyle.ts). Its title row (laneTitle /
+   * laneHeader) sits on the lane; every other direct child becomes an inner card.
+   * Used by Insights, Usage and analytics (settings keep their own flat cards above).
+   */
+  laneCard: `lane-merge overflow-hidden flex flex-col gap-2 p-2 ${LANE_CLASS} ${LANE_CHILD_CARD}`,
+  laneTitle: 'lane-title flex min-h-7 items-center px-1 text-body-sm font-semibold text-veenna-fg',
+  /** A group title sharing its row (a badge, a Close link). */
+  laneHeader: 'lane-title flex min-h-7 items-center justify-between gap-2 px-1',
+  laneLabel: 'text-body-sm font-semibold text-veenna-fg',
   settingsRows: 'divide-y divide-veenna-divider',
   settingsRow: 'px-4 py-3.5',
   settingsInset: 'px-4 py-3.5',
