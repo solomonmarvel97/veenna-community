@@ -16,9 +16,9 @@ defineProps<{
 </script>
 
 <template>
-  <div :class="[veennaUi.settingsCard, 'flex flex-col']">
-    <div :class="veennaUi.settingsGroupHeader">
-      <span :class="veennaUi.settingsGroupLabel">{{ label }}</span>
+  <div :class="[veennaUi.laneCard, 'flex flex-col']">
+    <div :class="veennaUi.laneHeader">
+      <span :class="veennaUi.laneLabel">{{ label }}</span>
     </div>
     <div class="flex-1 px-4 py-4">
       <p class="text-stat font-semibold tabular-nums leading-none text-veenna-fg">{{ value }}</p>

@@ -36,8 +36,8 @@ const captionWidths = ['w-28', 'w-20', 'w-32', 'w-24']
 <template>
   <div class="space-y-4" role="status" aria-busy="true" :aria-label="label">
     <div :class="gridClass">
-      <div v-for="i in count" :key="i" :class="[veennaUi.settingsCard, 'flex flex-col', tileClass]">
-        <div :class="veennaUi.settingsGroupHeader">
+      <div v-for="i in count" :key="i" :class="[veennaUi.laneCard, 'flex flex-col', tileClass]">
+        <div :class="veennaUi.laneHeader">
           <Skeleton class="h-2.5" :class="skeletonWidth(eyebrowWidths, i - 1)" :animated="false" />
         </div>
         <div class="flex-1 px-4 py-4">
@@ -58,8 +58,8 @@ const captionWidths = ['w-28', 'w-20', 'w-32', 'w-24']
     </div>
 
     <div v-if="charts" class="grid gap-4 lg:grid-cols-2">
-      <div v-for="c in charts" :key="c" :class="[veennaUi.settingsCard, 'flex h-64 flex-col']">
-        <div :class="veennaUi.settingsGroupHeader">
+      <div v-for="c in charts" :key="c" :class="[veennaUi.laneCard, 'flex h-64 flex-col']">
+        <div :class="veennaUi.laneHeader">
           <Skeleton class="h-2.5 w-28" :delay="skeletonDelay(count + c - 1)" />
         </div>
         <div class="flex min-h-0 flex-1 px-4 py-4">

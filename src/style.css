@@ -15,3 +15,18 @@
 @import './styles/overlays.css';
 @import './styles/utilities.css';
 @import './styles/todo.css';
+
+/*
+ * A lane holds one inner card: when its body has several sections (a figure and its
+ * footnote), they join into that single card, with a hairline between them.
+ */
+.lane-merge > :not(.lane-title) ~ :not(.lane-title) {
+  margin-top: -0.5rem;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.lane-merge > :not(.lane-title):has(~ :not(.lane-title)) {
+  border-bottom-width: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}

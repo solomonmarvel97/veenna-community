@@ -63,7 +63,7 @@ function onWheel(event: WheelEvent) {
     v-bind="forwarded"
     :class="
       cn(
-        'inline-flex h-7 w-full items-center justify-start gap-1 overflow-x-auto overscroll-x-contain rounded-[calc(var(--radius)-6px)] bg-veenna-row p-0.5 text-veenna-muted [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden',
+        'inline-flex h-7 w-full items-center justify-start gap-1 overflow-x-auto overscroll-x-contain rounded-sm bg-veenna-row p-0.5 text-veenna-muted [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden',
         props.class,
       )
     "

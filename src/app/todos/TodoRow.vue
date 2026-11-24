@@ -92,7 +92,7 @@ async function onCopy() {
       aria-hidden="true"
     >
       <span
-        class="flex size-4 items-center justify-center rounded-[5px] border"
+        class="flex size-4 items-center justify-center rounded-sm border"
         :class="
           checked
             ? 'border-veenna-accent bg-veenna-accent text-veenna-accent-fg'

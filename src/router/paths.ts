@@ -28,6 +28,7 @@ const SETTINGS_TABS = [
   'appearance',
   'dictation',
   'models',
+  'developer',
 ] as const
 export type SettingsTab = (typeof SETTINGS_TABS)[number]
 
