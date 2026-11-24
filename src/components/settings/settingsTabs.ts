@@ -1,4 +1,4 @@
-import { PhCode, PhDesktop, PhGear, PhMicrophone, PhPalette, PhShieldCheck, PhBrain } from '@phosphor-icons/vue'
+import { PhDesktop, PhGear, PhMicrophone, PhPalette, PhShieldCheck, PhBrain } from '@phosphor-icons/vue'
 import type { SettingsTab } from '@/router/paths'
 import type { NavIconTileColor } from '@/lib/navIconTile'
 
@@ -53,13 +53,6 @@ const SETTINGS_TAB_DEFS: SettingsTabDef[] = [
     description: 'On-device speech models: download more, or import your own.',
     icon: PhBrain,
     iconTile: 'purple',
-  },
-  {
-    id: 'developer',
-    label: 'Developer',
-    description: 'Trace each dictation step by step and read what happened.',
-    icon: PhCode,
-    iconTile: 'gray',
   },
 ]
 

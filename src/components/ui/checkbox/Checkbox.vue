@@ -31,7 +31,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
     v-bind="forwarded"
     :class="
       cn(
-        'peer h-4 w-4 shrink-0 rounded-sm border border-veenna-border bg-veenna-panel text-veenna-fg focus-visible:outline-none focus-visible:border-[var(--veenna-focus-line)] disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:border-veenna-accent data-[state=checked]:bg-veenna-accent data-[state=checked]:text-veenna-accent-fg data-[state=indeterminate]:border-veenna-accent data-[state=indeterminate]:bg-veenna-accent data-[state=indeterminate]:text-veenna-accent-fg',
+        'peer h-4 w-4 shrink-0 rounded-[5px] border border-veenna-border bg-veenna-panel text-veenna-fg focus-visible:outline-none focus-visible:border-[var(--veenna-focus-line)] disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:border-veenna-accent data-[state=checked]:bg-veenna-accent data-[state=checked]:text-veenna-accent-fg data-[state=indeterminate]:border-veenna-accent data-[state=indeterminate]:bg-veenna-accent data-[state=indeterminate]:text-veenna-accent-fg',
         props.class,
       )
     "

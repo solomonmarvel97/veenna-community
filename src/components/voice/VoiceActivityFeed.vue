@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { format, isToday, parseISO } from 'date-fns'
-import { PhCaretDown, PhCopy, PhMagicWand, PhStop, PhSpinner } from '@phosphor-icons/vue'
+import { PhCaretDown, PhCopy, PhMagicWand, PhMagnifyingGlass, PhStop, PhSpinner } from '@phosphor-icons/vue'
 import CopiedCheck from '@/components/ui/CopiedCheck.vue'
 import { useRouter } from 'vue-router'
 import { transcribeGuestBlob } from '@/lib/voice/localStt'
@@ -26,9 +26,6 @@ import DictationEmptyState from '@/components/dictation/DictationEmptyState.vue'
 import { QUERY } from '@/router/paths'
 import VoiceCaptureFeedSkeleton from '@/components/skeleton/VoiceCaptureFeedSkeleton.vue'
 import { useErrorToast } from '@/composables/useMessageToast'
-import { developerModeEnabled } from '@/lib/trace'
-import { dictationTraceIdFor, loadDictationTrace } from '@/lib/dictation/dictationTrace'
-import TraceModal from '@/components/trace/TraceModal.vue'
 
 const PREVIEW_PAGE_SIZE_OPTIONS = [5, 10, 20]
 
@@ -272,7 +269,6 @@ const detailActions = computed<DictationDetailActions>(() => {
     playLoading: false,
     audioPendingLabel: null,
     canRetry: false,
-    canTrace: false,
   }
   if (!item) return none
   const hasAudio = captureHasPlayableAudio(item)
@@ -283,7 +279,6 @@ const detailActions = computed<DictationDetailActions>(() => {
     playLoading: playLoadingId.value === item.id,
     audioPendingLabel: null,
     canRetry: audioReady,
-    canTrace: traceAvailable(item.id),
   }
 })
 
@@ -323,20 +318,6 @@ function clearRowAction(id: string, action: CaptureRowAction) {
 function syncViewing(item: VoiceCapture | null) {
   if (!item) return
   if (viewing.value?.id === item.id) viewing.value = item
-}
-
-const traceOpen = ref(false)
-const traceId = ref<string | null>(null)
-
-function traceAvailable(captureId: string): boolean {
-  return developerModeEnabled.value && Boolean(dictationTraceIdFor(captureId))
-}
-
-function viewTrace(item: VoiceCapture) {
-  const id = loadDictationTrace(item.id)
-  if (!id) return
-  traceId.value = id
-  traceOpen.value = true
 }
 
 async function retryTranscript(item: VoiceCapture) {
@@ -690,7 +671,14 @@ useErrorToast(() => (isFull.value ? store.historyError : null), {
         <SearchField
           v-model="query"
           placeholder="Search captures"
-          class="w-full sm:max-w-xs" />
+          variant="row"
+          class="w-full sm:max-w-xs"
+          input-class="outline-none focus-visible:outline-none focus-visible:ring-0 focus-visible:shadow-none"
+        >
+          <template #icon>
+            <PhMagnifyingGlass class="h-4 w-4" />
+          </template>
+        </SearchField>
         <div class="w-full sm:w-32">
           <Select v-model="historyPeriod">
             <SelectTrigger aria-label="Filter captures by date range">
@@ -853,12 +841,6 @@ useErrorToast(() => (isFull.value ? store.historyError : null), {
                         >
                           Retry transcript
                         </DropdownMenuItem>
-                        <DropdownMenuItem
-                          v-if="traceAvailable(item.id)"
-                          @select="viewTrace(item)"
-                        >
-                          View trace
-                        </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem
                           destructive
@@ -894,11 +876,8 @@ useErrorToast(() => (isFull.value ? store.historyError : null), {
       @copy="copyFromDetail"
       @play="viewing && togglePlayback(viewing)"
       @retry-transcript="viewing && retryTranscript(viewing)"
-      @view-trace="viewing && viewTrace(viewing)"
       @delete="viewing && confirmDeleteCapture(viewing)"
     />
-
-    <TraceModal :open="traceOpen" :trace-id="traceId" @close="traceOpen = false" />
 
     <div v-if="showPagination" class="space-y-2 pt-2">
       <Pagination

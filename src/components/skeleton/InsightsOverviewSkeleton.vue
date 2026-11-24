@@ -41,9 +41,9 @@ const xTickLefts = ['0%', '19%', '40%', '61%', '80%', '100%']
 <template>
   <div class="space-y-4" role="status" aria-busy="true" :aria-label="label">
     <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-      <div v-for="(tile, i) in tiles" :key="tile" :class="[veennaUi.laneCard, 'flex flex-col']">
-        <div :class="veennaUi.laneHeader">
-          <span :class="veennaUi.laneLabel">{{ tile }}</span>
+      <div v-for="(tile, i) in tiles" :key="tile" :class="[veennaUi.settingsCard, 'flex flex-col']">
+        <div :class="veennaUi.settingsGroupHeader">
+          <span :class="veennaUi.settingsGroupLabel">{{ tile }}</span>
         </div>
         <div class="flex-1 px-4 py-4">
           <!-- text-stat line box, so the figure lands without moving the card. -->
@@ -61,8 +61,8 @@ const xTickLefts = ['0%', '19%', '40%', '61%', '80%', '100%']
 
     <div class="grid gap-4 lg:grid-cols-2">
       <!-- Activity heatmap -->
-      <div :class="[veennaUi.laneCard, 'flex h-full w-full min-w-0 flex-col']">
-        <div :class="veennaUi.laneHeader">
+      <div :class="[veennaUi.settingsCard, 'flex h-full w-full min-w-0 flex-col']">
+        <div :class="veennaUi.settingsGroupHeader">
           <Skeleton class="h-2.5 w-24" :delay="skeletonDelay(4)" />
           <p class="flex items-center gap-1.5 text-caption text-veenna-muted">
             Longest
@@ -130,9 +130,9 @@ const xTickLefts = ['0%', '19%', '40%', '61%', '80%', '100%']
       </div>
 
       <!-- Words over time -->
-      <div :class="[veennaUi.laneCard, 'flex h-full flex-col']">
-        <div :class="[veennaUi.laneHeader, 'pr-12']">
-          <h3 :class="veennaUi.laneLabel">Words over time</h3>
+      <div :class="[veennaUi.settingsCard, 'flex h-full flex-col']">
+        <div :class="[veennaUi.settingsGroupHeader, 'pr-12']">
+          <h3 :class="veennaUi.settingsGroupLabel">Words over time</h3>
           <Skeleton class="h-3 w-20" :delay="skeletonDelay(6)" />
         </div>
 

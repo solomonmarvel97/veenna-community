@@ -54,13 +54,13 @@ export default {
         overline: '0.06em', // uppercase labels
       },
       borderRadius: {
-        // One standard radius (8px): every step maps to sm. Buttons, tabs and chips use rounded-full.
+        // ChatGPT-style soft scale. Buttons, tabs and chips use rounded-full.
         sm: 'calc(var(--radius) - 8px)',
-        md: 'calc(var(--radius) - 8px)',
-        lg: 'calc(var(--radius) - 8px)',
-        xl: 'calc(var(--radius) - 8px)',
-        '2xl': 'calc(var(--radius) - 8px)',
-        '3xl': 'calc(var(--radius) - 8px)',
+        md: 'calc(var(--radius) - 4px)',
+        lg: 'var(--radius)',
+        xl: 'calc(var(--radius) + 4px)',
+        '2xl': 'calc(var(--radius) + 8px)',
+        '3xl': 'calc(var(--radius) + 16px)',
       },
       colors: {
         background: 'hsl(var(--background))',

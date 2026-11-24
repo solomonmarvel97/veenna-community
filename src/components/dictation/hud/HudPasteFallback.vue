@@ -139,7 +139,7 @@ onUnmounted(countdown.stop)
   height: 1.5rem;
   flex-shrink: 0;
   border: none;
-  border-radius: 0.5rem;
+  border-radius: 9999px;
   background: rgba(255, 255, 255, 0.08);
   color: rgba(255, 255, 255, 0.82);
   cursor: pointer;
@@ -177,7 +177,7 @@ onUnmounted(countdown.stop)
   gap: 0.35rem;
   padding: 0.35rem 0.75rem;
   border: none;
-  border-radius: 0.5rem;
+  border-radius: 9999px;
   background: rgba(255, 255, 255, 0.14);
   font-size: 0.6875rem;
   font-weight: 600;
@@ -209,7 +209,7 @@ onUnmounted(countdown.stop)
   height: 1rem;
   flex-shrink: 0;
   border: none;
-  border-radius: 0.5rem;
+  border-radius: 9999px;
   background: rgba(255, 255, 255, 0.08);
   color: rgba(255, 255, 255, 0.72);
   cursor: pointer;
@@ -224,7 +224,7 @@ onUnmounted(countdown.stop)
   position: relative;
   flex: 1;
   height: 2px;
-  border-radius: 0.5rem;
+  border-radius: 9999px;
   overflow: hidden;
   background: rgba(255, 255, 255, 0.08);
 }

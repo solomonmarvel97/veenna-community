@@ -161,7 +161,7 @@ onBeforeUnmount(() => {
 
           <div
             v-else-if="isProcessing && !store.error"
-            class="dictation-overlay__processing flex h-8 w-8 items-center justify-center rounded-sm bg-white/20 sm:h-9 sm:w-9"
+            class="dictation-overlay__processing flex h-8 w-8 items-center justify-center rounded-full bg-white/20 sm:h-9 sm:w-9"
             aria-hidden="true"
           >
             <PhSpinner
@@ -178,14 +178,14 @@ onBeforeUnmount(() => {
               <button
                 v-if="canRetryDictation"
                 type="button"
-                class="rounded-sm border border-white/20 bg-white/10 px-3 py-1 text-caption font-medium text-white hover:bg-white/15"
+                class="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-caption font-medium text-white hover:bg-white/15"
                 @click="onRetryDictation"
               >
                 Retry
               </button>
               <button
                 type="button"
-                class="rounded-sm border border-white/20 bg-white/10 px-3 py-1 text-caption font-medium text-white hover:bg-white/15"
+                class="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-caption font-medium text-white hover:bg-white/15"
                 @click="onDismissError"
               >
                 Dismiss
@@ -231,7 +231,7 @@ onBeforeUnmount(() => {
   height: 1.75rem;
   flex-shrink: 0;
   border: none;
-  border-radius: 0.5rem;
+  border-radius: 9999px;
   cursor: pointer;
   transition: background 120ms ease;
 }

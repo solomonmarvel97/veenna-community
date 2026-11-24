@@ -8,12 +8,12 @@ export type WaveBarShape = {
 
 /** Bar width for a canvas of this height: thin capsules, like a voice recorder. */
 export function waveBarWidth(canvasHeight: number): number {
-  return Math.min(2, Math.max(1.25, canvasHeight * 0.07))
+  return Math.min(3.5, Math.max(2, canvasHeight * 0.11))
 }
 
 /** Space between bars, relative to bar width. */
 export function waveBarGap(barWidth: number): number {
-  return Math.max(1.75, barWidth * 1.2)
+  return Math.max(1.5, barWidth * 0.8)
 }
 
 /**

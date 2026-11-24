@@ -1,8 +1,6 @@
 import {
   DEFAULT_LOCAL_WHISPER_MODEL_ID,
   isLocalWhisperModelId,
-  localSpeechModelDef,
-  speechModelRuntime,
   type LocalWhisperModelId,
 } from '@/lib/voice/localWhisperModels'
 
@@ -20,9 +18,8 @@ export type SpeechModelSettings = {
  * v3: default on-device model became Whisper Small (was Large v3).
  * v4: default is the bundled Whisper Base on whisper.cpp; Small took ~9 s a clip on one CPU thread.
  * v5: v4 again, for settings that were stamped v4 while still on Small (a v4 build without the move).
- * v6: any model on the slower ONNX runtime moves to the default once; whisper.cpp is much faster here.
  */
-const SETTINGS_DEFAULTS_VERSION = 6
+const SETTINGS_DEFAULTS_VERSION = 5
 const PREVIOUS_DEFAULT_LOCAL_MODEL_IDS: Record<number, string> = {
   3: 'Xenova/whisper-large-v3',
   5: 'Xenova/whisper-small',
@@ -44,12 +41,6 @@ function normalize(raw: Partial<SpeechModelSettings> | null | undefined): Speech
     if (priorVersion < Number(version) && localModelId === previousDefault) {
       localModelId = DEFAULTS.localModelId
     }
-  }
-  // Once, for settings from before v6: a model on the ONNX runtime moves to the default. Choosing
-  // one afterwards is respected, since the stored version is then current.
-  const def = localSpeechModelDef(localModelId)
-  if (priorVersion < 6 && def && speechModelRuntime(def) !== 'whisper-cpp') {
-    localModelId = DEFAULTS.localModelId
   }
   return { localModelId, defaultsVersion: SETTINGS_DEFAULTS_VERSION }
 }

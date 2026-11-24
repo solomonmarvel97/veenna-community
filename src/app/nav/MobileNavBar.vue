@@ -30,7 +30,7 @@ function onLogoClick() {
     <MobileNavButton />
     <button
       type="button"
-      class="mobile-nav-logo flex h-7 w-7 shrink-0 items-center justify-center rounded-sm focus-visible:outline-none focus-visible:shadow-[0_0_0_1px_var(--veenna-focus-subtle)]"
+      class="mobile-nav-logo flex h-7 w-7 shrink-0 items-center justify-center rounded-[6px] focus-visible:outline-none focus-visible:shadow-[0_0_0_1px_var(--veenna-focus-subtle)]"
       :class="{ 'mobile-nav-logo--pop': popping }"
       aria-label="Go home"
       @click="onLogoClick"

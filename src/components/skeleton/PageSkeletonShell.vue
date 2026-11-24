@@ -94,10 +94,7 @@ const showTopChrome = computed(
               {{ subtitle }}
             </p>
             <!-- Same line box as the real subtitle, so the body below starts where it will. -->
-            <div
-              v-else-if="subtitle === true"
-              :class="[veennaUi.pageSubtitle, 'flex items-center']"
-            >
+            <div v-else-if="subtitle === true" :class="[veennaUi.pageSubtitle, 'flex items-center']">
               <span class="invisible w-0">&#8203;</span>
               <Skeleton class="h-3 w-48 max-w-[70%] sm:h-3.5" :delay="40" />
             </div>

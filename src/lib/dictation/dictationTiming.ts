@@ -2,7 +2,6 @@
  * Colored timing logs for Format-ON dictation (Electron DevTools / terminal).
  */
 import chalk from 'chalk'
-import type { DictationTrace } from './dictationTrace'
 
 try {
   // Force ANSI in Electron/Vite so timings stay readable.
@@ -29,8 +28,7 @@ function preview(text: string, max = 72): string {
   return chalk.white(s.length > max ? `${s.slice(0, max)}…` : s)
 }
 
-/** With a `trace`, every mark and the end also become a step in the developer-mode trace. */
-export function startDictationTimer(label = 'format-on', trace?: DictationTrace): DictationTimer {
+export function startDictationTimer(label = 'format-on'): DictationTimer {
   const t0 = performance.now()
   let last = t0
   console.log('')
@@ -46,7 +44,6 @@ export function startDictationTimer(label = 'format-on', trace?: DictationTrace)
       const step = now - last
       const total = now - t0
       last = now
-      trace?.step(event, detail)
       console.log(
         chalk.cyan('  ▶'),
         chalk.white.bold(event),
@@ -63,7 +60,6 @@ export function startDictationTimer(label = 'format-on', trace?: DictationTrace)
       const step = now - last
       const total = now - t0
       last = now
-      trace?.step(event, detail)
       console.log(
         chalk.green('  ✔'),
         chalk.greenBright.bold(event),

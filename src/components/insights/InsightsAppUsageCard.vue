@@ -44,9 +44,9 @@ function barTone(index: number): string {
 </script>
 
 <template>
-  <div :class="[veennaUi.laneCard, 'flex h-full flex-col']">
-    <div :class="veennaUi.laneHeader">
-      <h3 :class="veennaUi.laneLabel">Desktop usage</h3>
+  <div :class="[veennaUi.settingsCard, 'flex h-full flex-col']">
+    <div :class="veennaUi.settingsGroupHeader">
+      <h3 :class="veennaUi.settingsGroupLabel">Desktop usage</h3>
       <span class="text-caption tabular-nums text-veenna-muted">
         {{ totalApps || categories.filter((c) => c.wordCount > 0).length }} apps
       </span>

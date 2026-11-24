@@ -43,8 +43,8 @@ withDefaults(
       cn(
         'inline-flex shrink-0 items-center justify-center overflow-hidden',
         size === 'lg'
-          ? 'h-14 w-14 rounded-sm p-3 sm:h-16 sm:w-16 sm:rounded-sm sm:p-3.5'
-          : 'size-5 rounded-sm p-[3px]',
+          ? 'h-14 w-14 rounded-[12px] p-3 sm:h-16 sm:w-16 sm:rounded-[14px] sm:p-3.5'
+          : 'size-5 rounded-[5px] p-[3px]',
       )
     "
     :style="{
@@ -61,8 +61,8 @@ withDefaults(
       cn(
         'inline-flex shrink-0 items-center justify-center overflow-hidden text-white shadow-[inset_0_0.5px_0_rgba(255,255,255,0.28)] [&_svg]:text-white',
         size === 'lg'
-          ? 'h-14 w-14 rounded-sm p-3 sm:h-16 sm:w-16 sm:rounded-sm sm:p-3.5'
-          : 'size-5 rounded-sm p-[3px]',
+          ? 'h-14 w-14 rounded-[12px] p-3 sm:h-16 sm:w-16 sm:rounded-[14px] sm:p-3.5'
+          : 'size-5 rounded-[5px] p-[3px]',
       )
     "
     :style="{ backgroundColor: NAV_ICON_TILE_COLORS[color] }"

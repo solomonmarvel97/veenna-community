@@ -26,9 +26,9 @@ describe('waveBarShape', () => {
   })
 
   it('keeps bars thin across canvas sizes', () => {
-    expect(waveBarWidth(16)).toBe(1.25)
-    expect(waveBarWidth(28)).toBeCloseTo(1.96)
-    expect(waveBarWidth(80)).toBe(2)
-    expect(waveBarGap(2)).toBe(2.4)
+    expect(waveBarWidth(16)).toBe(2)
+    expect(waveBarWidth(28)).toBeCloseTo(3.08)
+    expect(waveBarWidth(80)).toBe(3.5)
+    expect(waveBarGap(2)).toBe(1.6)
   })
 })

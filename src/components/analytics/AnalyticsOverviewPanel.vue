@@ -1,11 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import {
-  formatCompactCount,
-  formatGrowthBadge,
-  wordsMilestone,
-  wpmPaceLabel,
-} from '@/lib/insightsCopy'
+import { formatCompactCount, formatGrowthBadge, wordsMilestone, wpmPaceLabel } from '@/lib/insightsCopy'
 import { fillDailySeries, validHeatmapPoints } from '@/lib/insightsSeries'
 import type { VeennaAnalyticsPayload } from '@/types/insights'
 import InsightsActivityHeatmap from '@/components/insights/InsightsActivityHeatmap.vue'
@@ -21,7 +16,12 @@ const wpmRank = computed(() => wpmPaceLabel(voice.value.averageWpm))
 const milestone = computed(() => wordsMilestone(voice.value.totalWords))
 const growth = computed(() => formatGrowthBadge(voice.value.monthOverMonthPct))
 
-const trendSeries = computed(() => fillDailySeries(props.data.dailyTrend, props.data.periodDays))
+const trendSeries = computed(() =>
+  fillDailySeries(
+    props.data.dailyTrend,
+    props.data.periodDays,
+  ),
+)
 
 const heatmapPoints = computed(() => {
   const fromVoice = validHeatmapPoints(voice.value.heatmap)

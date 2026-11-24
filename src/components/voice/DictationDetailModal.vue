@@ -30,8 +30,6 @@ export type DictationDetailActions = {
   /** Audio is on another device and has not reached this one; the text says where. */
   audioPendingLabel: string | null
   canRetry: boolean
-  /** Developer mode recorded a trace for this dictation. */
-  canTrace?: boolean
 }
 
 const props = defineProps<{
@@ -49,7 +47,6 @@ const emit = defineEmits<{
   copy: [text: string]
   play: []
   'retry-transcript': []
-  'view-trace': []
   delete: []
 }>()
 
@@ -83,7 +80,7 @@ function formatDuration(ms: number) {
 const hasAudioItem = computed(
   () => props.actions.canPlay || Boolean(props.actions.audioPendingLabel),
 )
-const hasMore = computed(() => props.actions.canRetry || Boolean(props.actions.canTrace))
+const hasMore = computed(() => props.actions.canRetry)
 </script>
 
 <template>
@@ -147,9 +144,6 @@ const hasMore = computed(() => props.actions.canRetry || Boolean(props.actions.c
                   @select="emit('retry-transcript')"
                 >
                   Retry transcript
-                </DropdownMenuItem>
-                <DropdownMenuItem v-if="actions.canTrace" @select="emit('view-trace')">
-                  View trace
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem destructive :disabled="busy" @select="emit('delete')">

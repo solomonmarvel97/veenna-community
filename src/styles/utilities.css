@@ -116,5 +116,5 @@ body *::after {
 
 /* Cancel / finish follow the expanded pill's curve rather than being full circles. */
 .dictation-recorder-btn.dictation-recorder-btn {
-  border-radius: 0.5rem;
+  border-radius: 999px;
 }

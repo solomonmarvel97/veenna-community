@@ -33,9 +33,6 @@ import { QUERY } from '@/router/paths'
 const lazyPanel = (loader: AsyncComponentLoader) =>
   defineAsyncComponent({ loader, loadingComponent: SettingsPanelSkeleton })
 
-const SettingsDeveloperPanel = lazyPanel(
-  () => import('@/components/settings/SettingsDeveloperPanel.vue'),
-)
 const SettingsSystemPanel = lazyPanel(() => import('@/components/settings/SettingsSystemPanel.vue'))
 const SettingsPermissionsPanel = lazyPanel(
   () => import('@/components/settings/SettingsPermissionsPanel.vue'),
@@ -132,8 +129,6 @@ const panel = computed(() => {
   switch (activeTab.value) {
     case 'models':
       return SettingsSpeechModelsPanel
-    case 'developer':
-      return SettingsDeveloperPanel
     case 'system':
       return SettingsSystemPanel
     case 'permissions':
@@ -183,7 +178,7 @@ onMounted(() => {
         :style="isMobile ? undefined : { width: `${menuWidth}px` }"
       >
         <div
-          class="no-drag relative z-[7] flex h-11 shrink-0 items-center gap-1 border-b border-veenna-divider pl-3 pr-2"
+          class="draggable-region relative z-[6] flex h-11 shrink-0 items-center gap-1 border-b border-veenna-divider pl-3 pr-2"
         >
           <span
             class="min-w-0 flex-1 truncate text-label font-medium uppercase tracking-overline text-veenna-muted"
@@ -226,8 +221,7 @@ onMounted(() => {
         class="veenna-notes-page veenna-frame-card no-drag relative z-[6] flex h-full min-h-0 min-w-0 flex-1 flex-col"
       >
         <header
-          class="flex h-11 shrink-0 items-center gap-3 border-b border-veenna-divider px-4 sm:px-6"
-          :class="isMobile ? 'no-drag' : 'draggable-region'"
+          class="draggable-region flex h-11 shrink-0 items-center gap-3 border-b border-veenna-divider px-4 sm:px-6"
         >
           <button
             v-if="!navOpen"

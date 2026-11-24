@@ -52,7 +52,7 @@ function onLogoPopEnd() {
       <template v-if="!navCollapsed">
         <button
           type="button"
-          class="nav-plan-logo flex h-7 w-7 shrink-0 items-center justify-center rounded-sm focus-visible:outline-none focus-visible:shadow-[0_0_0_1px_var(--veenna-focus-subtle)]"
+          class="nav-plan-logo flex h-7 w-7 shrink-0 items-center justify-center rounded-[6px] focus-visible:outline-none focus-visible:shadow-[0_0_0_1px_var(--veenna-focus-subtle)]"
           :class="{ 'nav-plan-logo--pop': popping }"
           aria-label="Celebrate"
           @click="celebrateLogo"
@@ -70,7 +70,7 @@ function onLogoPopEnd() {
       <button
         v-else
         type="button"
-        class="group no-drag flex h-7 w-7 shrink-0 cursor-pointer items-center justify-center rounded-sm text-veenna-icon-muted transition-colors hover:text-veenna-fg focus-visible:outline-none focus-visible:shadow-[0_0_0_1px_var(--veenna-focus-subtle)]"
+        class="group no-drag flex h-7 w-7 shrink-0 cursor-pointer items-center justify-center rounded-[6px] text-veenna-icon-muted transition-colors hover:text-veenna-fg focus-visible:outline-none focus-visible:shadow-[0_0_0_1px_var(--veenna-focus-subtle)]"
         :title="`Show sidebar (${expandShortcut})`"
         aria-label="Show sidebar"
         aria-expanded="false"

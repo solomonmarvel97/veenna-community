@@ -23,9 +23,9 @@ const mobileWidth = computed(() => Math.max(0, 100 - desktopWidth.value))
 </script>
 
 <template>
-  <div :class="[veennaUi.laneCard, 'flex h-full flex-col']">
-    <div :class="veennaUi.laneHeader">
-      <h3 :class="veennaUi.laneLabel">Words dictated</h3>
+  <div :class="[veennaUi.settingsCard, 'flex h-full flex-col']">
+    <div :class="veennaUi.settingsGroupHeader">
+      <h3 :class="veennaUi.settingsGroupLabel">Words dictated</h3>
       <span
         v-if="growth"
         class="shrink-0 rounded-full bg-veenna-accent-soft px-2 py-0.5 text-micro font-medium text-veenna-accent"

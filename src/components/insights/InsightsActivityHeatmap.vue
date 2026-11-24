@@ -108,9 +108,9 @@ function clearTip() {
 </script>
 
 <template>
-  <div :class="[veennaUi.laneCard, 'insights-heatmap flex h-full w-full min-w-0 flex-col']">
-    <div :class="veennaUi.laneHeader">
-      <h3 :class="veennaUi.laneLabel">{{ dayStreak }} day streak</h3>
+  <div :class="[veennaUi.settingsCard, 'insights-heatmap flex h-full w-full min-w-0 flex-col']">
+    <div :class="veennaUi.settingsGroupHeader">
+      <h3 :class="veennaUi.settingsGroupLabel">{{ dayStreak }} day streak</h3>
       <p class="text-caption tabular-nums text-veenna-muted">
         Longest <span class="text-veenna-fg">{{ longestStreak }} days</span>
       </p>
